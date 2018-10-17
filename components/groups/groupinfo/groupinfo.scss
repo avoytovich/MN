@@ -1,0 +1,59 @@
+.group-icon {
+  width: 80px;
+  height: 80px;
+  background: url('/static/png/icon-group.png') no-repeat;
+  background-size: contain;
+}
+
+.members-count{
+  font-size: 18px;
+  font-weight: 600;
+  color: #5e6a78;
+  margin-top: 14px;
+}
+
+.last-update{
+  margin-top: 8px;
+  font-size: 13px;
+  font-weight: 600;
+  color: #b6bec9;
+}
+
+.margin-info{
+  margin-left: 21px;
+}
+
+.actions-block{
+  height: 58px;
+}
+.actions-block span {
+  text-transform: uppercase;
+  font-weight: bold;
+  color: #b6bec9;
+}
+
+.divider{
+  height: 100%;
+  width: 1px;
+  margin: 0 20px;
+  background-color: #e7e7e7;;
+}
+
+.edit-text{
+  text-transform: uppercase;
+}
+
+.icon{
+  width: 18px;
+  height: 18px;
+  background-size: contain;
+  margin-right: 11px;
+}
+
+.move .icon{
+  background-image: url('/static/png/garbage.png');
+}
+
+.edit .icon{
+  background-image: url('/static/png/edit.png');
+}

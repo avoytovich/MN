@@ -1,0 +1,14 @@
+@import '../../../sass/common.scss';
+
+.btn-icon{
+    background-image: url(/static/png/white@2x.png);
+    width: 22px;
+    height: 22px;
+    background-size: contain;   
+}
+
+.btn-text{
+    text-transform: uppercase;
+    font-size: 14px;
+    color: '#fff'
+}
