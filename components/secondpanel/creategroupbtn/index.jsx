@@ -1,6 +1,6 @@
 import React, { PureComponent } from 'react';
+import Link from 'next/link';
 import { Button } from '@material-ui/core';
-
 import './creategroupbtn.scss';
 
 const style = {
@@ -13,10 +13,14 @@ const style = {
 export default class CreateGroupBtn extends PureComponent {
   render() {
     return (
-      <Button variant="contained" color="primary" style={style}>
-        <div className="btn-icon" />
-        <span className="btn-text">Create group</span>
-      </Button>
+      <Link href="/creategrouppage">
+        <a>
+          <Button variant="contained" color="primary" style={style}>
+            <div className="btn-icon" />
+            <span className="btn-text">Create group</span>
+          </Button>
+        </a>
+      </Link>
     );
   }
 }

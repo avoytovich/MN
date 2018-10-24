@@ -6,6 +6,9 @@ import Header from '../components/header/header';
 import withModal from '../services/decorators/withModal/index';
 
 import './style.scss';
+import token from './token.js';
+
+
 
 @withModal(null, { withClose: true })
 export default class App extends React.Component {

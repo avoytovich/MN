@@ -3,6 +3,7 @@ import { Typography } from '@material-ui/core';
 
 export default class BreadCrumbs extends Component {
   render() {
-    return <Typography variant="caption">Home / Manage Groups</Typography>;
+    const { text } = this.props;
+    return <Typography variant="caption">{text}</Typography>;
   }
 }

@@ -27,7 +27,9 @@ const theme = () => {
     },
   });
   const typography = createTypography(palette, {
-    fontFamily: 'Muli',
+    fontFamily: "'Muli', sans-serif",
+    fontStretch: 'normal',
+    lineHeight: 'normal',
     title: {
       fontSize: 24,
       fontWeight: 'bold',
@@ -40,11 +42,18 @@ const theme = () => {
     subheading: {
       fontSize: 20,
       color: '#4f5863',
-      fontWeight: 'bold'
+      fontWeight: 'bold',
+      lineHeight: 'normal'
     },
     display1: {
+      fontFamily: 'Poppins',
       fontSize: '27px',
       fontWeight: 600,
+      color: '#fff'
+    },
+    display2: {
+      fontSize: 15,
+      fontWeight: 'bold',
       color: '#fff'
     }
   });
@@ -55,6 +64,22 @@ const theme = () => {
     typography,
     overrides: {
       MuiButton: {
+        outlinedPrimary: {
+          color: '#ff6f00',
+          backgroundColor: '#fff',
+          display: 'flex',
+          alignItems: 'center',
+          borderRadius: '50px',
+          border: '1px solid #ff6f00',
+          fontWeight: 'bolder',
+          lineHeight: 'normal',
+          letterSpacing: '0.05em',
+          '&:hover': {
+            backgroundColor: '#ff6f00',
+            color: '#fff',
+            border: '1px solid #ff6f00',
+          }
+        },
         containedPrimary: {
           color: 'white',
           display: 'flex',
@@ -64,6 +89,21 @@ const theme = () => {
           fontWeight: 'bolder',
           lineHeight: 'normal',
           letterSpacing: '0.05em'
+        },
+        outlinedSecondary: {
+          boxSizing: 'border-box',
+          backgroundColor: '#fff',
+          borderRadius: 50,
+          fontWeight: 'bolder',
+          lineHeight: 'normal',
+          letterSpacing: '0.05em',
+          color: '#224483',
+          border: '1px solid #224483',
+          '&:hover': {
+            backgroundColor: '#224483',
+            color: '#fff',
+            border: '1px solid #224483'
+          }
         }
       }
     }

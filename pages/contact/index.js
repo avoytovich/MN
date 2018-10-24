@@ -10,20 +10,22 @@ import MenuItem from '@material-ui/core/MenuItem';
 
 import Layout from '../../components/MyLayout.js';
 import TestForm from '../../forms/testForm';
+import Slider from "react-slick";
 
 import i18n from '../../services/decorators/i18n';
 
 import './style.scss';
+import { Typography } from '@material-ui/core';
 
 const mapStateToProps = ({ localization: { lang } }) => ({ lang });
 @i18n()
-@withRouter
+// @withRouter
 @connect(mapStateToProps)
 export default class About extends Component {
   handleChange = event => {
     this.props.dispatch({
       type: 'CHANGE_LANGUAGE',
-      lang: event.target.value,
+      lang: event.target.value
     });
     Cookies.set('lang', event.target.value);
     // window.location.reload();
@@ -31,19 +33,37 @@ export default class About extends Component {
 
   render() {
     console.log('LANG', this.props.lang);
+    var settings = {
+      dots: true,
+      infinite: true,
+      speed: 500,
+      slidesToShow: 1,
+      slidesToScroll: 1
+    };
     return (
-      <Layout>
-        <p className="test-style">Contact US</p>
-        <Button>{this.props.translate('testString', 'objectTest')}</Button>
-        <Link href="/">
-          <Button>Hello world</Button>
-        </Link>
-        <Select onChange={this.handleChange} value={this.props.lang}>
-          <MenuItem value="en">English</MenuItem>
-          <MenuItem value="de">Dentmark</MenuItem>
-        </Select>
-        <TestForm />
-      </Layout>
+      // <Layout>
+      <Typography>
+        <Slider {...settings}>
+          <div>
+            <h3>1</h3>
+          </div>
+          <div>
+            <h3>2</h3>
+          </div>
+          <div>
+            <h3>3</h3>
+          </div>
+          <div>
+            <h3>4</h3>
+          </div>
+          <div>
+            <h3>5</h3>
+          </div>
+          <div>
+            <h3>6</h3>
+          </div>
+        </Slider>
+      </Typography>
     );
   }
 }

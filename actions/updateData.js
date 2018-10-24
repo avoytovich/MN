@@ -67,5 +67,5 @@ export const reloadTableData = (name, action) =>
       let key = 0;
       resp.data.forEach(item => (item.key = key++));
       return resp;
-    },
+    }
   });

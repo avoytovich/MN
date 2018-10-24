@@ -21,3 +21,6 @@ export const CHANGE_LANGUAGE = 'CHANGE_LANGUAGE';
 
 // form
 export const CHANGE_OPEN_FIELD = 'CHANGE_OPEN_FIELD';
+
+// groups
+export const GET_GROUPS = 'GET_GROUPS';

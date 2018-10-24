@@ -6,6 +6,7 @@ import SecondPanel from '../../../components/secondpanel';
 import SearchPanel from '../../../components/searchpanel';
 import Groups from '../../../components/groups';
 import Footer from '../../../components/footer';
+import CreateGroupBtn from '../../../components/secondpanel/creategroupbtn';
 
 @withRouter
 export default class About extends Component {
@@ -14,7 +15,11 @@ export default class About extends Component {
       <Grid container spacing={0} justify="center">
         <Grid item xs={12} sm={12}>
           <Layout>
-            <SecondPanel />
+            <SecondPanel
+              title="Manage Groups"
+              breadCrumb="Home / Manage Groups"
+              actionButtons={[<CreateGroupBtn key={'one'} />]}
+            />
             <SearchPanel />
             <Groups />
             <Footer />

@@ -9,32 +9,44 @@ class MyDocument extends Document {
 
     return (
       <html lang="en" dir="ltr">
-      <Head>
-        <meta charSet="utf-8" />
-        {/* Use minimum-scale=1 to enable GPU rasterization */}
-        <meta
-          name="viewport"
-          content={
-            'user-scalable=0, initial-scale=1, ' +
-            'minimum-scale=1, width=device-width, height=device-height'
-          }
-        />
-        {/* PWA primary color */}
-        <meta
-          name="theme-color"
-          content={pageContext.theme.palette.primary.main}
-        />
-        <link
-          rel="stylesheet"
-          href="https://fonts.googleapis.com/css?family=Muli"
-        />
+        <Head>
+          <meta charSet="utf-8" />
+          {/* Use minimum-scale=1 to enable GPU rasterization */}
+          <meta
+            name="viewport"
+            content={
+              'user-scalable=0, initial-scale=1, ' +
+              'minimum-scale=1, width=device-width, height=device-height'
+            }
+          />
+          {/* PWA primary color */}
+          <link
+            rel="stylesheet"
+            type="text/css"
+            charSet="UTF-8"
+            href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.6.0/slick.min.css"
+          />
+          <link
+            rel="stylesheet"
+            type="text/css"
+            href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.6.0/slick-theme.min.css"
+          />
 
-        <link rel="stylesheet" href="/_next/static/style.css" />
-      </Head>
-      <body>
-      <Main />
-      <NextScript />
-      </body>
+          <meta
+            name="theme-color"
+            content={pageContext.theme.palette.primary.main}
+          />
+          <link
+            href="https://fonts.googleapis.com/css?family=Muli|Poppins"
+            rel="stylesheet"
+          />
+
+          <link rel="stylesheet" href="/_next/static/style.css" />
+        </Head>
+        <body>
+          <Main />
+          <NextScript />
+        </body>
       </html>
     );
   }
@@ -72,7 +84,7 @@ MyDocument.getInitialProps = ctx => {
     };
 
     WrappedComponent.propTypes = {
-      pageContext: PropTypes.object.isRequired,
+      pageContext: PropTypes.object.isRequired
     };
 
     return WrappedComponent;
@@ -88,12 +100,12 @@ MyDocument.getInitialProps = ctx => {
           id="jss-server-side"
           // eslint-disable-next-line react/no-danger
           dangerouslySetInnerHTML={{
-            __html: pageContext.sheetsRegistry.toString(),
+            __html: pageContext.sheetsRegistry.toString()
           }}
         />
         {flush() || null}
       </React.Fragment>
-    ),
+    )
   };
 };
 

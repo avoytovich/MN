@@ -5,7 +5,7 @@ const styles = theme => ({
   input: {
     // border: '1px solid',
     borderRadius: '5px',
-    padding: '5px',
+    padding: '6px 13px 7px',
     height: 37,
     maxWidth: 307,
     width: '100%',

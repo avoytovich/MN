@@ -6,22 +6,19 @@ import Close from '@material-ui/icons/Close';
 
 import './withModal.scss';
 
-export default function withModal(component, options = {}) {
+export default function withModal(ComponentModal, options = {}) {
   return function(Child) {
     @injectIntl
     class CustomModal extends Component {
       state = {
-        open: false,
+        open: false
       };
-
       handleOpen = () => {
         this.setState({ open: true });
       };
-
       handleClose = () => {
         this.setState({ open: false });
       };
-
       render() {
         return (
           <div>
@@ -32,7 +29,7 @@ export default function withModal(component, options = {}) {
                     <Close onClick={this.handleClose} />
                   </div>
                 )}
-                <h1>test</h1>
+                <ComponentModal close={this.handleClose} />
               </div>
             </Modal>
             <Child
