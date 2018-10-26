@@ -23,6 +23,9 @@
     "lodash": "^4.17.10",
     "moment": "^2.22.2",
     "next": "^6.1.1",
+    "next-assets-import": "0.0.2",
+    "next-compose-plugins": "^2.1.1",
+    "next-images": "^1.0.1",
     "next-routes": "^1.4.2",
     "node-sass": "^4.9.1",
     "prop-types": "^15.6.2",
@@ -36,6 +39,7 @@
     "redux-devtools-extension": "^2.13.5",
     "redux-thunk": "^2.3.0",
     "styled-jsx": "^2.2.7",
+    "video-react": "^0.13.0",
     "yup": "^0.25.1"
   },
   "devDependencies": {
