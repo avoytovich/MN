@@ -10,13 +10,20 @@ import {
   Icon,
   Select,
   Avatar,
-  Grid
+  Grid,
+  List,
+  ListItem,
+  ListItemText,
+  ListItemSecondaryAction,
+  IconButton
 } from '@material-ui/core';
 import SS from '@material-ui/icons/ArrowDropDown';
 
 import styles from './styles.js';
 import withModal from '../../../services/decorators/withModal';
 import IconModal from '../../iconmodal/';
+import { Field } from 'formik';
+import Subgroups from './subgroups.jsx';
 
 const questions = [
   {
@@ -43,7 +50,7 @@ export default class Main extends Component {
   };
 
   render() {
-    const { classes, open, close } = this.props;
+    const { classes, open, close, formik } = this.props;
     return (
       <div className={classes.wrapper}>
         <Paper elevation={0} className={classes.paper}>
@@ -60,6 +67,7 @@ export default class Main extends Component {
             <SS />
           </div>
           <TextField
+            onChange={formik.handleChange}
             InputProps={{
               className: classes.text
             }}
@@ -67,6 +75,9 @@ export default class Main extends Component {
               shrink: true,
               className: classes.label
             }}
+            helperText={formik.errors.name}
+            error={formik.errors.name !== undefined}
+            name="name"
             placeholder="Group name"
             fullWidth
             margin="normal"
@@ -79,8 +90,13 @@ export default class Main extends Component {
               shrink: true,
               className: classes.label
             }}
+            helperText={formik.errors.description}
+            error={formik.errors.description !== undefined}
+            name="description"
+            onChange={formik.handleChange}
             placeholder="Description"
             fullWidth
+            name="description"
             margin="normal"
           />
         </Paper>
@@ -109,6 +125,9 @@ export default class Main extends Component {
                 <div className={classes.plusIcon} />
                 <Typography className={classes.addText}>add</Typography>
               </Button>
+            </Grid>
+            <Grid item xs={12}>
+              <Subgroups formik={formik} />
             </Grid>
           </Grid>
         </Paper>

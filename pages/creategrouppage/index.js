@@ -7,7 +7,8 @@ import Header from '../../components/header/header';
 import CreateGroup from '../../components/creategroups';
 import SecondPanel from '../../components/secondpanel';
 import BacktoGroupBtn from '../../components/creategroups/backtogroupbtn';
-import Main from '../../components/creategroups/main/index.jsx';
+import CreateGroups from '../../components/creategroups';
+import Main from '../../components/creategroups/main';
 
 @withRouter
 export default class CreateGroupPage extends Component {
@@ -16,15 +17,7 @@ export default class CreateGroupPage extends Component {
       <Grid container spacing={0} justify="center">
         <Grid item xs={12} sm={12}>
           <Layout>
-            <SecondPanel
-              title="Create a Group"
-              breadCrumb="Home / Create a Group"
-              actionButtons={[
-                <Button variant="outlined" color="secondary">Cancel</Button>,
-                <Button variant="contained" color="primary">Save</Button>
-              ]}
-            />
-            <Main />
+            <CreateGroups />              
             <Footer />
           </Layout>
         </Grid>

@@ -1,22 +1,27 @@
 import dispatchSend from '../services/dispatchSend';
-import Axios from 'axios';
-import { START_LOAD, END_LOAD, GET_GROUPS } from '../constants/actions';
-import groupsdata from '../testdata/groups.js';
+import { START_LOAD, GET_GROUPS, ADD_GROUP } from '../constants/actions';
+import { sendRequest } from '../api/endpoints';
 
-// Fake promise
-export const getGroupsPromise = () => {
-  return new Promise((rs, rj) => {
-    setTimeout(() => { }, 1500);
-    rs(groupsdata);
-  });
-};
+const getGroupsPromise = (limit, offset) =>
+  sendRequest('getGroups', { limit, offset });
+const createGroupPromise = data => sendRequest('createGroup', data);
 
-export const getGroups = () =>
-  dispatchSend('get_groups', getGroupsPromise(), {
+export const getGroups = (limit, offset) =>
+  dispatchSend('get_groups', getGroupsPromise(limit, offset), {
     start_action: START_LOAD,
     receiveAction: GET_GROUPS,
     adaptData: resp => {
-      return resp;
+      console.log(resp);
+      return resp.data;
     }
   });
 
+export const createGroup = data =>
+  dispatchSend('create_group', createGroupPromise(data), {
+    start_action: START_LOAD,
+    receiveAction: ADD_GROUP,
+    adaptData: resp => {
+      console.log(resp);
+      return resp.data;
+    }
+  });
