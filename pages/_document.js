@@ -37,7 +37,7 @@ class MyDocument extends Document {
             content={pageContext.theme.palette.primary.main}
           />
           <link
-            href="https://fonts.googleapis.com/css?family=Muli|Poppins"
+            href="https://fonts.googleapis.com/css?family=Lato:300|Poppins:300,400,500|Roboto:300,400,500"
             rel="stylesheet"
           />
 

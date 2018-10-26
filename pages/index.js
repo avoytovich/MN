@@ -13,8 +13,8 @@ import PhoneIcon from '@material-ui/icons/Phone';
 import { Player, BigPlayButton } from 'video-react';
 import Video from '../static/mp4/long_video.mp4';
 import './style.scss';
-import token from './token.js';
 import "video-react/styles/scss/video-react.scss";
+import withModal from '../services/decorators/withModal'
 
 
 
