@@ -221,8 +221,21 @@
 
   &-advantages-container{
     height: 681px;
-    background-color:rgba(34, 182, 182, 0.33);
+    background-image: url("/static/jpg/landeeng-adnantages-bg.jpg");
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
+    position:relative;
     display: flex;
+    &:after{
+      content:'';
+      position: absolute;
+      left: 0;
+      right: 0;
+      top:0;
+      bottom: 0;
+      background-color:rgba(34, 182, 182, 0.33);
+    }
   }
 
   &-video{
@@ -246,7 +259,18 @@
 
   &-advantage{
     width: 20%;
+    position: relative;
+    &:not(:last-child):after{
+      content: '';
+      position: absolute;
+      right: 0;
+      top: 0;
+      height: 100%;
+      width:4px;
+      opacity: 0.2;
+      background-color: #ffffff;
 
+    }
     &-title{
       font-family: Poppins;
       font-size: 70px;
@@ -270,6 +294,7 @@
       letter-spacing: normal;
       color: #ffffff;
       max-width: 242px;
+      margin: 0 auto;
     }
   }
   &-responses{
