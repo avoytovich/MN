@@ -25,8 +25,6 @@ export default class About extends Component {
             <Footer />
           </Layout>
         </Grid>
-        <Grid container spacing={0} justify="center" />
-        <Grid item xs={12} sm={10} md={9} lg={8} xl={6} />
       </Grid>
     );
   }

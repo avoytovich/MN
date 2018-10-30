@@ -1,5 +1,4 @@
 import { GET_GROUPS } from '../../constants/actions';
-import Axios from 'axios';
 const initialState = {
   groups: []
 };
