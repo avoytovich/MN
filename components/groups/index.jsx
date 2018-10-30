@@ -45,14 +45,15 @@ export default class Groups extends Component {
 
   render() {
     const { classes, groups } = this.props;
+
     return (
       <Fragment>
         <List className={classes.list}>
           {groups.map(group => (
-            <Fragment>
+            <Fragment key={`group-${group.id}`}>
               <ListItem className={classes.item}>
                 <GroupInfo info={group} />
-                <Gallery images={group.memberImages}/>
+                <Gallery images={group.images}/>
               </ListItem>
               <Divider />
             </Fragment>

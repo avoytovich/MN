@@ -12,6 +12,7 @@ module.exports = withTypescript(withAssetsImport( withSass({
         config.resolve.alias = {
             'components': path.resolve('./components'),
             'static': path.resolve('./static'),
+            'helpers': path.resolve('./helpers')
         }
         return config;
       }
