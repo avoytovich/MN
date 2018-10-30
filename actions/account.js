@@ -1,14 +1,30 @@
 import { ACCOUNT_URL} from '../constants/api'
 import { getAxiosInstance } from '../shared/request'
 const request = getAxiosInstance(ACCOUNT_URL, false)
-const localStorage = window.localStorage
+import dispatchSend from '../services/dispatchSend';
+import { START_LOAD, GET_GROUPS, ADD_GROUP } from '../constants/actions';
+import { sendRequest } from '../api/endpoints';
+const getGroupsPromise = (limit, offset) =>
+  sendRequest('getGroups', { limit, offset });
+const createGroupPromise = data => sendRequest('createGroup', data);
 
+export const getGroups = (limit, offset) =>
+  dispatchSend('get_groups', getGroupsPromise(limit, offset), {
+    start_action: START_LOAD,
+    receiveAction: GET_GROUPS,
+    adaptData: resp => {
+      console.log(resp);
+      return resp.data;
+    }
+  });
 export async function signIn (payload) {
 
 
   try {
-    const { data } = await request.post('/Login', payload)
+    const data = await request.post('/Login', payload)
+    console.log(data)
     localStorage.setItem('user', data)
+
     return Promise.resolve(data)
   } catch (e) {
     return Promise.reject(e.data)

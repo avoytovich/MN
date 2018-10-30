@@ -8,6 +8,7 @@ import runtime from './runtime';
 import localization from './localization';
 import groups from './reducers/groups';
 import { saveState, loadState } from 'helpers/cache';
+import snackbar from './reducers/snackbar';
 
 
 export function initializeStore(initialState = {}) {
@@ -16,7 +17,7 @@ export function initializeStore(initialState = {}) {
   Object.assign(initialState, loadState());
 
   const store = createStore(
-    combineReducers({ runtime, localization, groups }),
+    combineReducers({ runtime, localization, groups, snackbar }),
     initialState,
     composeWithDevTools(applyMiddleware(thunkMiddleware))
   );

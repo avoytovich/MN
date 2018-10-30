@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import { withStyles, Avatar, Typography, Button ,TextField} from '@material-ui/core';
 import { Formik, Form, Field } from 'formik';
-
+import { signIn } from '../../../actions/account'
 import CloseIcon from '@material-ui/icons/Close';
 import * as Yup from 'yup';
 const styles = theme => ({
@@ -77,14 +77,10 @@ const styles = theme => ({
 
 @withStyles(styles)
 export default class IconModal extends Component {
-  handleSubmit = (values, opt) => {
-    console.log(values);
+  handleSubmit = (values) => {
+    signIn(values);
   };
-  handleChange = name => e => {
-    this.setState({
-      [name]: e.target.value
-    });
-  };
+
 
   render() {
     console.log(this.props)
@@ -96,6 +92,10 @@ export default class IconModal extends Component {
 
         <Formik
           onSubmit={this.handleSubmit}
+          initialValues={{
+            Email: '',
+            Password: ''
+          }}
           validationSchema={Yup.object().shape({
             //   email: Yup.string()
             //     .email('Invalid email')
@@ -105,24 +105,23 @@ export default class IconModal extends Component {
           })}>
           {props => (
             <Form>
-              <TextField
+              <Field
                 className={classes.input}
-                onChange={this.handleChange}
-                helperText={props.errors.email}
-                error={props.errors.email !== undefined}
+                // onChange={this.handleChange}
+                helperText={props.errors.Email}
+                error={props.errors.Email !== undefined}
                 type="email"
-                name="email"
+                name="Email"
                 placeholder="Group name"
                 fullWidth
                 margin="normal"
               />
-              <TextField
+              <Field
                 className={classes.input}
-                onChange={this.handleChange}
-                helperText={props.errors.password}
-                error={props.errors.password !== undefined}
+                helperText={props.errors.Password}
+                error={props.errors.Password !== undefined}
                 type="password"
-                name="password"
+                name="Password"
                 placeholder="Group name"
                 fullWidth
                 margin="normal"
