@@ -102,34 +102,7 @@ export default class Main extends Component {
         </Paper>
         <Paper elevation={0} className={classes.paper}>
           <Typography className={classes.title}>Sub Groups</Typography>
-          <Grid container alignItems="center" spacing={0}>
-            <Grid item xs={10}>
-              <TextField
-                InputProps={{
-                  className: classes.text
-                }}
-                InputLabelProps={{
-                  shrink: true,
-                  className: classes.label
-                }}
-                placeholder="New Subgroup name"
-                fullWidth
-                margin="normal"
-              />
-            </Grid>
-            <Grid item xs={2}>
-              <Button
-                className={classes.addButton}
-                variant="contained"
-                color="primary">
-                <div className={classes.plusIcon} />
-                <Typography className={classes.addText}>add</Typography>
-              </Button>
-            </Grid>
-            <Grid item xs={12}>
-              <Subgroups formik={formik} />
-            </Grid>
-          </Grid>
+          <Subgroups classes={classes}/>
         </Paper>
         <Paper elevation={0} className={classes.paper}>
           <Typography className={classes.title}>Question Answer</Typography>
@@ -152,6 +125,7 @@ export default class Main extends Component {
               <Button
                 className={classes.addButton}
                 variant="contained"
+                // onClick={this.}
                 color="primary">
                 <div className={classes.plusIcon} />
                 <Typography className={classes.addText}>add</Typography>

@@ -2,7 +2,7 @@ import React, { Component, Fragment } from 'react';
 import { ListItem, List, Divider, withStyles } from '@material-ui/core';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-
+import Axios from 'axios';
 import GroupInfo from './groupinfo';
 import Gallery from './gallery';
 import { getGroups } from '../../actions/groups';
@@ -40,7 +40,11 @@ const mapDispatchToProps = dispatch =>
 )
 export default class Groups extends Component {
   componentDidMount = () => {
-    this.props.getGroups(10, 0);
+    Axios.post('/api/Account/Login', { Email: 'some', Password: 'more' }).then(
+      r => {
+        console.log(r);
+      }
+    );
   };
 
   render() {
@@ -53,7 +57,7 @@ export default class Groups extends Component {
             <Fragment key={`group-${group.id}`}>
               <ListItem className={classes.item}>
                 <GroupInfo info={group} />
-                <Gallery images={group.images}/>
+                <Gallery images={group.images} />
               </ListItem>
               <Divider />
             </Fragment>

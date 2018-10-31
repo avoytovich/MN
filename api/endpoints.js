@@ -11,6 +11,11 @@ const endpoints = {
     url: '/api/Group/CreateGroup',
     method: 'put',
     auth: true
+  },
+  login: {
+    url: '/api/account/login',
+    method: 'post',
+    auth: true
   }
 };
 const createUrl = (string, params) => {
@@ -30,9 +35,8 @@ const createUrl = (string, params) => {
 export const sendRequest = (name, data) => {
   const endpoint = endpoints[name];
   const { url, method, auth } = endpoint;
-
   return Axios({
-    method: 'GET',
+    method: method,
     url: createUrl(url, data),
     data: method !== 'get' ? data : undefined,
     headers: {

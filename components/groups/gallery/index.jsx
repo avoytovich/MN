@@ -89,9 +89,9 @@ export default class Gallery extends PureComponent {
         <Slider {...settings}>
           {images.map((image, key) => (
             <Card key={key} className={classes.card}>
-              <CardMedia className={classes.media} image={image}>
+              <CardMedia className={classes.media} image={image.mediumImage}>
                 <Typography className={classes.mediaText}>
-                  Darth Vader
+                  {image.firstName}
                 </Typography>
               </CardMedia>
             </Card>
