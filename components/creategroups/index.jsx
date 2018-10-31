@@ -7,13 +7,11 @@ import { bindActionCreators } from 'redux';
 import { createGroup } from '../../actions/groups';
 import { connect } from 'react-redux';
 import * as Yup from 'yup';
-import { login } from '../../actions/login';
 
 const mapDispatchToProps = dispatch =>
   bindActionCreators(
     {
       createGroup,
-      login
     },
     dispatch
   );
@@ -32,9 +30,6 @@ const mapDispatchToProps = dispatch =>
   }
 })
 export default class CreateGroups extends Component {
-  componentDidMount = () => {
-    this.props.login({Email: "String", Password: "12341"});
-  }
   render() {
     return (
       <Form>

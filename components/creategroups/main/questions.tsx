@@ -1,4 +1,4 @@
-import React, { Component, Fragment } from 'react';
+import React, { Component, Fragment, SyntheticEvent, FormEvent } from 'react';
 import {
   ListItem,
   List,
@@ -14,9 +14,13 @@ import {
 } from '@material-ui/core';
 import Edit from '@material-ui/icons/Edit';
 import Trash from '@material-ui/icons/Delete';
-import _ from 'lodash';
+import * as _ from 'lodash';
 
-export default class Subgroups extends Component {
+export default class Questions extends Component<{
+  formik: any;
+  classes: any;
+}> {
+
   state = {
     subgroups: [],
     val: ''
@@ -25,23 +29,29 @@ export default class Subgroups extends Component {
   addSubgroup = () => {
     if (!this.state.val.length) return;
     const newGroups = [...this.state.subgroups, this.state.val];
-    this.props.formik.setFieldValue('questions', newGroups);
+    this.props.formik.setFieldValue('subgroups', newGroups);
     this.setState({
       subgroups: newGroups,
       val: ''
     });
   };
-  handleChange = e => {
-    this.setState({ val: e.target.value });
+  handleChange = (e: FormEvent<HTMLInputElement>) => {
+    this.setState({ val: e.currentTarget.value });
   };
-  editGroup = k => e => {
+  editGroup = (k: any) => (e: any) => {
     this.setState({
       val: this.state.subgroups[k],
-      subgroups: _.filter(this.state.subgroups, (sg, key) => key !== k)
+      subgroups: _.filter(
+        this.state.subgroups,
+        (sg: string, key: number) => key !== k
+      )
     });
   };
-  deleteGroup = k => e => {
-    const newGroups = _.filter(this.state.subgroups, (sg, key) => key !== k);
+  deleteGroup = (k: number) => (e: SyntheticEvent) => {
+    const newGroups = _.filter(
+      this.state.subgroups,
+      (sg: string, key: number) => key !== k
+    );
     this.props.formik.setFieldValue('questions', newGroups);
     this.setState({
       subgroups: newGroups
@@ -64,7 +74,7 @@ export default class Subgroups extends Component {
                 className: classes.label
               }}
               onChange={this.handleChange}
-              placeholder="New Subgroup name"
+              placeholder="Your question"
               fullWidth
               margin="normal"
             />
@@ -82,7 +92,7 @@ export default class Subgroups extends Component {
           <Grid item xs={12}>
             <List>
               {subgroups.map((el, key) => (
-                <ListItem key={`group-${key}`}>
+                <ListItem key={`question-${key}`}>
                   <ListItemText>
                     <Typography>{el}</Typography>
                   </ListItemText>

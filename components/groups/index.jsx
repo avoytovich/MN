@@ -40,11 +40,7 @@ const mapDispatchToProps = dispatch =>
 )
 export default class Groups extends Component {
   componentDidMount = () => {
-    Axios.post('/api/Account/Login', { Email: 'some', Password: 'more' }).then(
-      r => {
-        console.log(r);
-      }
-    );
+    
   };
 
   render() {

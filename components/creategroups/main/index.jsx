@@ -24,6 +24,7 @@ import withModal from '../../../services/decorators/withModal';
 import IconModal from '../../iconmodal/';
 import { Field } from 'formik';
 import Subgroups from './subgroups.jsx';
+import Questions from './questions';
 
 const questions = [
   {
@@ -102,36 +103,11 @@ export default class Main extends Component {
         </Paper>
         <Paper elevation={0} className={classes.paper}>
           <Typography className={classes.title}>Sub Groups</Typography>
-          <Subgroups classes={classes}/>
+          <Subgroups classes={classes} formik={formik}/>
         </Paper>
         <Paper elevation={0} className={classes.paper}>
           <Typography className={classes.title}>Question Answer</Typography>
-          <Grid container alignItems="center" spacing={0}>
-            <Grid item xs={10}>
-              <TextField
-                InputProps={{
-                  className: classes.text
-                }}
-                InputLabelProps={{
-                  shrink: true,
-                  className: classes.label
-                }}
-                placeholder="Add new question"
-                fullWidth
-                margin="normal"
-              />
-            </Grid>
-            <Grid item xs={2}>
-              <Button
-                className={classes.addButton}
-                variant="contained"
-                // onClick={this.}
-                color="primary">
-                <div className={classes.plusIcon} />
-                <Typography className={classes.addText}>add</Typography>
-              </Button>
-            </Grid>
-          </Grid>
+          <Questions classes={classes} formik={formik}/>
         </Paper>
       </div>
     );
