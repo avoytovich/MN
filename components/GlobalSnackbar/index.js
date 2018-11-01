@@ -18,7 +18,7 @@ class GlobalSnackbar extends Component {
 
     return (
       <Snackbar
-        anchorOrigin={{ vertical: 'top', horizontal: 'center' }}
+        anchorOrigin={{ vertical: 'top', horizontal: 'right' }}
         open={snackbar.open}
         autoHideDuration={4000}
         onClose={() => this.props.toggleSnackbar(null, null, false)}>

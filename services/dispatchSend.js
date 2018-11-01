@@ -1,6 +1,6 @@
 import axios from 'axios';
 import { msgError } from './errorHandler';
-import { START_LOAD, END_LOAD, ERROR_LOAD } from '../constants/actions';
+import { START_LOAD, END_LOAD, ERROR_LOAD, TOGGLE_SNACKBAR } from '../constants/actions';
 
 const demyFunc = data => data;
 

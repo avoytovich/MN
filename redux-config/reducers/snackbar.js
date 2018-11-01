@@ -1,4 +1,4 @@
-import { TOGGLE_SNACKBAR } from '../../constants/actions';
+import { ERROR_LOAD, TOGGLE_SNACKBAR } from '../../constants/actions';
 import colors from '../../constants/colors'
 
 const initialState = {
@@ -12,8 +12,20 @@ const initialState = {
 
 export default function (state = initialState, action) {
   switch (action.type) {
-    case TOGGLE_SNACKBAR:
+    case ERROR_LOAD:
+      const color = colors['error']
+      const { message } = action.error.response.data.errors[0]
+      return {
+        ...state,
+        snackbar: {
+          open: true,
+          message,
+          color
+        }
+      }
+    case TOGGLE_SNACKBAR:{
       const color = colors[action.payload.color]
+
       return {
         ...state,
         snackbar: {
@@ -22,6 +34,8 @@ export default function (state = initialState, action) {
           color
         }
       }
+    }
+
     default:
       return state
   }

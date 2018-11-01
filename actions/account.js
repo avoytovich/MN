@@ -2,55 +2,43 @@ import { ACCOUNT_URL} from '../constants/api'
 import { getAxiosInstance } from '../shared/request'
 const request = getAxiosInstance(ACCOUNT_URL, false)
 import dispatchSend from '../services/dispatchSend';
-import { START_LOAD, GET_GROUPS, ADD_GROUP } from '../constants/actions';
-import { sendRequest } from '../api/endpoints';
-const getGroupsPromise = (limit, offset) =>
-  sendRequest('getGroups', { limit, offset });
-const createGroupPromise = data => sendRequest('createGroup', data);
+import { START_LOAD, SIGN_IN, RE_LOGIN} from '../constants/actions';
 
-export const getGroups = (limit, offset) =>
-  dispatchSend('get_groups', getGroupsPromise(limit, offset), {
+export const signIn = (payload) =>
+  dispatchSend('login', request.post('/Login', payload), {
     start_action: START_LOAD,
-    receiveAction: GET_GROUPS,
+    receiveAction: SIGN_IN,
     adaptData: resp => {
-      console.log(resp);
-      return resp.data;
+      return resp;
+    },
+    adaptError: e => {
+      return e;
     }
   });
-export async function signIn (payload) {
+export const reLogin = ({ RefreshToken }) =>
+  dispatchSend('reLogin', request.post('/RefreshToken', { RefreshToken }), {
+    start_action: START_LOAD,
+    receiveAction: RE_LOGIN,
+    adaptData: resp => {
+      return resp;
+    },
+    adaptError: e => {
+      return e;
+    }
+  });
 
+export const signUp = (payload) =>
+  dispatchSend('signUp', request.post('/Register', payload), {
+    start_action: START_LOAD,
+    receiveAction: SIGN_IN,
+    adaptData: resp => {
+      return resp;
+    },
+    adaptError: e => {
+      return e;
+    }
+  });
 
-  try {
-    const data = await request.post('/Login', payload)
-    console.log(data)
-    localStorage.setItem('user', data)
-
-    return Promise.resolve(data)
-  } catch (e) {
-    return Promise.reject(e.data)
-  }
-}
-
-// export function signUp (payload) {
-//   return async dispatch => {
-//     const updatedPayload = {
-//       ...payload,
-//       password: md5(payload.password),
-//       deviceId: generateDeviceId(),
-//       birthday: moment(payload.birthday).format(SERVER_DATE_FORMAT)
-//     }
-//
-//     try {
-//       const response = await request.post('/signUp', updatedPayload)
-//
-//       return Promise.resolve(response)
-//     } catch (e) {
-//       dispatch(toggleSnackbar(e.data.message))
-//
-//       return Promise.reject(e)
-//     }
-//   }
-// }
 //
 // export async function signOut () {
 //   const request = getAxiosInstance(AUTH_URL)
@@ -65,3 +53,37 @@ export async function signIn (payload) {
 //     return Promise.reject(e.response.data.message)
 //   }
 // }
+//
+// export async function forgotPassword ({ email }) {
+//   try {
+//     const { data } = await request.post('/password/forgot', { email })
+//
+//     return Promise.resolve(data)
+//   } catch (e) {
+//     return Promise.reject(e.data.message)
+//   }
+// }
+//
+// export async function restorePassword ({
+//                                          email,
+//                                          restorePasswordCode,
+//                                          newPassword,
+//                                          confirmPassword
+//                                        }) {
+//   try {
+//     const hashedPayload = {
+//       email,
+//       restorePasswordCode,
+//       newPassword: md5(newPassword),
+//       confirmPassword: md5(confirmPassword)
+//     }
+//     const { data } = await request.post('password/restore', hashedPayload)
+//
+//     return Promise.resolve(data)
+//   } catch (e) {
+//     return Promise.reject(e.response.data.message)
+//   }
+// }
+//
+//
+//

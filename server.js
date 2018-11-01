@@ -15,7 +15,7 @@ const express = require('express');
 const port = isDev ? 3000 : 80;
 app.prepare().then(() => {
   express()
-    .use('/api',  proxy({target: 'http://192.168.4.100:3090',  changeOrigin: true}))
+     .use('/api',  proxy({target: 'http://127.0.0.1:1260',  changeOrigin: true}))
     .use(handler)
     .use(cookieParser())
     .listen(port);

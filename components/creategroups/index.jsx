@@ -8,13 +8,6 @@ import { createGroup } from '../../actions/groups';
 import { connect } from 'react-redux';
 import * as Yup from 'yup';
 
-const mapDispatchToProps = dispatch =>
-  bindActionCreators(
-    {
-      createGroup,
-    },
-    dispatch
-  );
 
 @connect(
   null,

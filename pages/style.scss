@@ -63,6 +63,7 @@
     color: #ffffff;
     margin-top: 15px;
     position:relative;
+    cursor: pointer;
     &:after{
       content:"";
       position:absolute;
@@ -563,13 +564,4 @@
     }
   }
 
-}
-
-
-
-
-@media (max-width: 480px) {
-  .landing-container {
-    background-color:  grey;
-  }
 }

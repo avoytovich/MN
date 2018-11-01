@@ -16,11 +16,41 @@ import './style.scss';
 import "video-react/styles/scss/video-react.scss";
 
 import SignInModal from '../components/landing/signInModal'
+import SignUpModal from '../components/landing/signUpModal'
 import withModal from '../services/decorators/withModal'
 
 
 
 @withModal(SignInModal)
+class SigInBtn extends React.Component {
+  render() {
+    const { open } = this.props;
+    return (
+      <p
+        className='landing-auth-btn'
+        onClick={() => open(true)}
+      >
+        Sign In
+      </p>
+    )
+  }
+}
+
+@withModal(SignUpModal)
+class SignUpBtn extends React.Component {
+  render() {
+    const { open } = this.props;
+    return (
+      <p
+        className='landing-auth-btn'
+        onClick={() => open(true)}
+      >
+        Sign Up
+      </p>
+    )
+  }
+}
+
 export default class App extends React.Component {
   render() {
     const { open } = this.props;
@@ -40,8 +70,8 @@ export default class App extends React.Component {
               </Grid>
               <Grid item>
                 <Grid container wrap="nowrap">
-                  <p className='landing-auth-btn' onClick={() => open(true)} >Sign In</p>
-                  <p className='landing-auth-btn'>Sign Up</p>
+                  <SigInBtn/>
+                  <SignUpBtn/>
                   <p className='landing-auth-btn'>Create Group</p>
                 </Grid>
               </Grid>
