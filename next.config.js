@@ -6,14 +6,29 @@ const { parsed: localEnv } = require('dotenv').config()
 const webpack = require('webpack');
 const path = require('path');
 
-module.exports = withTypescript(withAssetsImport( withSass({
-    webpack(config) {
+module.exports = withTypescript(
+  withAssetsImport(
+    withSass({
+      webpack(config) {
         config.plugins.push(new webpack.EnvironmentPlugin(localEnv))
         config.resolve.alias = {
+            'actions': path.resolve('./actions'),
+            'api': path.resolve('./api'),
             'components': path.resolve('./components'),
-            'static': path.resolve('./static'),
-            'helpers': path.resolve('./helpers')
+            'constans': path.resolve('./constans'),
+            'containers': path.resolve('./containers'),
+            'forms': path.resolve('./forms'),
+            'helpers': path.resolve('./helpers'),
+            'locales': path.resolve('./locales'),
+            'pages': path.resolve('./pages'),
+            'redux-config': path.resolve('./redux-config'),
+            'sass': path.resolve('./sass'),
+            'services': path.resolve('./services'),
+            'shared': path.resolve('./shared'),
+            'static': path.resolve('./static')
         }
         return config;
       }
-})));
+    })
+  )
+);

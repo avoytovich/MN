@@ -16,6 +16,10 @@ export const SPLICE_ARR_ELEM = 'SPLICE_ARR_ELEM';
 export const LAZY_START = 'LAZY_START';
 export const MERGE_RUNTIME = 'MERGE_RUNTIME';
 
+// snackbar
+export const TOGGLE_SNACKBAR = 'TOGGLE_SNACKBAR'
+
+
 // localization
 export const CHANGE_LANGUAGE = 'CHANGE_LANGUAGE';
 
@@ -29,3 +33,7 @@ export const ADD_GROUP = 'ADD_GROUP';
 // auth
 export const LOGIN_SUCCESS = 'LOGIN_SUCCESS';
 
+
+// auth
+export const SIGN_IN = 'SIGN_IN';
+export const RE_LOGIN = 'RE_LOGIN';

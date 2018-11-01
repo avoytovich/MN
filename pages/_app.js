@@ -1,10 +1,11 @@
-import React from 'react';
+import React, { Fragment } from 'react';
 import App, { Container } from 'next/app';
 import { Provider } from 'react-redux';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import { MuiThemeProvider } from '@material-ui/core/styles';
 import JssProvider from 'react-jss/lib/JssProvider';
 
+import GlobalSnackbar from '../components/GlobalSnackbar'
 import getPageContext from '../page-cotext';
 import withReduxStore from '../redux-config/with-redux-store';
 import Localization from '../containers/Localization';
@@ -45,7 +46,10 @@ export default class MyApp extends App {
                 to render collected styles on server side. */}
             <Provider store={reduxStore}>
               <Localization>
-                <Component pageContext={this.pageContext} {...pageProps} />
+                <Fragment>
+                  <GlobalSnackbar/>
+                  <Component pageContext={this.pageContext} {...pageProps} />
+                </Fragment>
               </Localization>
             </Provider>
           </MuiThemeProvider>
