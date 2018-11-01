@@ -40,7 +40,11 @@ const mapDispatchToProps = dispatch =>
 )
 export default class Groups extends Component {
   componentDidMount = () => {
-    
+      this.props.getGroups(
+        {
+          limit:30,
+          offset:0
+        });
   };
 
   render() {

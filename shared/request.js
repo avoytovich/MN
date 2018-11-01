@@ -21,7 +21,7 @@ async function requestCheckAuthInterceptor (config) {
     } else {
       config.headers['Authorization'] = user.token.accessToken
     }
-    config.header['Organization'] = user.organizationId
+    config.headers['Organization'] = user.organizationId
   }
 
   return config
