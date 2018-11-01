@@ -11,12 +11,14 @@ const getGroupsPromise = (limit, offset) =>
 const createGroupPromise = data => sendRequest('createGroup', data);
 
 export const getGroups = (params) =>
-  dispatchSend('get_groups',  request.get('/GetGroups', {params} ), {
+  dispatchSend('get_groups',  request.get('/GetGroups', {params}), {
     start_action: START_LOAD,
     receiveAction: GET_GROUPS,
     adaptData: resp => {
-      console.log(resp);
-      return resp.data;
+      return resp;
+    },
+    adaptError: e => {
+      return e;
     }
   });
 
@@ -25,7 +27,6 @@ export const createGroup = data =>
     start_action: START_LOAD,
     receiveAction: ADD_GROUP,
     adaptData: resp => {
-      console.log(resp);
       return resp.data;
     }
   });

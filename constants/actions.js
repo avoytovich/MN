@@ -30,10 +30,4 @@ export const CHANGE_OPEN_FIELD = 'CHANGE_OPEN_FIELD';
 export const GET_GROUPS = 'GET_GROUPS';
 export const ADD_GROUP = 'ADD_GROUP';
 
-// auth
-export const LOGIN_SUCCESS = 'LOGIN_SUCCESS';
-
-
-// auth
-export const SIGN_IN = 'SIGN_IN';
 export const RE_LOGIN = 'RE_LOGIN';

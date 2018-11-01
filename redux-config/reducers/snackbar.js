@@ -12,17 +12,17 @@ const initialState = {
 
 export default function (state = initialState, action) {
   switch (action.type) {
-    // case ERROR_LOAD:
-    //   const color = colors['error']
-    //   const { message } = action.error.response.data.errors[0]
-    //   return {
-    //     ...state,
-    //     snackbar: {
-    //       open: true,
-    //       message,
-    //       color
-    //     }
-    //s  }
+    case ERROR_LOAD:
+      const color = colors['error']
+      const { message } = action.error.response.data.errors[0]
+      return {
+        ...state,
+        snackbar: {
+          open: true,
+          message,
+          color
+        }
+      }
     case TOGGLE_SNACKBAR:{
       const color = colors[action.payload.color]
 
