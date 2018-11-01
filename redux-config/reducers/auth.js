@@ -1,4 +1,4 @@
-import { SIGN_IN, RE_LOGIN } from '../../constants/actions';
+import { SIGN_IN, RE_LOGIN, LOGOUT } from '../../constants/actions';
 const initialState = {
   user: {}
 };
@@ -17,6 +17,8 @@ export default (state = initialState, action) => {
           token: action.data
         }
       }
+    case LOGOUT: 
+      return initialState;
     default:
       return state;
   }

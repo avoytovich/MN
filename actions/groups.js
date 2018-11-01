@@ -2,9 +2,10 @@ import dispatchSend from '../services/dispatchSend';
 import { START_LOAD, GET_GROUPS, ADD_GROUP } from '../constants/actions';
 import { sendRequest } from '../api/endpoints';
 
-import { GROUP_URL } from '../constants/api'
-import { getAxiosInstance } from '../shared/request'
-const request = getAxiosInstance(GROUP_URL);
+import { GROUP_URL } from '../constants/api';
+// import { getAxiosInstance } from '../shared/request';
+import Axios from 'axios';
+// const request = getAxiosInstance('/api/Group');
 
 const getGroupsPromise = (limit, offset) =>
   sendRequest('getGroups', { limit, offset });

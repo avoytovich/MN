@@ -14,7 +14,7 @@ import snackbar from './reducers/snackbar';
 export function initializeStore(initialState = {}) {
 
   // Assign localstorage cache to state
-  Object.assign(initialState, loadState());
+  // Object.assign(initialState, loadState());
 
   const store = createStore(
     combineReducers({ runtime, localization, groups, snackbar }),

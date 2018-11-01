@@ -29,7 +29,7 @@ export default class Questions extends Component<{
   addSubgroup = () => {
     if (!this.state.val.length) return;
     const newGroups = [...this.state.subgroups, this.state.val];
-    this.props.formik.setFieldValue('subgroups', newGroups);
+    this.props.formik.setFieldValue('questions', newGroups);
     this.setState({
       subgroups: newGroups,
       val: ''

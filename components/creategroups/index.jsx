@@ -5,9 +5,18 @@ import SecondPanel from '../secondpanel';
 import { Button } from '@material-ui/core';
 import { bindActionCreators } from 'redux';
 import { createGroup } from '../../actions/groups';
+import { setData } from 'actions/updateData';
 import { connect } from 'react-redux';
 import * as Yup from 'yup';
+import Link from 'next/link';
 
+const mapDispatchToProps = dispatch =>
+  bindActionCreators(
+    {
+      createGroup
+    },
+    dispatch
+  );
 
 @connect(
   null,
@@ -18,6 +27,12 @@ import * as Yup from 'yup';
     name: Yup.string().required('Required'),
     description: Yup.string().required('Required')
   }),
+  mapPropsToValues: props => {
+    return {
+      subgroups: [],
+      questions: []
+    };
+  },
   handleSubmit: (values, { props }) => {
     props.createGroup(values);
   }
@@ -30,9 +45,14 @@ export default class CreateGroups extends Component {
           title="Create a Group"
           breadCrumb="Home / Create a Group"
           actionButtons={[
-            <Button variant="outlined" color="secondary">
-              Cancel
-            </Button>,
+            <Link href="/home/manage-groups">
+              <a>
+                <Button variant="outlined" color="secondary">
+                  Cancel
+                </Button>
+                
+              </a>
+            </Link>,
             <Button variant="contained" type="submit" color="primary">
               Save
             </Button>

@@ -30,8 +30,7 @@ const mapDispatchToProps = dispatch =>
     {
       getGroups
     },
-    dispatch
-  );
+    dispatch);
 
 @withStyles(styles)
 @connect(
@@ -46,10 +45,8 @@ export default class Groups extends Component {
           offset:0
         });
   };
-
   render() {
-    const { classes } = this.props;
-  const groups=[];
+    const { classes, groups } = this.props;
     return (
       <Fragment>
         <List className={classes.list}>
