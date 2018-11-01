@@ -36,7 +36,7 @@ const mapDispatchToProps = dispatch =>
 @withStyles(styles)
 @connect(
   mapStateToProps,
-  mapDispatchToProps
+  { getGroups }
 )
 export default class Groups extends Component {
   componentDidMount = () => {
@@ -48,8 +48,8 @@ export default class Groups extends Component {
   };
 
   render() {
-    const { classes, groups } = this.props;
-
+    const { classes } = this.props;
+  const groups=[];
     return (
       <Fragment>
         <List className={classes.list}>

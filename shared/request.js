@@ -1,14 +1,12 @@
 import axios from 'axios'
-import get from 'lodash/get'
 import Router from 'next/router'
 
 import { reLogin } from 'actions/account'
 
 async function requestCheckAuthInterceptor (config) {
-  const state = JSON.parse(window.localStorage.getItem('state'))
-  const user = get(state, 'auth.user')
+  const user = JSON.parse(window.localStorage.getItem('user'))
 
-  if (user.token) {
+  if (user) {
     const expireDate = user.token.expireDate * 1000
     const timeNow = new Date().getTime()
 
@@ -17,13 +15,12 @@ async function requestCheckAuthInterceptor (config) {
       const response = await reLogin({
         RefreshToken: user.token.refreshToken
       })
-      config.headers['Authorization'] = response.token
+      config.headers['Authorization'] = 'Bearer ' + response.token.accessToken
     } else {
-      config.headers['Authorization'] = user.token.accessToken
+      config.headers['Authorization'] = 'Bearer ' + user.token.accessToken
     }
     config.headers['Organization'] = user.organizationId
   }
-
   return config
 }
 

@@ -1,44 +1,47 @@
 import { ACCOUNT_URL} from '../constants/api'
 import { getAxiosInstance } from '../shared/request'
 const request = getAxiosInstance(ACCOUNT_URL, false)
-import dispatchSend from '../services/dispatchSend';
-import { START_LOAD, SIGN_IN, RE_LOGIN} from '../constants/actions';
 
-export const signIn = (payload) =>
-  dispatchSend('login', request.post('/Login', payload), {
-    start_action: START_LOAD,
-    receiveAction: SIGN_IN,
-    adaptData: resp => {
-      return resp;
-    },
-    adaptError: e => {
-      return e;
-    }
-  });
-export const reLogin = ({ RefreshToken }) =>
-  dispatchSend('reLogin', request.post('/RefreshToken', { RefreshToken }), {
-    start_action: START_LOAD,
-    receiveAction: RE_LOGIN,
-    adaptData: resp => {
-      return resp;
-    },
-    adaptError: e => {
-      return e;
-    }
-  });
+export async function signIn (payload) {
+  try {
+    const { data } = await request.post('/Login', payload)
+    localStorage.setItem(
+      'user',
+      JSON.stringify({ ...data })
+    )
 
-export const signUp = (payload) =>
-  dispatchSend('signUp', request.post('/Register', payload), {
-    start_action: START_LOAD,
-    receiveAction: SIGN_IN,
-    adaptData: resp => {
-      return resp;
-    },
-    adaptError: e => {
-      return e;
-    }
-  });
+    return Promise.resolve(data)
+  } catch (e) {
+    return Promise.reject(e)
+  }
+}
 
+export async function reLogin (payload) {
+  try {
+    const { data } = await request.post('/RefreshToken', payload)
+    const user = localStorage.getItem('user')
+    user.token = data
+    localStorage.setItem(
+      'user',user
+    )
+    return Promise.resolve(data)
+  } catch (e) {
+    return Promise.reject(e)
+  }
+}
+
+export async function signUp (payload) {
+  try {
+    const { data } = await request.post('/Register', payload)
+    localStorage.setItem(
+      'user',
+      JSON.stringify({ ...data })
+    )
+    return Promise.resolve(data)
+  } catch (e) {
+    return Promise.reject(e)
+  }
+}
 //
 // export async function signOut () {
 //   const request = getAxiosInstance(AUTH_URL)
