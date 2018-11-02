@@ -1,5 +1,5 @@
 import dispatchSend from '../services/dispatchSend';
-import { START_LOAD, GET_GROUPS, ADD_GROUP, GET_SINGLE, EDIT_GROUP } from '../constants/actions';
+import { START_LOAD, GET_GROUPS, ADD_GROUP, GET_SINGLE, EDIT_GROUP, DELETE_GROUP } from '../constants/actions';
 
 import { GROUP_URL } from '../constants/api';
 import { getAxiosInstance } from '../shared/request';
@@ -45,10 +45,17 @@ export const createGroup = data =>
 
   export const editGroup = data => 
     dispatchSend('edit_group', request.post('/EditGroup', data), {
-      start_action: START_LOAD,
       receiveAction: EDIT_GROUP,
       adaptData: resp => {
         console.log(resp);
         return resp;
+      }
+    })
+
+export const deleteGroup = params => 
+    dispatchSend('delete_group', request.delete('DeleteGroup', {params}), {
+      receiveAction: DELETE_GROUP,
+      adaptData: resp => {
+        return params.id;
       }
     })
