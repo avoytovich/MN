@@ -55,7 +55,6 @@ export default class App extends React.Component {
   render() {
     const { open } = this.props;
     return (
-      <NoSSR>
         <div className="landing-container">
           <Grid
               className="landing-header"
@@ -206,7 +205,7 @@ export default class App extends React.Component {
               </div>
             </Grid>
      
-          <Grid c lassName="landing-footer-container" >
+          <Grid className="landing-footer-container">
             <Grid container>
               <a  href="#" className="landing-footer-link">Privacy Policy</a>
               <a href="#" className="landing-footer-link">Terms of use</a>
@@ -214,7 +213,6 @@ export default class App extends React.Component {
             </Grid>
           </Grid>
           </div > 
-        </NoSSR>                
     )              
   }        
 }

@@ -4,9 +4,8 @@ import { Provider } from 'react-redux';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import { MuiThemeProvider } from '@material-ui/core/styles';
 import JssProvider from 'react-jss/lib/JssProvider';
-
 import GlobalSnackbar from '../components/GlobalSnackbar'
-import getPageContext from '../page-cotext';
+import getPageContext from '../page-context';
 import withReduxStore from '../redux-config/with-redux-store';
 import Localization from '../containers/Localization';
 
@@ -16,7 +15,7 @@ export default class MyApp extends App {
     super(props);
     this.pageContext = getPageContext();
   }
-
+  
   pageContext = null;
 
   componentDidMount() {
@@ -47,7 +46,7 @@ export default class MyApp extends App {
             <Provider store={reduxStore}>
               <Localization>
                 <Fragment>
-                  <GlobalSnackbar/>
+                  <GlobalSnackbar />
                   <Component pageContext={this.pageContext} {...pageProps} />
                 </Fragment>
               </Localization>

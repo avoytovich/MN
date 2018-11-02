@@ -13,8 +13,13 @@ const initialState = {
 export default function (state = initialState, action) {
   switch (action.type) {
     case ERROR_LOAD:
-      const color = colors['error']
-      const { message } = action.error.response.data.errors[0]
+      const color = colors['error'];
+      let message = "";
+      
+      if(typeof action.error === String)
+        message = action.error;
+      else
+        message  = action.error.response.data.errors[0];
       return {
         ...state,
         snackbar: {

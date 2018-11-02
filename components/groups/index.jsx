@@ -54,7 +54,8 @@ export default class Groups extends Component {
             <Fragment key={`group-${group.id}`}>
               <ListItem className={classes.item}>
                 <GroupInfo info={group} />
-                <Gallery images={group.images} />
+                  {/* TODO setup images */}
+                <Gallery images={group.images === undefined? []: group.images} />
               </ListItem>
               <Divider />
             </Fragment>

@@ -8,8 +8,6 @@ const handler = routes.getRequestHandler(app);
 const proxy = require('http-proxy-middleware');
 const axios = require('axios');
 
-
-
 // With express
 const express = require('express');
 const port = isDev ? 3000 : 80;

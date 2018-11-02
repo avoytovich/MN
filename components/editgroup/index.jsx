@@ -1,27 +1,35 @@
-import React, { Component, Fragment } from 'react';
+import { Component } from 'react';
 import Main from './main';
-import { Formik, Form, Field, withFormik } from 'formik';
+import {  Form,  withFormik } from 'formik';
 import SecondPanel from '../secondpanel';
 import { Button } from '@material-ui/core';
 import { bindActionCreators } from 'redux';
-import { createGroup } from '../../actions/groups';
-import { setData } from 'actions/updateData';
+import { editGroup, getSingle } from '../../actions/groups';
 import { connect } from 'react-redux';
 import * as Yup from 'yup';
 import Link from 'next/link';
-import Router from 'next/router';
+import { withRouter } from 'next/router';
+import find from 'lodash/find';
+import get from 'lodash/get'
+
+const mapStateToProps = ({ groups }, { router }) => ({
+  group: find(groups.groups, g => g.id === parseInt(router.query.id, 10)),
+})
 
 const mapDispatchToProps = dispatch =>
   bindActionCreators(
     {
-      createGroup
+      editGroup,
+      getSingle
     },
     dispatch
   );
 
+
+@withRouter
 @connect(
-  null,
-  mapDispatchToProps
+  mapStateToProps,
+  { editGroup, getSingle }
 )
 @withFormik({
   validationSchema: Yup.object().shape({
@@ -29,25 +37,34 @@ const mapDispatchToProps = dispatch =>
     description: Yup.string().required('Required')
   }),
   mapPropsToValues: props => {
+    const name = get(props, 'group.name');
+    const desc = get(props, 'group.description');
+    const id = get(props, 'group.id');
     return {
       subgroups: [],
-      questions: []
+      questions: [],
+      name: name,
+      description: desc,
+      id
     };
   },
+  
   handleSubmit: (values, { props }) => {
-    props.createGroup(values)
-      .then(r => {
-        Router.push('/home/manage-groups');
-      })
+    props.editGroup(values);
   }
 })
-export default class CreateGroups extends Component {
+export default class EditGroup extends Component {
+  componentDidMount = () => {
+    // this.props.getSingle({groupId: this.props.router.query.id});
+  }
   render() {
+    const { router, group } =  this.props;
+    if(!group) return null; 
     return (
       <Form>
         <SecondPanel
-          title="Create a Group"
-          breadCrumb="Home / Create a Group"
+          title="Edit Group"
+          breadCrumb="Home / Edit a Group"
           actionButtons={[
             <Link href="/home/manage-groups">
               <a>
@@ -61,7 +78,7 @@ export default class CreateGroups extends Component {
             </Button>
           ]}
         />
-        <Main formik={this.props} />
+        <Main formik={this.props} group={group} />
       </Form>
     );
   }

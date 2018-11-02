@@ -41,7 +41,7 @@ export default class Header extends Component {
     const { classes } = this.props;
     return (
       <AppBar className={classes.appBar}>
-        <Grid alignItems="center" container xs={10} sm={10}>
+        <Grid alignItems="center" container>
           <div
             className="logo-image"
             style={{

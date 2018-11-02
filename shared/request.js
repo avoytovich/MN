@@ -22,12 +22,7 @@ async function requestCheckAuthInterceptor (config) {
     }
     config.headers['Organization'] = user.organizationId
   }
-<<<<<<< Updated upstream
-  return config
-=======
-
   return config;
->>>>>>> Stashed changes
 }
 
 function unauthorizedResponseInterceptor (error) {

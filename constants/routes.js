@@ -1,1 +1,0 @@
-export const MANAGE_GROUPS = '/home/manage-groups'

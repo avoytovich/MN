@@ -2,6 +2,7 @@ import React, { PureComponent } from 'react';
 import Link from 'next/link';
 import { Button } from '@material-ui/core';
 import './creategroupbtn.scss';
+import Router from 'next/router';
 
 const style = {
   display: 'flex',
@@ -15,12 +16,12 @@ export default class CreateGroupBtn extends PureComponent {
     return (
       <Link href="/creategrouppage">
         <a>
-          <Button variant="contained" color="primary" style={style}>
+          <Button  variant="contained" color="primary" style={style}>
             <div className="btn-icon" />
             <span className="btn-text">Create group</span>
           </Button>
-        </a>
-      </Link>
+         </a>
+       </Link>
     );
   }
 }

@@ -1,15 +1,12 @@
 import dispatchSend from '../services/dispatchSend';
-import { START_LOAD, GET_GROUPS, ADD_GROUP } from '../constants/actions';
-import { sendRequest } from '../api/endpoints';
+import { START_LOAD, GET_GROUPS, ADD_GROUP, GET_SINGLE, EDIT_GROUP } from '../constants/actions';
 
 import { GROUP_URL } from '../constants/api';
-// import { getAxiosInstance } from '../shared/request';
+import { getAxiosInstance } from '../shared/request';
 import Axios from 'axios';
-// const request = getAxiosInstance('/api/Group');
 
-const getGroupsPromise = (limit, offset) =>
-  sendRequest('getGroups', { limit, offset });
-const createGroupPromise = data => sendRequest('createGroup', data);
+const request = getAxiosInstance('/api/Group');
+const requestQuestions = getAxiosInstance('/api/Question');
 
 export const getGroups = (params) =>
   dispatchSend('get_groups',  request.get('/GetGroups', {params}), {
@@ -19,15 +16,39 @@ export const getGroups = (params) =>
       return resp;
     },
     adaptError: e => {
-      return e;
+      return "Error load"
     }
   });
+export const getSingle = params => 
+  dispatchSend('get_group', Axios.all(
+  request.get('/GetGroupDetails', {params}),
+  request.get('/GetQuestions', {params})
+  ),
+  {
+    adaptData: (r, q) => {
+      debugger;
+      console.log(r,q);
+    },
+    receiveAction: GET_SINGLE
+  }
+  );
 
 export const createGroup = data =>
-  dispatchSend('create_group', createGroupPromise(data), {
+  dispatchSend('create_group', request.put('/CreateGroup', data), {
     start_action: START_LOAD,
     receiveAction: ADD_GROUP,
     adaptData: resp => {
-      return resp.data;
+      console.log(resp);
+      return resp;
     }
   });
+
+  export const editGroup = data => 
+    dispatchSend('edit_group', request.post('/EditGroup', data), {
+      start_action: START_LOAD,
+      receiveAction: EDIT_GROUP,
+      adaptData: resp => {
+        console.log(resp);
+        return resp;
+      }
+    })

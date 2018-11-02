@@ -14,11 +14,9 @@ export default class GroupInfo extends Component<IGroupProps>{
     render() {
         return (
             <Fragment>
-                <Grid container>
-                    {/* <Grid>
-
-                    </Grid> */}
-                </Grid>
+                {/* <Grid container>
+                    
+                </Grid> */}
             </Fragment>
         );
     }

@@ -29,4 +29,6 @@ export const CHANGE_OPEN_FIELD = 'CHANGE_OPEN_FIELD';
 // groups
 export const GET_GROUPS = 'GET_GROUPS';
 export const ADD_GROUP = 'ADD_GROUP';
-
+export const GET_SINGLE = 'GET_SINGLE';
+export const EDIT_GROUP = 'EDIT_GROUP';
+export const DELETE_GROUP = 'DELETE_GROUP';

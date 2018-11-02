@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import { Typography, Divider, withStyles } from '@material-ui/core';
 import moment from 'moment';
+import Link from 'next/link';
+import Router from 'next/router';
 
 import '../../../sass/common.scss';
 import './groupinfo.scss';
@@ -30,7 +32,9 @@ export default class GroupInfo extends Component {
         <div className="group-icon" />
         <div className="d-flex f-column margin-info">
           <Typography variant="subheading">{info.name}</Typography>
-          <Typography className={classes.mcount}>{info.membersCount} members</Typography>
+          <Typography className={classes.mcount}>
+            {info.membersCount} members
+          </Typography>
           <Typography className={classes.lupdate}>
             Last update{' '}
             {moment(info.dateOfLastUpdate).format('DD/MM/YYYY h:mm a')}
@@ -38,9 +42,16 @@ export default class GroupInfo extends Component {
           <div className="actions-block d-flex jcc ai-center">
             <div className="d-flex edit ai-center">
               <div className="icon" />
-              <Typography className="edit-text" variant="caption">
-                edit
-              </Typography>
+              <Link
+                prefetch
+                href={{ pathname: '/editgroup', query: { id: info.id } }}
+                >
+                <a>
+                  <Typography className="edit-text" variant="caption">
+                    edit
+                  </Typography>
+                </a>
+              </Link>
             </div>
             <div className="divider" />
             <div className="move d-flex ai-center">
