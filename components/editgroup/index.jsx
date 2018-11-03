@@ -50,7 +50,10 @@ const mapDispatchToProps = dispatch =>
   },
   
   handleSubmit: (values, { props }) => {
-    props.editGroup(values);
+    props.editGroup(values)
+      .then(r => {
+        props.router.push('/home/manage-groups')
+      })
   }
 })
 export default class EditGroup extends Component {
@@ -59,6 +62,7 @@ export default class EditGroup extends Component {
   }
   render() {
     const { router, group } =  this.props;
+    console.log(router);
     if(!group) return null; 
     return (
       <Form>

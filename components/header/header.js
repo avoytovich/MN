@@ -63,7 +63,7 @@ export default class Header extends Component {
             })}
           </div>
         </Grid>
-        <Grid alignItems="center" justify="flex-end" container xs={2} sm={2}>
+        <Grid alignItems="center" justify="flex-end" container>
           <Avatar
             className={classes.avatar}
             src="/static/png/image-member.png"
