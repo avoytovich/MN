@@ -16,6 +16,7 @@ import {
     ListItemSecondaryAction,
     IconButton
   } from '@material-ui/core';import styles from './styles';
+import get from 'lodash/get';
 
 import Subgroups from './subgroups';
 import Questions from './questions';
@@ -28,10 +29,12 @@ export default class Main extends Component {
     
     render() {
         const { classes, formik, group, open } = this.props;
+        const subgroups = get(group, 'subgroups', []);
+        const id = get(group, 'id');
         return (
             <div className={classes.wrapper}>
                 <Paper elevation={0} className={classes.paper}>
-                    <Typography className={classes.title}>Edit Group {group.name}</Typography>
+                    <Typography className={classes.title}>Edit Group</Typography>
                     <div className={classes.iconWrapper}>
                         <Avatar
                             onClick={() => open(true)}
@@ -81,9 +84,9 @@ export default class Main extends Component {
                 <Paper elevation={0} className={classes.paper}>
                     <Typography className={classes.title}>Sub Groups</Typography>
                     <Subgroups
-                        subgroups={group.subgroups}
+                        subgroups={subgroups}
                         classes={classes}
-                        id={group.id}
+                        id={id}
                         />
                 </Paper>
                 <Paper elevation={0} className={classes.paper}>

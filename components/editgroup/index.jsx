@@ -62,7 +62,6 @@ export default class EditGroup extends Component {
   }
   render() {
     const { router, group } =  this.props;
-    if(!group) return null; 
     return (
       <Form>
         <SecondPanel
@@ -81,7 +80,7 @@ export default class EditGroup extends Component {
             </Button>
           ]}
         />
-        <Main  formik={this.props} group={group} />
+        <Main formik={this.props} group={group} />
       </Form>
     );
   }

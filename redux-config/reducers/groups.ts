@@ -2,15 +2,22 @@ import {
   GET_GROUPS,
   ADD_GROUP,
   EDIT_GROUP,
-  DELETE_GROUP
+  DELETE_GROUP,
+  SET_MODAL_DELETE
 } from '../../constants/actions';
 import find from 'lodash/find';
 const initialState = {
-  groups: []
+  groups: [],
+  deleteModal: null
 };
 
 export default (state = initialState, action: any) => {
   switch (action.type) {
+    case SET_MODAL_DELETE: 
+      return {
+        ...state,
+        deleteModal: action.data
+      }
     case DELETE_GROUP:
       if (action.data.isSubgroup) {
         const group = find(

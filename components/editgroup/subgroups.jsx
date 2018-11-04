@@ -17,7 +17,12 @@ import Trash from '@material-ui/icons/Delete';
 import _ from 'lodash';
 import { connect } from 'react-redux';
 
-import { deleteGroup, editGroup, createGroup } from 'actions/groups';
+import {
+  deleteGroup,
+  editGroup,
+  createGroup,
+  setModalDeleteGroup
+} from 'actions/groups';
 import find from 'lodash/find';
 import { bindActionCreators } from 'redux';
 import withModal from 'services/decorators/withModal';
@@ -27,7 +32,8 @@ import DeleteModal from './deleteModal';
   null,
   {
     editGroup,
-    createGroup
+    createGroup,
+    setModalDeleteGroup
   }
 )
 @withModal(DeleteModal)
@@ -64,16 +70,19 @@ export default class Subgroups extends Component {
   };
   editGroup = k => e => {
     if (this.state.isEditing) {
-      this.props.editGroup({
-        id: this.state.editGroup,
-        name: this.state.editVal,
-        description: ''
-      });
-      this.setState({
-        isEditing: false,
-        editGroup: null,
-        editVal: ''
-      });
+      this.props
+        .editGroup({
+          id: this.state.editGroup,
+          name: this.state.editVal,
+          description: ''
+        })
+        .then(r => {
+          this.setState({
+            isEditing: false,
+            editGroup: null,
+            editVal: ''
+          });
+        });
     } else
       this.setState({
         isEditing: true,
@@ -82,7 +91,11 @@ export default class Subgroups extends Component {
       });
   };
   deleteGroup = group => e => {
-    this.props.deleteGroup(group);
+    // this.props.deleteGroup(group);
+  };
+  handleOpen = group => e => {
+    this.props.setModalDeleteGroup(group);
+    this.props.open();
   };
   render() {
     const { classes, id, subgroups, open } = this.props;
@@ -116,7 +129,9 @@ export default class Subgroups extends Component {
             </Button>
           </Grid>
           <Grid item xs={12}>
-            <Typography className={classes.eg}>Existing groups</Typography>
+            {subgroups.length > 0 ? (
+              <Typography className={classes.eg}>Existing groups</Typography>
+            ) : null}
             <List>
               {subgroups.map((el, key) => (
                 <ListItem key={`group-${key}`}>
@@ -137,9 +152,15 @@ export default class Subgroups extends Component {
                   )}
                   <ListItemSecondaryAction>
                     <IconButton onClick={this.editGroup(el.id)}>
-                      <Edit />
+                      <Edit
+                        style={
+                          this.state.editGroup === el.id
+                            ? { color: 'orange' }
+                            : {}
+                        }
+                      />
                     </IconButton>
-                    <IconButton onClick={open}>
+                    <IconButton onClick={this.handleOpen(el)}>
                       <Trash />
                     </IconButton>
                   </ListItemSecondaryAction>

@@ -1,5 +1,5 @@
 import dispatchSend from '../services/dispatchSend';
-import { START_LOAD, GET_GROUPS, ADD_GROUP, GET_SINGLE, EDIT_GROUP, DELETE_GROUP } from '../constants/actions';
+import { START_LOAD, GET_GROUPS, ADD_GROUP, GET_SINGLE, EDIT_GROUP, DELETE_GROUP, SET_MODAL_DELETE } from '../constants/actions';
 
 import { GROUP_URL } from '../constants/api';
 import { getAxiosInstance } from '../shared/request';
@@ -58,4 +58,10 @@ export const deleteGroup = params =>
       adaptData: resp => {
         return params;
       }
+    })
+
+export const setModalDeleteGroup = group => dispatch =>
+    dispatch({
+      type: SET_MODAL_DELETE,
+      data: group
     })

@@ -26,13 +26,18 @@ const styles = theme => ({
 });
 
 @connect(
-  null,
+  ({groups}) => ({deleteGroupItem: groups.deleteModal}),
   {
     deleteGroup
   }
 )
 @withStyles(styles)
 export default class DeleteModal extends Component {
+  handleAccept = () => {
+    console.log(this.props);
+    this.props.deleteGroup(this.props.deleteGroupItem);
+    this.props.close();
+  }
   render() {
     const { classes, close } = this.props;
 
@@ -50,7 +55,7 @@ export default class DeleteModal extends Component {
           <Button onClick={close} style={{marginRight: 5}} variant="outlined" color="secondary">
             Cancel
           </Button>
-          <Button variant="contained" color="primary">
+          <Button onClick={this.handleAccept} variant="contained" color="primary">
             Delete
           </Button>
         </Grid>
