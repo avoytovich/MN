@@ -59,7 +59,7 @@ export default class GroupInfo extends Component {
               </Link>
             </div>
             <div className="divider" />
-            <div onClick={() => this.props.deleteGroup({id: info.id})} className="move d-flex ai-center">
+            <div onClick={() => this.props.deleteGroup(info)} className="move d-flex ai-center">
               <div className="icon" />
               <Typography  className="move-text" variant="caption">
                 move

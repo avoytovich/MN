@@ -53,7 +53,7 @@ export const createGroup = data =>
     })
 
 export const deleteGroup = params => 
-    dispatchSend('delete_group', request.delete('DeleteGroup', {params}), {
+    dispatchSend('delete_group', request.delete('DeleteGroup', {params: {id: params.id}}), {
       receiveAction: DELETE_GROUP,
       adaptData: resp => {
         return params;

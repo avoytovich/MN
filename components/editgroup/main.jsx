@@ -19,12 +19,15 @@ import {
 
 import Subgroups from './subgroups';
 import Questions from './questions';
+import withModal from 'services/decorators/withModal';
+import IconModal from 'components/iconmodal';
 
+@withModal(IconModal)
 @withStyles(styles)
 export default class Main extends Component {
     
     render() {
-        const { classes, formik, group } = this.props;
+        const { classes, formik, group, open } = this.props;
         return (
             <div className={classes.wrapper}>
                 <Paper elevation={0} className={classes.paper}>
@@ -79,7 +82,9 @@ export default class Main extends Component {
                     <Typography className={classes.title}>Sub Groups</Typography>
                     <Subgroups
                         subgroups={group.subgroups}
-                        classes={classes} />
+                        classes={classes}
+                        id={group.id}
+                        />
                 </Paper>
                 <Paper elevation={0} className={classes.paper}>
                     <Typography className={classes.title}>Question Answer</Typography>

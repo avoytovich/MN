@@ -22,19 +22,20 @@ export default function withModal(ComponentModal, options = {}) {
       render() {
         return (
           <div>
-            <Modal open={this.state.open} onClose={this.handleClose}>
+            <Modal  open={this.state.open} onClose={this.handleClose}>
               <div className="modal-window">
                 {options.withClose && (
                   <div className="close-wrapper">
                     <Close onClick={this.handleClose} />
                   </div>
                 )}
-                <ComponentModal close={this.handleClose} />
+                <ComponentModal  close={this.handleClose} />
               </div>
             </Modal>
             <Child
               {...this.props}
               translate={this.translate}
+              
               open={this.handleOpen}
               close={this.handleClose}
             />

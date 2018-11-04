@@ -95,6 +95,11 @@ const styles = theme => ({
     fontSize: 19,
     fontWeight: 400,
     color: '#a3abb5'
+  },
+  eg: {
+    fontSize: 20,
+    fontWeight: 600,
+    color: '#224483'
   }
 });
 

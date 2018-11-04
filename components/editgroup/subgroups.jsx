@@ -15,27 +15,26 @@ import {
 import Edit from '@material-ui/icons/Edit';
 import Trash from '@material-ui/icons/Delete';
 import _ from 'lodash';
-import { connect } from 'react-redux'
+import { connect } from 'react-redux';
 
-import { deleteGroup, editGroup } from 'actions/groups';
+import { deleteGroup, editGroup, createGroup } from 'actions/groups';
 import find from 'lodash/find';
 import { bindActionCreators } from 'redux';
+import withModal from 'services/decorators/withModal';
+import DeleteModal from './deleteModal';
 
-const mapDispatchToProps = dispatch => bindActionCreators({
-  deleteGroup, editGroup
-}, dispatch)
-
-
-
-@connect(null, {
-  editGroup, deleteGroup
-})
+@connect(
+  null,
+  {
+    editGroup,
+    createGroup
+  }
+)
+@withModal(DeleteModal)
 export default class Subgroups extends Component {
   constructor(props) {
     super(props);
-    console.log(props);
     this.state = {
-      subgroups: props.subgroups,
       val: '',
       isEditing: false,
       editGroup: null,
@@ -51,13 +50,12 @@ export default class Subgroups extends Component {
 
   addSubgroup = () => {
     if (!this.state.val.length) return;
-    // TODO: solve empty description
-    const newGroups = [
-      ...this.state.subgroups,
-      { name: this.state.val, description: '' }
-    ];
+    this.props.createGroup({
+      name: this.state.val,
+      description: '',
+      masterGroupId: this.props.id
+    });
     this.setState({
-      subgroups: newGroups,
       val: ''
     });
   };
@@ -80,20 +78,14 @@ export default class Subgroups extends Component {
       this.setState({
         isEditing: true,
         editGroup: k,
-        editVal: find(this.state.subgroups, el => el.id === k).name
+        editVal: find(this.props.subgroups, el => el.id === k).name
       });
   };
-  deleteGroup = k => e => {
-    const newGroups = _.filter(this.state.subgroups, (sg, key) => key !== k);
-    this.props.formik.setFieldValue('subgroups', newGroups);
-    this.setState({
-      subgroups: newGroups
-    });
+  deleteGroup = group => e => {
+    this.props.deleteGroup(group);
   };
   render() {
-    console.log(this.props)
-    const { classes } = this.props;
-    const { subgroups } = this.state;
+    const { classes, id, subgroups, open } = this.props;
     return (
       <Fragment>
         <Grid container alignItems="center" spacing={0}>
@@ -124,6 +116,7 @@ export default class Subgroups extends Component {
             </Button>
           </Grid>
           <Grid item xs={12}>
+            <Typography className={classes.eg}>Existing groups</Typography>
             <List>
               {subgroups.map((el, key) => (
                 <ListItem key={`group-${key}`}>
@@ -132,6 +125,9 @@ export default class Subgroups extends Component {
                       value={this.state.editVal}
                       fullWidth
                       name="name"
+                      style={{
+                        width: 'calc(100% - 60px)'
+                      }}
                       onChange={this.handleChangeEdit}
                     />
                   ) : (
@@ -143,7 +139,7 @@ export default class Subgroups extends Component {
                     <IconButton onClick={this.editGroup(el.id)}>
                       <Edit />
                     </IconButton>
-                    <IconButton onClick={this.deleteGroup(el.id)}>
+                    <IconButton onClick={open}>
                       <Trash />
                     </IconButton>
                   </ListItemSecondaryAction>
