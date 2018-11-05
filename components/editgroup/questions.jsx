@@ -17,7 +17,7 @@ import Trash from '@material-ui/icons/Delete';
 import _ from 'lodash';
 import { connect } from 'react-redux';
 import { withRouter } from 'next/router';
-import { getQuestions } from 'actions/questions';
+import { getQuestions, deleteQuestion } from 'actions/questions';
 
 const mapStateToProps = ({ questions }, { router }) => ({
   questions: _.filter(
@@ -30,46 +30,45 @@ const mapStateToProps = ({ questions }, { router }) => ({
 @connect(
   mapStateToProps,
   {
-    getQuestions
+    getQuestions,
+    deleteQuestion
   }
 )
 export default class Questions extends Component {
   componentDidMount = () => {
-    console.log(this.props);
     this.props.getQuestions({ groupId: this.props.router.query.id });
   };
   state = {
-    subgroups: [],
+    questions: [],
     val: ''
   };
 
   addSubgroup = () => {
     if (!this.state.val.length) return;
-    const newGroups = [...this.state.subgroups, this.state.val];
-    this.props.formik.setFieldValue('questions', newGroups);
+    const newQuestions = [...this.state.questions, this.state.val];
+    this.props.formik.setFieldValue('questions', newQuestions);
     this.setState({
-      subgroups: newGroups,
+      questions: newQuestions,
       val: ''
     });
   };
   handleChange = e => {
     this.setState({ val: e.currentTarget.value });
   };
-  editGroup = k => e => {
+  deleteQuestionState = k => e => {
+    const st = this.state.questions.filter((el, key) => key !== k);
+    this.props.formik.setFieldValue('questions', st);
     this.setState({
-      val: this.state.subgroups[k],
-      subgroups: _.filter(this.state.subgroups, (sg, key) => key !== k)
-    });
-  };
-  deleteGroup = k => e => {
-    const newGroups = _.filter(this.state.subgroups, (sg, key) => key !== k);
-    this.props.formik.setFieldValue('questions', newGroups);
-    this.setState({
-      subgroups: newGroups
-    });
+      questions: st
+    })
+  }
+  deleteQuestion = k => e => {
+    console.log(k);
+    this.props.deleteQuestion(k);
   };
   render() {
     const { classes, questions = [] } = this.props;
+    const newQuestions = this.state.questions;
     return (
       <Fragment>
         <Grid container alignItems="center" spacing={0}>
@@ -104,13 +103,25 @@ export default class Questions extends Component {
               <Typography className={classes.eg}>Existing questions</Typography>
             ) : null}
             <List>
+              {newQuestions.map((el, key) => (
+                <ListItem key={`question-${key}`}>
+                  <ListItemText>
+                    <Typography>{el}</Typography>
+                  </ListItemText>
+                  <ListItemSecondaryAction>
+                    <IconButton onClick={this.deleteQuestionState(key)}>
+                      <Trash />
+                    </IconButton>
+                  </ListItemSecondaryAction>
+                </ListItem>
+              ))}
               {questions.map((el, key) => (
                 <ListItem key={`question-${key}`}>
                   <ListItemText>
                     <Typography>{el.question}</Typography>
                   </ListItemText>
                   <ListItemSecondaryAction>
-                    <IconButton onClick={this.deleteGroup(key)}>
+                    <IconButton onClick={this.deleteQuestion(el)}>
                       <Trash />
                     </IconButton>
                   </ListItemSecondaryAction>

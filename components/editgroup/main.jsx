@@ -14,10 +14,10 @@ import {
     ListItem,
     ListItemText,
     ListItemSecondaryAction,
-    IconButton
+    IconButton,
+    NoSsr
   } from '@material-ui/core';import styles from './styles';
 import get from 'lodash/get';
-
 import Subgroups from './subgroups';
 import Questions from './questions';
 import withModal from 'services/decorators/withModal';
@@ -34,7 +34,7 @@ export default class Main extends Component {
         return (
             <div className={classes.wrapper}>
                 <Paper elevation={0} className={classes.paper}>
-                    <Typography className={classes.title}>Edit Group</Typography>
+                        <Typography className={classes.title}>Edit Group</Typography>
                     <div className={classes.iconWrapper}>
                         <Avatar
                             onClick={() => open(true)}
@@ -91,7 +91,7 @@ export default class Main extends Component {
                 </Paper>
                 <Paper elevation={0} className={classes.paper}>
                     <Typography className={classes.title}>Question Answer</Typography>
-                    <Questions classes={classes} />
+                    <Questions formik={formik} classes={classes} />
                 </Paper>
             </div>
         )

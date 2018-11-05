@@ -20,9 +20,7 @@ export default (state = initialState, action) => {
         case DELETE_QUESTION: 
             return {
                 ...state,
-                questions: {
-                    ..._.filter(state.questions, sq => sq.id !== action.data.id)
-                }
+                questions: _.filter(state.questions, sq => sq.questionId !== action.data)
             }
         case GET_QUESTIONS:
             return {

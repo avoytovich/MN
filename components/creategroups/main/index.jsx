@@ -77,7 +77,7 @@ export default class Main extends Component {
               className: classes.label
             }}
             helperText={formik.errors.name}
-            error={formik.errors.name !== undefined}
+            // error={formik.errors.name !== undefined}
             name="name"
             placeholder="Group name"
             fullWidth

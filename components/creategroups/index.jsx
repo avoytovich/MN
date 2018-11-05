@@ -61,7 +61,8 @@ export default class CreateGroups extends Component {
             </Button>
           ]}
         />
-        <Main formik={this.props} />
+        <Main
+         formik={this.props} />
       </Form>
     );
   }

@@ -28,7 +28,8 @@ export const createQuestions = data =>
   });
 
 export const deleteQuestion = params => 
-dispatchSend('delete_question', request.delete('/DeleteQuestion', {params}), {
+dispatchSend('delete_question', request.delete('/DeleteQuestion', {params: {
+  questionId: params.questionId }}), {
   start_action: START_LOAD,
   receiveAction: DELETE_QUESTION,
   adaptData: resp => {
