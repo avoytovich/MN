@@ -14,13 +14,30 @@ import {
 } from '@material-ui/core';
 import Edit from '@material-ui/icons/Edit';
 import Trash from '@material-ui/icons/Delete';
-import * as _ from 'lodash';
+import _ from 'lodash';
+import { connect } from 'react-redux';
+import { withRouter } from 'next/router';
+import { getQuestions } from 'actions/questions';
 
-export default class Questions extends Component<{
-  formik: any;
-  classes: any;
-}> {
+const mapStateToProps = ({ questions }, { router }) => ({
+  questions: _.filter(
+    questions.questions,
+    q => q.groupId === parseInt(router.query.id, 10)
+  )
+});
 
+@withRouter
+@connect(
+  mapStateToProps,
+  {
+    getQuestions
+  }
+)
+export default class Questions extends Component {
+  componentDidMount = () => {
+    console.log(this.props);
+    this.props.getQuestions({ groupId: this.props.router.query.id });
+  };
   state = {
     subgroups: [],
     val: ''
@@ -35,31 +52,24 @@ export default class Questions extends Component<{
       val: ''
     });
   };
-  handleChange = (e: FormEvent<HTMLInputElement>) => {
+  handleChange = e => {
     this.setState({ val: e.currentTarget.value });
   };
-  editGroup = (k: any) => (e: any) => {
+  editGroup = k => e => {
     this.setState({
       val: this.state.subgroups[k],
-      subgroups: _.filter(
-        this.state.subgroups,
-        (sg: string, key: number) => key !== k
-      )
+      subgroups: _.filter(this.state.subgroups, (sg, key) => key !== k)
     });
   };
-  deleteGroup = (k: number) => (e: SyntheticEvent) => {
-    const newGroups = _.filter(
-      this.state.subgroups,
-      (sg: string, key: number) => key !== k
-    );
+  deleteGroup = k => e => {
+    const newGroups = _.filter(this.state.subgroups, (sg, key) => key !== k);
     this.props.formik.setFieldValue('questions', newGroups);
     this.setState({
       subgroups: newGroups
     });
   };
   render() {
-    const { classes } = this.props;
-    const { subgroups } = this.state;
+    const { classes, questions = [] } = this.props;
     return (
       <Fragment>
         <Grid container alignItems="center" spacing={0}>
@@ -90,16 +100,16 @@ export default class Questions extends Component<{
             </Button>
           </Grid>
           <Grid item xs={12}>
+            {questions.length > 0 ? (
+              <Typography className={classes.eg}>Existing questions</Typography>
+            ) : null}
             <List>
-              {subgroups.map((el, key) => (
+              {questions.map((el, key) => (
                 <ListItem key={`question-${key}`}>
                   <ListItemText>
-                    <Typography>{el}</Typography>
+                    <Typography>{el.question}</Typography>
                   </ListItemText>
                   <ListItemSecondaryAction>
-                    <IconButton onClick={this.editGroup(key)}>
-                      <Edit />
-                    </IconButton>
                     <IconButton onClick={this.deleteGroup(key)}>
                       <Trash />
                     </IconButton>

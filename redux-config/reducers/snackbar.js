@@ -15,8 +15,7 @@ export default function (state = initialState, action) {
     case ERROR_LOAD:
       const color = colors['error'];
       let message = "";
-      
-      if(typeof action.error === String)
+      if(typeof action.error === 'string')
         message = action.error;
       else
         message  = action.error.response.data.errors[0];

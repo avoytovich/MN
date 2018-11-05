@@ -1,6 +1,6 @@
 import { Component } from 'react';
 import Main from './main';
-import {  Form,  withFormik } from 'formik';
+import { Form, withFormik } from 'formik';
 import SecondPanel from '../secondpanel';
 import { Button } from '@material-ui/core';
 import { bindActionCreators } from 'redux';
@@ -10,11 +10,11 @@ import * as Yup from 'yup';
 import Link from 'next/link';
 import { withRouter } from 'next/router';
 import find from 'lodash/find';
-import get from 'lodash/get'
+import get from 'lodash/get';
 
-const mapStateToProps = ({ groups }, { router }) => ({
-  group: find(groups.groups, g => g.id === parseInt(router.query.id, 10)),
-})
+const mapStateToProps = ({ groups, questions }, { router }) => ({
+  group: find(groups.groups, g => g.id === parseInt(router.query.id, 10))
+});
 
 const mapDispatchToProps = dispatch =>
   bindActionCreators(
@@ -24,7 +24,6 @@ const mapDispatchToProps = dispatch =>
     },
     dispatch
   );
-
 
 @withRouter
 @connect(
@@ -48,20 +47,19 @@ const mapDispatchToProps = dispatch =>
       id
     };
   },
-  
+
   handleSubmit: (values, { props }) => {
-    props.editGroup(values)
-      .then(r => {
-        props.router.push('/home/manage-groups')
-      })
+    props.editGroup(values).then(r => {
+      props.router.push('/home/manage-groups');
+    });
   }
 })
 export default class EditGroup extends Component {
   componentDidMount = () => {
     // this.props.getSingle({groupId: this.props.router.query.id});
-  }
+  };
   render() {
-    const { router, group } =  this.props;
+    const { router, group } = this.props;
     return (
       <Form>
         <SecondPanel

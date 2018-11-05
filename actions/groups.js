@@ -6,7 +6,6 @@ import { getAxiosInstance } from '../shared/request';
 import Axios from 'axios';
 
 const request = getAxiosInstance('/api/Group');
-const requestQuestions = getAxiosInstance('/api/Question');
 
 export const getGroups = (params) =>
   dispatchSend('get_groups',  request.get('/GetGroups', {params}), {
@@ -49,6 +48,12 @@ export const createGroup = data =>
       adaptData: resp => {
         console.log(resp);
         return resp;
+      },
+      adaptError: err => {
+        console.log(err.response);
+        if(err.response)
+          return err.response.data.errors[0].message;
+        return "Error";
       }
     })
 

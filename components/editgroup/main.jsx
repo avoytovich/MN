@@ -91,7 +91,7 @@ export default class Main extends Component {
                 </Paper>
                 <Paper elevation={0} className={classes.paper}>
                     <Typography className={classes.title}>Question Answer</Typography>
-                    {/* <Questions classes={classes} formik={formik} /> */}
+                    <Questions classes={classes} />
                 </Paper>
             </div>
         )

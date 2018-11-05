@@ -57,7 +57,7 @@ export default class IconModal extends Component {
             error={this.props.errors.Email !== undefined}
             type="email"
             name="Email"
-            placeholder="Group name"
+            placeholder="Email"
             fullWidth
             margin="normal"
           />
@@ -68,7 +68,7 @@ export default class IconModal extends Component {
             error={this.props.errors.Password !== undefined}
             type="password"
             name="Password"
-            placeholder="Group name"
+            placeholder="Password"
             fullWidth
             margin="normal"
           />
@@ -76,7 +76,6 @@ export default class IconModal extends Component {
           <Button type="submit"  className={classes.submit}>Sign in</Button>
           <Typography align="center" className={classes.haveNotAccount}>Don`t have an account ?
             <Typography component="a" className={classes.signUp}>Sign up</Typography>
-
           </Typography>
         </Form>
       </div>

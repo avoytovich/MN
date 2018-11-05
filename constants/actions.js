@@ -33,3 +33,8 @@ export const GET_SINGLE = 'GET_SINGLE';
 export const EDIT_GROUP = 'EDIT_GROUP';
 export const DELETE_GROUP = 'DELETE_GROUP';
 export const SET_MODAL_DELETE = 'SET_MODAL_DELETE_GROUP';
+
+// questions
+export const GET_QUESTIONS = 'GET_QUESTIONS';
+export const ADD_QUESTIONS = 'ADD_QUESTIONS';
+export const DELETE_QUESTION = 'DELETE_QUESTION';
