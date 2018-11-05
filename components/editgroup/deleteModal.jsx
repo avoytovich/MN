@@ -12,6 +12,7 @@ const styles = theme => ({
   wrapper: {
     padding: 30,
     height: '100%',
+    position: 'absolute'
   },
   boldText: {
     marginTop: 15,
@@ -21,7 +22,7 @@ const styles = theme => ({
   },
   actions: {
       position: 'relative',
-      marginTop: 20
+      marginTop: 'auto',
   }
 });
 
