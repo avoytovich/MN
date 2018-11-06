@@ -94,7 +94,7 @@ export default class Subgroups extends Component {
     // this.props.deleteGroup(group);
   };
   handleOpen = group => e => {
-    this.props.setModalDeleteGroup(group);
+    // this.props.setModalDeleteGroup(group);
     this.props.open();
   };
   render() {
