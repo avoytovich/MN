@@ -59,7 +59,7 @@ const mapDispatchToProps = dispatch =>
       groupId: values.id,
       text: values.questions
     })
-    // props.router.push('/home/manage-groups');
+    props.router.push('/home/manage-groups');
   }
 })
 export default class EditGroup extends Component {
