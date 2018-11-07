@@ -29,5 +29,8 @@ app.prepare().then(() => {
      .use('/api',  proxy({target: process.env.API_HOST,  changeOrigin: true}))
     .use(handler)
     .use(cookieParser())
-    .listen(port);
+    .listen(port, err => {
+      if (err) throw err;
+      console.log(`> Ready on http://localhost:${port}`);
+    });
 });
