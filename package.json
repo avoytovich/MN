@@ -1,5 +1,5 @@
 {
-  "name": "my-profashional",
+  "name": "MetKnow",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
@@ -9,7 +9,7 @@
     "start": "NODE_ENV=production node server.js",
     "prod": "NODE_ENV=production pm2 start server.js"
   },
-  "author": "Mykola Krys",
+  "author": "Mykola",
   "license": "ISC",
   "dependencies": {
     "@babel/runtime": "^7.1.2",
