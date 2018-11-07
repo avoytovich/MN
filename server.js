@@ -23,7 +23,7 @@ const axios = require('axios');
 
 // With express
 const express = require('express');
-const port = isDev ? 3000 : 80;
+const port = isDev ? 3000 : 8081;
 app.prepare().then(() => {
   express()
      .use('/api',  proxy({target: process.env.API_HOST,  changeOrigin: true}))
