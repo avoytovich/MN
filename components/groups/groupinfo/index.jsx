@@ -3,7 +3,7 @@ import { Typography, Divider, withStyles } from '@material-ui/core';
 import moment from 'moment';
 import Link from 'next/link';
 import Router from 'next/router';
-import { connect } from 'react-redux'
+import { connect } from 'react-redux';
 import { deleteGroup } from 'actions/groups';
 
 import '../../../sass/common.scss';
@@ -26,9 +26,12 @@ const styles = theme => ({
 });
 
 @withStyles(styles)
-@connect(null, {
-  deleteGroup
-})
+@connect(
+  null,
+  {
+    deleteGroup
+  }
+)
 export default class GroupInfo extends Component {
   render() {
     const { classes, info } = this.props;
@@ -49,8 +52,7 @@ export default class GroupInfo extends Component {
               <div className="icon" />
               <Link
                 prefetch
-                href={{ pathname: '/editgroup', query: { id: info.id } }}
-                >
+                href={{ pathname: '/editgroup', query: { id: info.id } }}>
                 <a>
                   <Typography className="edit-text" variant="caption">
                     edit
@@ -59,10 +61,12 @@ export default class GroupInfo extends Component {
               </Link>
             </div>
             <div className="divider" />
-            <div onClick={() => this.props.deleteGroup(info)} className="move d-flex ai-center">
+            <div
+              onClick={() => this.props.deleteGroup(info)}
+              className="move d-flex ai-center">
               <div className="icon" />
-              <Typography  className="move-text" variant="caption">
-                move
+              <Typography className="move-text" variant="caption">
+                remove
               </Typography>
             </div>
           </div>
