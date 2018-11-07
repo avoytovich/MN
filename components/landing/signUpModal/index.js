@@ -63,7 +63,7 @@ export default class IconModal extends Component {
             error={this.props.errors.OrganizationId !== undefined}
             type="text"
             name="OrganizationId"
-            placeholder="Group name"
+            placeholder="Organization Id"
             fullWidth
             margin="normal"
           />
@@ -74,7 +74,7 @@ export default class IconModal extends Component {
             error={this.props.errors.Email !== undefined}
             type="email"
             name="Email"
-            placeholder="Group name"
+            placeholder="Email"
             fullWidth
             margin="normal"
           />
@@ -85,7 +85,7 @@ export default class IconModal extends Component {
             error={this.props.errors.Password !== undefined}
             type="password"
             name="Password"
-            placeholder="Group name"
+            placeholder="Password"
             fullWidth
             margin="normal"
           />
@@ -96,7 +96,7 @@ export default class IconModal extends Component {
             error={this.props.errors.ConfirmPassword !== undefined}
             type="password"
             name="ConfirmPassword"
-            placeholder="Group name"
+            placeholder="Confirm password"
             fullWidth
             margin="normal"
           />
