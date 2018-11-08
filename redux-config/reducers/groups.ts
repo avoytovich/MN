@@ -3,12 +3,14 @@ import {
   ADD_GROUP,
   EDIT_GROUP,
   DELETE_GROUP,
-  SET_MODAL_DELETE
+  SET_MODAL_DELETE,
+  SEARCH_GROUPS
 } from '../../constants/actions';
 import find from 'lodash/find';
 const initialState = {
   groups: [],
-  deleteModal: null
+  deleteModal: null,
+  searchGroups: []
 };
 
 export default (state = initialState, action: any) => {
@@ -17,6 +19,11 @@ export default (state = initialState, action: any) => {
       return {
         ...state,
         deleteModal: action.data
+      }
+    case SEARCH_GROUPS:
+      return {
+        ...state,
+        searchGroups: action.data
       }
     case DELETE_GROUP:
       if (action.data.isSubgroup) {
@@ -62,6 +69,7 @@ export default (state = initialState, action: any) => {
         });
       }
     }
+
     case ADD_GROUP:
       if (action.data.isSubgroup)
         return {

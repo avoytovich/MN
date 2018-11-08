@@ -39,8 +39,12 @@ const styles = theme => ( style );
         pathname: '/home/manage-groups'
       })
     } catch (e) {
-      const  { message} = e.response.data.errors[0]
-      props.toggleSnackbar(message, 'error')
+      // if(e.response)
+        const  { message} = e.response.data.errors[0]
+        props.toggleSnackbar(message, 'error')
+      // else
+      //   props.toggleSnackbar('Server error');
+
     }
 
   }

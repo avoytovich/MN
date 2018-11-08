@@ -7,9 +7,8 @@ import { setData } from 'actions/updateData';
 
 async function requestCheckAuthInterceptor (config) {
   const user = JSON.parse(window.localStorage.getItem('user'))
-
   if (user) {
-    const expireDate = user.token.expireDate * 1000
+    const expireDate = new Date(user.token.expireDate) * 1000
     const timeNow = new Date().getTime();
     /* Relogin if token expires in less than a minute */
     if ((expireDate - timeNow) < 60) {

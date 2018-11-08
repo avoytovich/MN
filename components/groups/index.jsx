@@ -22,7 +22,7 @@ const styles = theme => ({
 });
 
 const mapStateToProps = ({ groups }) => ({
-  groups: groups.groups
+  groups: groups.searchGroups.length > 0? groups.searchGroups:groups.groups,
 });
 
 const mapDispatchToProps = dispatch =>
@@ -39,7 +39,6 @@ const mapDispatchToProps = dispatch =>
 )
 export default class Groups extends Component {
   componentDidMount = () => {
-    console.log('awddwa');
       this.props.getGroups(
         {
           limit:30,
@@ -48,6 +47,7 @@ export default class Groups extends Component {
   };
   render() {
     const { classes, groups = [] } = this.props;
+    // Chose what output should be in
     return (
       <Fragment>
         <List className={classes.list}>

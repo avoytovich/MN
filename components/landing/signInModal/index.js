@@ -74,35 +74,6 @@ export default class IconModal extends Component {
             value={values.Password}
             component={wrapField}
           />
-          {/* {
-            errors.Email
-          } */}
-          {/* <TextField
-            onBlur={handleBlur}
-            className={classes.input}
-            onChange={this.props.handleChange}
-            helperText={this.props.errors.Email}
-            error={this.props.errors.Email !== undefined}
-            type="email"
-            name="Email"
-            value={values.Email}
-            label="Email"
-            fullWidth
-            margin="normal"
-          /> */}
-          {/* <TextField
-            onBlur={handleBlur}
-            className={classes.input}
-            onChange={this.props.handleChange}
-            helperText={this.props.errors.Password}
-            error={this.props.errors.Password !== undefined}
-            type="password"
-            value={values.Password}
-            name="Password"
-            label="Password"
-            fullWidth
-            margin="normal"
-          /> */}
           <Typography align="right" className={classes.forgorPassword}>Forgot password?</Typography>
           <Button type="submit" className={classes.submit}>Sign in</Button>
           <Typography align="center" className={classes.haveNotAccount}>Don`t have an account ?

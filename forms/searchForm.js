@@ -20,23 +20,33 @@ import '../components/searchpanel/searchpanel.scss';
   }
 )
 @withFormik({
+  mapPropsToValues: () => ({
+    name: '',
+    memberName: ''
+  }),
   async handleSubmit(values, props) {
-    const response = await props.props.searchGroups(values);
-    return response;    
+    if (values.name.length > 0 || values.memberName.length > 0)
+      await props.props.searchGroups({
+        name: values.name,
+        membername: values.memberName
+      });
   }
 })
 export default class SearchForm extends React.Component {
   render() {
     console.log(this.props);
+    const { values } = this.props;
     return (
       <form onSubmit={this.props.handleSubmit}>
         <div className="d-flex search-form f-row jcc ai-center">
           <Field
-           name="name"
-           label="Search by name"
-           component={SearchField} />
-           <Field
+            name="name"
+            value={values.name}
+            label="Search by name"
+            component={SearchField} />
+          <Field
             name="memberName"
+            value={values.memberName}
             label="Search by Names"
             component={SearchField} />
           <Button variant="contained" color="primary" type="submit">
