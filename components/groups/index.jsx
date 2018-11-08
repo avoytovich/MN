@@ -39,6 +39,7 @@ const mapDispatchToProps = dispatch =>
 )
 export default class Groups extends Component {
   componentDidMount = () => {
+    console.log('awddwa');
       this.props.getGroups(
         {
           limit:30,
@@ -46,7 +47,7 @@ export default class Groups extends Component {
         });
   };
   render() {
-    const { classes, groups } = this.props;
+    const { classes, groups = [] } = this.props;
     return (
       <Fragment>
         <List className={classes.list}>

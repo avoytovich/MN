@@ -9,6 +9,12 @@ import { deleteGroup } from 'actions/groups';
 import '../../../sass/common.scss';
 import './groupinfo.scss';
 
+const replaceUrl = (word) => {
+  word = word.replace(/\s/g, '-');
+  word = word.toLowerCase();
+  return word;
+}
+
 const styles = theme => ({
   lupdate: {
     marginTop: 8,
@@ -48,8 +54,9 @@ export default class GroupInfo extends Component {
             <div className="d-flex edit ai-center">
               <div className="icon" />
               <Link
-                prefetch
                 href={{ pathname: '/editgroup', query: { id: info.id } }}
+                as={`/editgroup/${replaceUrl(info.name)}`}
+                
                 >
                 <a>
                   <Typography className="edit-text" variant="caption">

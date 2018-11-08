@@ -6,20 +6,7 @@ const isDev = process.env.NODE_ENV !== 'production';
 const app = next({ dev: isDev });
 const handler = routes.getRequestHandler(app);
 const proxy = require('http-proxy-middleware');
-
 const axios = require('axios');
-
-
-// axios.post('http://18.217.30.162/api/Account/Login', {
-//   Email: 'some@gmail.com',
-//   Password: '123466'
-// })
-// .then(r => {
-//   console.log(r);
-// })
-// .catch(err => {
-//   console.log(err);
-// })
 
 // With express
 const express = require('express');

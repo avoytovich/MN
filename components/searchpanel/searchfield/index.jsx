@@ -27,11 +27,12 @@ const styles = theme => ({
 @withStyles(styles)
 export default class SearchField extends PureComponent {
   render() {
-    const { name, label, error, classes } = this.props;
+    const { name, label, error, field, form, classes } = this.props;
     return (
       <Input
+        onChange={field.onChange}
         className={classes.input}
-        name={name}
+        name={field.name}
         label={label}
         error={error}
         placeholder={label}

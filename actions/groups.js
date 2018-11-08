@@ -70,3 +70,13 @@ export const setModalDeleteGroup = group => dispatch =>
       type: SET_MODAL_DELETE,
       data: group
     })
+
+export const searchGroups = (params) => 
+    dispatchSend('search_groups', request.get('/GroupSearch', {params}), {
+      adaptData: (r) => {
+        console.log(r);
+      },
+      adaptError: err => {
+        console.log(err);
+      }
+    })
