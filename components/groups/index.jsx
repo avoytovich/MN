@@ -6,6 +6,7 @@ import Axios from 'axios';
 import GroupInfo from './groupinfo';
 import Gallery from './gallery';
 import { getGroups } from '../../actions/groups';
+import map from 'lodash/map';
 
 import './groups.scss';
 import '../../sass/common.scss';
@@ -21,9 +22,14 @@ const styles = theme => ({
   }
 });
 
-const mapStateToProps = ({ groups }) => ({
-  groups: groups.searchGroups.length > 0? groups.searchGroups:groups.groups,
-});
+const mapStateToProps = ({ groups, runtime }) =>{
+  
+  const search = runtime.searchGroupsData? map(runtime.searchGroupsData): undefined;
+  
+  return {
+    groups: search? search: groups.groups
+  }
+};
 
 const mapDispatchToProps = dispatch =>
   bindActionCreators(
@@ -46,8 +52,9 @@ export default class Groups extends Component {
         });
   };
   render() {
-    const { classes, groups = [] } = this.props;
+    const { classes, groups } = this.props;
     // Chose what output should be in
+    
     return (
       <Fragment>
         <List className={classes.list}>

@@ -11,12 +11,13 @@ import { setData } from '../actions/updateData';
 import SearchField from '../components/searchpanel/searchfield';
 import '../sass/common.scss';
 import '../components/searchpanel/searchpanel.scss';
-
+import { resetData } from 'actions/updateData';
 @withRouter
 @connect(
   null,
   {
-    searchGroups
+    searchGroups,
+    resetData
   }
 )
 @withFormik({
@@ -27,14 +28,17 @@ import '../components/searchpanel/searchpanel.scss';
   async handleSubmit(values, props) {
     if (values.name.length > 0 || values.memberName.length > 0)
       await props.props.searchGroups({
-        name: values.name,
-        membername: values.memberName
-      });
+          name: values.name,
+          membername: values.memberName
+        });
   }
 })
 export default class SearchForm extends React.Component {
+
+  remove = () => {
+    this.props.resetData('searchGroups');
+  }
   render() {
-    console.log(this.props);
     const { values } = this.props;
     return (
       <form onSubmit={this.props.handleSubmit}>
@@ -42,13 +46,23 @@ export default class SearchForm extends React.Component {
           <Field
             name="name"
             value={values.name}
-            label="Search by name"
-            component={SearchField} />
+            render={
+              props => <SearchField
+                label="Search by name"
+                onRemove={this.remove}
+                {...props} />
+            } />
           <Field
             name="memberName"
             value={values.memberName}
             label="Search by Names"
-            component={SearchField} />
+            render={
+              props => <SearchField
+                label="Search by member name"
+                onRemove={this.remove}
+                {...props} />
+            }
+          />
           <Button variant="contained" color="primary" type="submit">
             search
           </Button>

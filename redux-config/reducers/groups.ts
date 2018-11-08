@@ -73,6 +73,7 @@ export default (state = initialState, action: any) => {
     case ADD_GROUP:
       if (action.data.isSubgroup)
         return {
+          ...state,
           groups: state.groups.map((group: any) => {
             if (group.id === action.data.masterGroupId)
               return {
@@ -83,6 +84,7 @@ export default (state = initialState, action: any) => {
           })
         };
       return {
+        ...state,
         groups: [...state.groups, action.data]
       };
     case GET_GROUPS:

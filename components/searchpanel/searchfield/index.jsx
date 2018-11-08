@@ -24,17 +24,26 @@ const styles = theme => ({
   }
 })
 
+
 @withStyles(styles)
 export default class SearchField extends PureComponent {
+  change = (e) => {
+    if(e.target.value.length === 0)
+    {
+      this.props.onRemove();
+    }
+    this.props.form.handleChange(e);
+  }
   render() {
     const { name, label, error, field, form, classes } = this.props;
     return (
       <Input
-        onChange={field.onChange}
         className={classes.input}
         name={field.name}
         label={label}
+        onChange={this.change}
         error={error}
+        type="search"
         placeholder={label}
       />
     );

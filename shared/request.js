@@ -6,7 +6,7 @@ import { bindActionCreators } from 'redux';
 import { setData } from 'actions/updateData';
 
 async function requestCheckAuthInterceptor (config) {
-  const user = JSON.parse(window.localStorage.getItem('user'))
+  const user = JSON.parse(window.localStorage.getItem('user'));
   if (user) {
     const expireDate = new Date(user.token.expireDate) * 1000
     const timeNow = new Date().getTime();
@@ -36,17 +36,17 @@ function unauthorizedResponseInterceptor (error) {
 }
 
 export function getAxiosInstance (url, isSecured = true) {
-
   const request = axios.create({
     baseURL: url
-  })  
+  });
   if (isSecured) {
-    request.interceptors.request.use(requestCheckAuthInterceptor)
+    request.interceptors.request.use(requestCheckAuthInterceptor);
   }
   request.interceptors.response.use(
     response => response && response.data, // success handler
     unauthorizedResponseInterceptor // error handler
   )
   
+
   return request;
 }

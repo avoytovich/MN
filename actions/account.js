@@ -42,7 +42,7 @@ export async function signUp (payload) {
     return Promise.reject(e)
   }
 }
-//
+
 // export async function signOut () {
 //   const request = getAxiosInstance(AUTH_URL)
 //

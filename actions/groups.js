@@ -1,5 +1,5 @@
 import dispatchSend from '../services/dispatchSend';
-import { START_LOAD, GET_GROUPS, ADD_GROUP, GET_SINGLE, EDIT_GROUP, DELETE_GROUP, SET_MODAL_DELETE, SEARCH_GROUPS } from '../constants/actions';
+import { START_LOAD, GET_GROUPS,  ADD_GROUP, GET_SINGLE, EDIT_GROUP, DELETE_GROUP, SET_MODAL_DELETE, SEARCH_GROUPS, UPDATE_SPEC_DATA, SET_RUNTIME_VARIABLE } from '../constants/actions';
 
 import { GROUP_URL } from '../constants/api';
 import { getAxiosInstance } from '../shared/request';
@@ -25,7 +25,6 @@ export const getSingle = params =>
   ),
   {
     adaptData: (r, q) => {
-      debugger;
       console.log(r,q);
     },
     receiveAction: GET_SINGLE
@@ -72,8 +71,8 @@ export const setModalDeleteGroup = group => dispatch =>
     })
 
 export const searchGroups = (params) => 
-    dispatchSend('search_groups', request.get('/GroupSearch', {params}), {
-      receiveAction: SEARCH_GROUPS,
+    dispatchSend('searchGroups', request.get('/GroupSearch', {params}), {
+      receiveAction: UPDATE_SPEC_DATA,
       adaptData: (r) => {
         console.log(r);
         return r;
