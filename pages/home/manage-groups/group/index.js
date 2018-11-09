@@ -5,13 +5,15 @@ import SecondPanel from 'components/secondpanel';
 import { Button } from '@material-ui/core';
 import Underheader from 'components/underheader';
 
+import "./group.sass";
+
 @withRouter
 export class Group extends Component {
   render() {
     return (
       <Fragment>
         <Layout>
-          <Underheader/>
+          <Underheader customStyle="wrapper"/>
         </Layout>
       </Fragment>
     );

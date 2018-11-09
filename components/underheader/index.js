@@ -32,22 +32,23 @@ export class Group extends Component {
       query: { name },
       pathname
     } = this.props.router;
+    const { customStyle } = this.props;
     return (
-      <Fragment>
+      <div className={customStyle || ''}>
         <SecondPanel
           actionButtons={[
             <Button variant="outlined" color="secondary"> INVITE
             </Button>
           ]}
           centerButtons={[
-            <Button variant="contained" color="primary">
+            <Button variant="contained" color="primary" className="custom-button-material">
               ? Start A QUIZ
             </Button>
           ]}
           breadCrumb={`${this.titlePath(pathname)} / ${this.titleCase(name)}`}
           title="Group Content"
         />
-      </Fragment>
+      </div>
     );
   }
 }
