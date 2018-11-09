@@ -2,12 +2,12 @@ import React, { Component } from 'react';
 import { Typography, Divider, withStyles } from '@material-ui/core';
 import moment from 'moment';
 import Link from 'next/link';
-import Router from 'next/router';
 import { connect } from 'react-redux';
 import { deleteGroup } from 'actions/groups';
 
 import '../../../sass/common.scss';
 import './groupinfo.scss';
+import './groupInfo.sass';
 
 const styles = theme => ({
   lupdate: {
@@ -33,13 +33,32 @@ const styles = theme => ({
   }
 )
 export default class GroupInfo extends Component {
+
+  titleCase = str => str.toLowerCase().split(' ').join('-');
+
   render() {
-    const { classes, info } = this.props;
+    const {
+      classes,
+      info,
+      info: { id, name },
+    } = this.props;
     return (
-      <div className="d-flex f-row">
+      <div className="d-flex f-row group-info-wrapper">
         <div className="group-icon" />
         <div className="d-flex f-column margin-info">
-          <Typography variant="subheading">{info.name}</Typography>
+          <Link
+            href={{ pathname: '/home/manage-groups/group', query: { id, name } }}
+            as={`/home/manage-groups/group/${this.titleCase(name)}`}
+          >
+            <a>
+              <Typography
+                className="group-name"
+                variant="subheading"
+              >
+                {info.name}
+              </Typography>
+            </a>
+          </Link>
           <Typography className={classes.mcount}>
             {info.membersCount} members
           </Typography>
