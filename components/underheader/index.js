@@ -4,7 +4,7 @@ import SecondPanel from 'components/secondpanel';
 import { Button } from '@material-ui/core';
 
 @withRouter
-export class Group extends Component {
+export class Underheader extends Component {
 
   titleCase = (str) => {
     if (str.search('-') !== -1) {
@@ -53,4 +53,4 @@ export class Group extends Component {
   }
 }
 
-export default Group;
+export default Underheader;

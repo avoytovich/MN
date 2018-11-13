@@ -4,6 +4,7 @@ import Layout from 'components/MyLayout';
 import SecondPanel from 'components/secondpanel';
 import { Button } from '@material-ui/core';
 import Underheader from 'components/underheader';
+import Features from 'components/features';
 
 import "./group.sass";
 
@@ -13,7 +14,8 @@ export class Group extends Component {
     return (
       <Fragment>
         <Layout>
-          <Underheader customStyle="wrapper"/>
+          <Underheader customStyle="underheader-wrapper"/>
+          <Features />
         </Layout>
       </Fragment>
     );
