@@ -7,13 +7,9 @@ import EditGroup from 'components/editgroup';
 import { connect } from 'react-redux'
 import find from 'lodash/find';
 
-
-
-
 @withRouter
 export default class EditGroupPage extends Component{
   render() {
-    
     return (
       <Grid container spacing={0} justify="center">
         <Grid item xs={12} sm={12}>

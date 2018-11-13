@@ -74,10 +74,11 @@ export const searchGroups = (params) =>
     dispatchSend('searchGroups', request.get('/GroupSearch', {params}), {
       receiveAction: UPDATE_SPEC_DATA,
       adaptData: (r) => {
-        console.log(r);
         return r;
       },
       adaptError: err => {
-        console.log(err);
+        if(err.response)
+          return err.response.data.errors[0].message;
+        else return "Error search";
       }
     })

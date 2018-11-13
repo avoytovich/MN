@@ -24,6 +24,7 @@ export default class Subgroups extends Component {
       val: ''
     };  
   }
+  
 
   addSubgroup = () => {
     if (!this.state.val.length) return;
@@ -40,7 +41,7 @@ export default class Subgroups extends Component {
   };
   editGroup = k => e => {
     this.setState({
-      val: this.state.subgroups[k],
+      val: this.state.subgroups[k].name,
       subgroups: _.filter(this.state.subgroups, (sg, key) => key !== k)
     });
   };

@@ -16,10 +16,13 @@ export function initializeStore(initialState = {}) {
 
   // Assign localstorage cache to state
   Object.assign(initialState, loadState());
-  const root = combineReducers({ runtime, localization, groups, snackbar, questions });
+  
+  const root = combineReducers({
+     runtime, localization, groups, snackbar, questions
+  });
   const store = createStore(
     root,
-    loadState(),
+    initialState,
     composeWithDevTools(applyMiddleware(thunkMiddleware))
   );
   

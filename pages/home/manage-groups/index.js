@@ -8,7 +8,8 @@ import Groups from '../../../components/groups';
 import Footer from '../../../components/footer';
 import CreateGroupBtn from '../../../components/secondpanel/creategroupbtn';
 
-@withRouter
+
+@withRouter 
 export default class About extends Component {
   render() {
     return (

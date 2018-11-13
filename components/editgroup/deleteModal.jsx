@@ -27,16 +27,15 @@ const styles = theme => ({
 });
 
 @connect(
-  ({groups}) => ({deleteGroupItem: groups.deleteModal}),
+  ({runtime}) => ({group: runtime.deleteGroupData}),
   {
     deleteGroup
   }
 )
 @withStyles(styles)
 export default class DeleteModal extends Component {
-  handleAccept = () => {
-    console.log(this.props);
-    this.props.deleteGroup(this.props.deleteGroupItem);
+  handleAccept = async() => {
+    await this.props.deleteGroup(this.props.group);
     this.props.close();
   }
   render() {

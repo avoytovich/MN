@@ -11,11 +11,12 @@ import { setData } from '../actions/updateData';
 import SearchField from '../components/searchpanel/searchfield';
 import '../sass/common.scss';
 import '../components/searchpanel/searchpanel.scss';
-import { resetData } from 'actions/updateData';
+import { resetData, updateSpecData } from 'actions/updateData';
 @withRouter
 @connect(
   null,
   {
+    updateSpecData,
     searchGroups,
     resetData
   }
@@ -26,11 +27,17 @@ import { resetData } from 'actions/updateData';
     memberName: ''
   }),
   async handleSubmit(values, props) {
-    if (values.name.length > 0 || values.memberName.length > 0)
-      await props.props.searchGroups({
-          name: values.name,
-          membername: values.memberName
-        });
+    if (values.name.length > 0 || values.memberName.length > 0){
+      const { name, memberName } = values;
+      // TODO: fix
+      const data = await props.props.searchGroups({
+        limit: 1000,
+        offset: 0,
+        name,
+        membername: memberName
+      });
+    }
+      
   }
 })
 export default class SearchForm extends React.Component {

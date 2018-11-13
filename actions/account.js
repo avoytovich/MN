@@ -9,7 +9,7 @@ export async function signIn (payload) {
       'user',
       JSON.stringify({ ...data })
     )
-
+    
     return Promise.resolve(data)
   } catch (e) {
     return Promise.reject(e)

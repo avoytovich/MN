@@ -7,6 +7,8 @@ import {
   SEARCH_GROUPS
 } from '../../constants/actions';
 import find from 'lodash/find';
+import uniqBy from 'lodash/uniqBy';
+
 const initialState = {
   groups: [],
   deleteModal: null,
@@ -21,9 +23,11 @@ export default (state = initialState, action: any) => {
         deleteModal: action.data
       }
     case SEARCH_GROUPS:
+    const filteredSearch = uniqBy([...state.searchGroups, ...action.data], 'id');
+      
       return {
         ...state,
-        searchGroups: action.data
+        searchGroups: filteredSearch
       }
     case DELETE_GROUP:
       if (action.data.isSubgroup) {
@@ -52,12 +56,14 @@ export default (state = initialState, action: any) => {
     case EDIT_GROUP: {
       if (!action.data.isSubgroup)
         return Object.assign({}, state, {
+          ...state,
           groups: state.groups.map(
             el => el.id === action.data.id ? action.data : el
           )
         });
       else {
         return Object.assign({}, state, {
+          ...state,
           groups: state.groups.map((g:any) => 
             g.id !== action.data.masterGroupId? g:
             {
@@ -88,8 +94,10 @@ export default (state = initialState, action: any) => {
         groups: [...state.groups, action.data]
       };
     case GET_GROUPS:
+      const filtered = uniqBy([...state.groups, ...action.data], 'id');
       return Object.assign({}, state, {
-        groups: action.data
+        ...state,
+        groups: filtered
       });
     default:
       return state;

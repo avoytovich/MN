@@ -55,8 +55,7 @@ export default class GroupInfo extends Component {
               <div className="icon" />
               <Link
                 href={{ pathname: '/editgroup', query: { id: info.id } }}
-                as={`/editgroup/${replaceUrl(info.name)}`}
-                
+                // as={`/editgroup/${replaceUrl(info.name)}`}
                 >
                 <a>
                   <Typography className="edit-text" variant="caption">

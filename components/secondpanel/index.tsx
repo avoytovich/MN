@@ -8,7 +8,7 @@ interface PanelProps {
   breadCrumb: string,
   actionButtons?: JSX.Element[],
   centerButtons?: JSX.Element[],
-  classes: any
+  classes?: any
 }
 
 const styles = theme => ({

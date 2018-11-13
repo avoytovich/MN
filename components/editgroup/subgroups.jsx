@@ -27,13 +27,15 @@ import find from 'lodash/find';
 import { bindActionCreators } from 'redux';
 import withModal from 'services/decorators/withModal';
 import DeleteModal from './deleteModal';
+import { updateSpecData } from 'actions/updateData';
 
 @connect(
   null,
   {
     editGroup,
     createGroup,
-    setModalDeleteGroup
+    setModalDeleteGroup,
+    updateSpecData
   }
 )
 @withModal(DeleteModal)
@@ -95,6 +97,7 @@ export default class Subgroups extends Component {
   };
   handleOpen = group => e => {
     // this.props.setModalDeleteGroup(group);
+    this.props.updateSpecData('deleteGroup', group);
     this.props.open();
   };
   render() {

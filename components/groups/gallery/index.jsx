@@ -17,36 +17,18 @@ const styles = theme => ({
   media: {
     height: 200,
     width: cardWidth,
-    position: 'relative'
+    position: 'relative',
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'flex-end'
   },
   mediaText: {
     position: 'relative',
     color: '#efefef',
     fontWeight: 600,
-    top: 177,
-    left: 42,
     fontSize: 13
   }
 });
-
-// function PrevArrow(props) {
-//   const { className, style, onClick } = props;
-//   return (
-//     <div
-//       // className={className}
-//       // style={{
-//       //   ...style,
-//       //   display: 'block',
-//       //   backgroundImage: "url('/static/svg/right-arrow.svg')",
-//       //   backgroundSize: 'cover',
-//       //   width: 22,
-//       //   height: 31,
-//       //   transform: 'rotate(180deg)'
-//       // }}
-//       // onClick={onClick}
-//     />
-//   );
-// }
 
 function NextArrow(props) {
   const { className, style, onClick } = props;
@@ -62,18 +44,18 @@ function NextArrow(props) {
         backgroundImage: "url('/static/svg/right-arrow.svg')"
       }}
       onClick={onClick}
-    />
+     />
   );
 }
 
 const settings = {
   dots: false,
-  infinite: true,
+  infinite: false,
   speed: 500,
   variableWidth: true,
-  slidesToShow: 1,
+  slidesToShow: 2,
   nextArrow: <NextArrow />,
-  prevArrow: null
+  prevArrow: <div />
 };
 
 @withStyles(styles)
