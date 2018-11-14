@@ -9,17 +9,18 @@ import {
 } from '@material-ui/core';
 import * as StaticAvatar from 'static/png/image-member.png';
 import * as Line from 'static/png/line.png';
-import AnswerButton from './button';
+import AnswerButton, { Status } from './button';
 
 const styles = () =>
   createStyles({
     wrapper: {
       display: 'flex',
       flexDirection: 'column',
-      minHeight: 500,
+      minHeight: 'calc(100vh - 300px)',
       backgroundColor: '#f3f5f7',
       alignItems: 'center',
-      position: 'relative'
+      position: 'relative',
+      paddingBottom: 20
     },
     avatar: {
       margin: 'auto auto',
@@ -59,7 +60,7 @@ class QuizShow extends React.Component<Props> {
 
   render() {
     const { classes } = this.props;
-
+    
     return (
       <div className={classes.wrapper}>
         <div className={classes.circleWrapper}>
@@ -72,13 +73,15 @@ class QuizShow extends React.Component<Props> {
               title="Mike Ross"
               letter="A"
               callback={this.onClickAnswer}
+              status="neutral"
             />
           </Grid>
-          <Grid item xs={6}>
+          <Grid item xs={6} >
             <AnswerButton
               title="Darth Vader"
               letter="B"
               callback={this.onClickAnswer}
+              status="neutral"
             />
           </Grid>
           <Grid item xs={6}>
@@ -86,6 +89,7 @@ class QuizShow extends React.Component<Props> {
               title="Harvy Specter"
               letter="C"
               callback={this.onClickAnswer}
+              status="wrong"
             />
           </Grid>
           <Grid item xs={6}>
@@ -93,6 +97,7 @@ class QuizShow extends React.Component<Props> {
               title="Daniel Dowd"
               letter="D"
               callback={this.onClickAnswer}
+              status="right"
             />
           </Grid>
         </Grid>

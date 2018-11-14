@@ -1,20 +1,20 @@
 import { Component, Fragment } from 'react';
-import { Typography, Grid, withStyles } from '@material-ui/core';
+import { Typography, Grid, withStyles, createStyles, WithStyles } from '@material-ui/core';
 
 import BreadCrumbs from './breadcrumbs';
 
-interface PanelProps {
+interface PanelProps extends WithStyles<typeof styles>{
   title: string,
   breadCrumb: string,
   actionButtons?: JSX.Element[],
   centerButtons?: JSX.Element[],
-  classes?: any
 }
 
-const styles = theme => ({
+const styles = (theme:Theme) => createStyles({
   root: {
     height: 74,
-    backgroundCcolor: '#fafafa'
+    backgroundCcolor: '#fafafa',
+    borderBottom: '1px solid rgba(0,0,0,0.1)'
   },
   title: {
     marginLeft: 37

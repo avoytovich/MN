@@ -1,21 +1,83 @@
 import * as React from 'react';
-import { Button, WithStyles, withStyles, Theme } from '@material-ui/core';
+import { Button, WithStyles, withStyles, Theme, createStyles } from '@material-ui/core';
+import classNames from 'classnames';
+import TickIcon from 'static/svg/check.svg'
 
-const styles = (theme:Theme) => ({
+const styles = (theme: Theme) => createStyles({
     button: {
-        width: 290
+        width: '100%',
+        fontSize: 20,
+        backgroundColor: '#fff',
+        boxShadow: '-4.7px 3.8px 6px 0 rgba(105, 105, 105, 0.08)',
+        height: 47,
+        color: '#748191',
+        '& span': {
+            display: 'block',
+            float: 'left'
+        },
+        '&:hover': {
+
+        }
+    },
+    letter: {
+        fontSize: 28,
+        fontWeight: 400,
+        top: 0,
+        width: 60,
+        bottom: 0,
+        height: '100%',
+        left: 0,
+        position: 'absolute',
+        textAlign: 'center',
+        color: '#fff',
+        paddingTop: 6,
+        background: '#748191',
+        borderRadius: 23
+    },
+    right: {
+        color: '#ff6f00',
+        '& div': {
+            backgroundColor: '#ff6f00',
+        },
+        '&:after': {
+            width: 25,
+            height: 25,
+            position: 'relative',
+            content: "\'\'",
+            background: 'url(/static/svg/check.svg)',
+            backgroundSize: 'cover',
+        }
+    },
+    wrong: {
+        border: '1px solid #e62a10',
+        '&:after': {
+            width: 25,
+            height: 25,
+            position: 'relative',
+            content: "\'\'",
+            background: 'url(/static/png/close.png)',
+            backgroundSize: 'cover',
+        }
+    },
+    neutral: {
+
     }
-})
+});
+
+
+
 
 export interface ButtonProps extends WithStyles<typeof styles> {
     title: string,
     letter: string,
     callback: Function,
+    status: "right" | "wrong" | "neutral"
 }
 
-const AnswerButton: React.SFC<ButtonProps> = (props:ButtonProps) => (
-    <Button variant="contained" color="primary" className={props.classes.button}>
-        {props.title}
+const AnswerButton: React.SFC<ButtonProps> = ({ status, classes, title, letter }) => (
+    <Button className={classNames(classes.button, classes[status])} variant="contained" color="primary">
+        <div className={classNames(classes.letter)}>{letter}</div>
+        {title}
     </Button>
 )
 
