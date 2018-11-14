@@ -12,8 +12,14 @@ const axios = require('axios');
 const express = require('express');
 const port = isDev ? 3000 : 8081;
 app.prepare().then(() => {
-  express()
-     .use('/api',  proxy({target: process.env.API_HOST,  changeOrigin: true}))
+  const server = express();
+  server.get('/home/manage-groups/group/:name', (req, res) => {
+    const actualPage = '/home/manage-groups/group';
+    const queryParams = { name: req.params.name };
+    app.render(req, res, actualPage, queryParams);
+  });
+  server
+    .use('/api',  proxy({target: process.env.API_HOST,  changeOrigin: true}))
     .use(handler)
     .use(cookieParser())
     .listen(port, err => {
