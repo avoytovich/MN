@@ -7,7 +7,7 @@ import JssProvider from 'react-jss/lib/JssProvider';
 import GlobalSnackbar from '../components/GlobalSnackbar'
 import getPageContext from '../page-context';
 import withReduxStore from '../redux-config/with-redux-store';
-import Localization from '../containers/Localization';
+// import Localization from '../containers/Localization';
 
 @withReduxStore
 export default class MyApp extends App {
@@ -44,12 +44,10 @@ export default class MyApp extends App {
             {/* Pass pageContext to the _document though the renderPage enhancer
                 to render collected styles on server side. */}
             <Provider store={reduxStore}>
-              <Localization>
                 <Fragment>
                   <GlobalSnackbar />
                   <Component pageContext={this.pageContext} {...pageProps} />
                 </Fragment>
-              </Localization>
             </Provider>
           </MuiThemeProvider>
         </JssProvider>

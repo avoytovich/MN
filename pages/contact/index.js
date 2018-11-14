@@ -12,13 +12,13 @@ import Layout from '../../components/MyLayout.js';
 import TestForm from '../../forms/testForm';
 import Slider from "react-slick";
 
-import i18n from '../../services/decorators/i18n';
+// import i18n from '../../services/decorators/i18n';
 
 import './style.scss';
 import { Typography } from '@material-ui/core';
 
 const mapStateToProps = ({ localization: { lang } }) => ({ lang });
-@i18n()
+// @i18n()
 // @withRouter
 @connect(mapStateToProps)
 export default class About extends Component {

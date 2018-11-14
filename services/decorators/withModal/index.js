@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import { injectIntl } from 'react-intl';
 
 import Modal from '@material-ui/core/Modal';
 import Close from '@material-ui/icons/Close';
@@ -8,7 +7,6 @@ import './withModal.scss';
 
 export default function withModal(ComponentModal, options = {}) {
   return function(Child) {
-    @injectIntl
     class CustomModal extends Component {
       state = {
         open: false

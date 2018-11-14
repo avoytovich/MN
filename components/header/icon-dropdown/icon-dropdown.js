@@ -2,7 +2,7 @@ import React from 'react';
 import { IconButton, Menu, MenuItem } from '@material-ui/core';
 import ExpandMore from '@material-ui/icons/ExpandMore';
 
-import i18n from '../../../services/decorators/i18n';
+// import i18n from '../../../services/decorators/i18n';
 
 import { menuProps } from '../../../constants/texts';
 
@@ -14,7 +14,7 @@ import { menuProps } from '../../../constants/texts';
 
 const ITEM_HEIGHT = 48;
 
-@i18n('menu')
+// @i18n('menu')
 class LongMenu extends React.Component {
   state = {
     anchorEl: null,
@@ -56,7 +56,8 @@ class LongMenu extends React.Component {
         >
           {menuProps.map(option => (
             <MenuItem key={option.translateVariable} selected={option.translateVariable === 'LogIn'} onClick={this.handleClose}>
-              {this.props.translate(option.translateVariable)}
+              {option.translateVariable}
+              {/* {this.props.translate(option.translateVariable)} */}
             </MenuItem>
           ))}
         </Menu>
