@@ -10,33 +10,35 @@ import { connect } from 'react-redux';
 import * as Yup from 'yup';
 import Link from 'next/link';
 import Router from 'next/router';
-
-const mapDispatchToProps = dispatch =>
-  bindActionCreators(
-    {
-      createGroup
-    },
-    dispatch
-  );
+import { loadIcons } from 'actions/groups';
+import { resetData } from 'actions/updateData';
+import get from 'lodash/get';
 
 @connect(
-  null,
-  mapDispatchToProps
+  ({runtime}) => ({
+    icon: runtime.chosenIconData
+  }),
+  {
+    createGroup,
+    loadIcons,
+    resetData
+  }
 )
 @withFormik({
   validationSchema: Yup.object().shape({
     name: Yup.string().required('Required'),
-    description: Yup.string().required('Required')
+    description: Yup.string().required('Required'),
   }),
-  mapPropsToValues: props => {
+  mapPropsToValues: props => {    
     return {
       name: '',
       description: '',
       subgroups: [],
-      questions: []
+      questions: [],
     };
   },
   handleSubmit: (values, { props }) => {
+    values.iconId = get(props, 'icon.id');
     props.createGroup(values)
       .then(r => {
         Router.push('/home/manage-groups');
@@ -44,8 +46,14 @@ const mapDispatchToProps = dispatch =>
   }
 })
 export default class CreateGroups extends Component {
+  componentDidMount = () => {
+    this.props.loadIcons();
+  }
+  componentWillUnmount = () => {
+    this.props.resetData('chosenIcon');
+  }
   render() {
-    const { handleChange, values, errors, setFieldValue } = this.props;
+    const { handleChange, values, errors, setFieldValue, icon } = this.props;
     return (
       <Form>
         <SecondPanel
@@ -65,6 +73,7 @@ export default class CreateGroups extends Component {
           ]}
         />
         <Main
+         icon={icon}
          errors={errors}
          handleChange={handleChange}
          setFieldValue={setFieldValue}

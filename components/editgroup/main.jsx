@@ -28,19 +28,24 @@ import IconModal from 'components/iconmodal';
 export default class Main extends Component {
     
     render() {
-        const { classes, formik, group, open } = this.props;
+        const { classes, formik, group, open, chosenIcon } = this.props;
         const subgroups = get(group, 'subgroups', []);
         const id = get(group, 'id');
+        // Showing either group icon or changed icon 
+        const icon = get(chosenIcon, 'icon') || get(group, 'icon');
+        // const iconId = get(chosenIcon, 'id');
         return (
             <div className={classes.wrapper}>
                 <Paper elevation={0} className={classes.paper}>
                         <Typography className={classes.title}>Edit Group</Typography>
                     <div className={classes.iconWrapper}>
+                        <NoSsr>
                         <Avatar
                             onClick={() => open(true)}
-                            src="/static/png/icon-group.png"
+                            src={icon}
                             className={classes.icon}
                         />
+                        </NoSsr>
                         <Typography onClick={() => open(true)} className={classes.sgi}>
                             Select Group Icon
                         </Typography>

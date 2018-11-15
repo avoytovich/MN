@@ -1,5 +1,5 @@
 import React, { Component, Fragment } from 'react';
-import { ListItem, List, Divider, withStyles } from '@material-ui/core';
+import { ListItem, List, Divider, withStyles, CircularProgress } from '@material-ui/core';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import Axios from 'axios';
@@ -22,6 +22,12 @@ const styles = theme => ({
   },
   list: {
     minHeight: 700
+  },
+  loader: {
+    color: '#224483',
+    display: 'block',
+    position: 'relative',
+    margin: '0 auto'
   }
 });
 
@@ -61,15 +67,15 @@ export default class Groups extends Component {
   }
   render() {
     const { classes, groups = [], isSearching } = this.props;
-    const page = groups.length / this.groups;
+    // const page = groups.length / this.groups;
     return (
       <Fragment>
         <List className={classes.list}>
           <InfiniteScroll
-            pageStart={page}
+            pageStart={0}
             loadMore={this.loadMore}
             hasMore={this.state.hasMore}
-            loader={<div className="loader" key={0}>Loading ...</div>}
+            loader={<CircularProgress className={classes.loader}/>}
           >
             {groups.map(group => (
               <Fragment key={`group-${group.id}`}>

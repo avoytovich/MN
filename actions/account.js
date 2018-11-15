@@ -5,6 +5,7 @@ const request = getAxiosInstance(ACCOUNT_URL, false)
 export async function signIn (payload) {
   try {
     const { data } = await request.post('/Login', payload)
+    localStorage.removeItem('state');
     localStorage.setItem(
       'user',
       JSON.stringify({ ...data })
@@ -32,7 +33,8 @@ export async function reLogin (payload) {
 
 export async function signUp (payload) {
   try {
-    const { data } = await request.post('/Register', payload)
+    const { data } = await request.post('/Register', payload);
+    localStorage.removeItem('state');
     localStorage.setItem(
       'user',
       JSON.stringify({ ...data })

@@ -27,7 +27,7 @@ import { Field } from 'formik';
 import Subgroups from './subgroups.jsx';
 import Questions from './questions';
 
-const Main  = ({ classes, open, close, setFieldValue, handleChange, errors, values }) => {
+const Main  = ({ classes, open, close, setFieldValue, handleChange, errors, icon, values }) => {
     return (
       <div className={classes.wrapper}>
         <Paper elevation={0} className={classes.paper}>
@@ -35,7 +35,7 @@ const Main  = ({ classes, open, close, setFieldValue, handleChange, errors, valu
           <div className={classes.iconWrapper}>
             <Avatar
               onClick={() => open(true)}
-              src="/static/png/icon-group.png"
+              src={icon? icon.icon: ''}
               className={classes.icon}
             />
             <Typography onClick={() => open(true)} className={classes.sgi}>

@@ -63,7 +63,6 @@ export default class Questions extends Component {
     })
   }
   deleteQuestion = k => e => {
-    console.log(k);
     this.props.deleteQuestion(k);
   };
   render() {

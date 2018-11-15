@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Typography, Divider, withStyles } from '@material-ui/core';
+import { Typography, Divider, withStyles, Avatar } from '@material-ui/core';
 import moment from 'moment';
 import Link from 'next/link';
 import { connect } from 'react-redux';
@@ -27,6 +27,11 @@ const styles = theme => ({
     color: '#5e6a78',
     marginTop: 14,
     lineHeight: 'normal'
+  },
+  avatar: {
+    width: 80,
+    height: 80,
+    
   }
 });
 
@@ -49,6 +54,7 @@ export default class GroupInfo extends Component {
     } = this.props;
     return (
       <div className="d-flex f-row group-info-wrapper">
+        <Avatar className={classes.avatar} src={info.icon || '/static/png/icon-group.png'}/>
         <div className="group-icon" />
         <div className="d-flex f-column margin-info">
           <Link

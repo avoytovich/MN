@@ -13,25 +13,20 @@ import { withRouter } from 'next/router';
 import find from 'lodash/find';
 import get from 'lodash/get';
 import NoSSR from '@material-ui/core/NoSsr'
+import { loadIcons } from 'actions/groups';
+import { resetData } from 'actions/updateData';
 
-const mapStateToProps = ({ groups, questions }, { router }) => ({
-  group: find(groups.groups, g => g.id === parseInt(router.query.id, 10))
+const mapStateToProps = ({ groups, questions, runtime }, { router }) => ({
+  group: find(groups.groups, g => g.id === parseInt(router.query.id, 10)),
+  icon: runtime.chosenIconData
 });
-
-const mapDispatchToProps = dispatch =>
-  bindActionCreators(
-    {
-      editGroup,
-      getSingle,
-      
-    },
-    dispatch
-  );
 
 @withRouter
 @connect(
   mapStateToProps,
-  { editGroup, getSingle, createQuestions }
+  { editGroup, getSingle, createQuestions,
+    loadIcons, resetData
+  }
 )
 @withFormik({
   validationSchema: Yup.object().shape({
@@ -45,12 +40,11 @@ const mapDispatchToProps = dispatch =>
     return {
       subgroups: [],
       questions: [],
-      name: name,
+      name,
       description: desc,
       id
     };
   },
-
   handleSubmit: async (values, { props }) => {
     await props.editGroup({ name: values.name, 
       description: values.description,
@@ -64,8 +58,12 @@ const mapDispatchToProps = dispatch =>
 })
 export default class EditGroup extends Component {
   componentDidMount = () => {
-    // this.props.getSingle({groupId: this.props.router.query.id});
+    this.props.loadIcons();
   };
+  componentWillUnmount = () =>
+  {
+    this.props.resetData('chosenIcon');
+  }
   render() {
     const { router, group } = this.props;
     return (
@@ -86,7 +84,9 @@ export default class EditGroup extends Component {
             </Button>
           ]}
         />
-          <Main formik={this.props} group={group} />
+          <Main 
+          chosenIcon={this.props.icon}
+          formik={this.props} group={group} />
       </Form>
     );
   }

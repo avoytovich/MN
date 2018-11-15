@@ -32,7 +32,6 @@ export default class About extends Component {
   };
 
   render() {
-    console.log('LANG', this.props.lang);
     var settings = {
       dots: true,
       infinite: true,

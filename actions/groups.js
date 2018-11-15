@@ -82,3 +82,14 @@ export const searchGroups = (params) =>
         else return "Error search";
       }
     })
+
+export const loadIcons = () => 
+    dispatchSend('loadIcons', request.get('/GetGroupIcons'), {
+      receiveAction: UPDATE_SPEC_DATA,
+      adaptData: (r) => r,
+      adaptError: err => {
+        if(err.response)
+          return err.response.data.errors[0].message;
+        else return "Error load icons";
+      }
+    })
