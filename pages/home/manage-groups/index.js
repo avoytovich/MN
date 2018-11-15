@@ -23,7 +23,6 @@ export default class About extends Component {
             />
             <SearchPanel />
             <Groups />
-            <Footer />
           </Layout>
         </Grid>
       </Grid>

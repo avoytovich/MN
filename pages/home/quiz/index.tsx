@@ -35,7 +35,6 @@ export default class Quiz extends React.Component<WithRouterProps> {
              <QuizShow 
                 groupId={groupId}
             />
-            <Footer />
           </Layout>
         </Grid>
       </Grid>

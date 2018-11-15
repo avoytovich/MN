@@ -14,7 +14,7 @@ const style = {
 export default class CreateGroupBtn extends PureComponent {
   render() {
     return (
-      <Link href="/creategrouppage">
+      <Link href="/home/creategroup">
         <a>
           <Button  variant="contained" color="primary" style={style}>
             <div className="btn-icon" />
