@@ -17,7 +17,7 @@ import Trash from '@material-ui/icons/Delete';
 import * as _ from 'lodash';
 
 export default class Questions extends Component<{
-  formik: any;
+  setFieldValue: Function;
   classes: any;
 }> {
 
@@ -29,7 +29,7 @@ export default class Questions extends Component<{
   addSubgroup = () => {
     if (!this.state.val.length) return;
     const newGroups = [...this.state.subgroups, this.state.val];
-    this.props.formik.setFieldValue('questions', newGroups);
+    this.props.setFieldValue('questions', newGroups);
     this.setState({
       subgroups: newGroups,
       val: ''
@@ -52,7 +52,7 @@ export default class Questions extends Component<{
       this.state.subgroups,
       (sg: string, key: number) => key !== k
     );
-    this.props.formik.setFieldValue('questions', newGroups);
+    this.props.setFieldValue('questions', newGroups);
     this.setState({
       subgroups: newGroups
     });

@@ -30,6 +30,8 @@ const mapDispatchToProps = dispatch =>
   }),
   mapPropsToValues: props => {
     return {
+      name: '',
+      description: '',
       subgroups: [],
       questions: []
     };
@@ -43,6 +45,7 @@ const mapDispatchToProps = dispatch =>
 })
 export default class CreateGroups extends Component {
   render() {
+    const { handleChange, values, errors, setFieldValue } = this.props;
     return (
       <Form>
         <SecondPanel
@@ -62,7 +65,11 @@ export default class CreateGroups extends Component {
           ]}
         />
         <Main
-         formik={this.props} />
+         errors={errors}
+         handleChange={handleChange}
+         setFieldValue={setFieldValue}
+         values={values}
+        />
       </Form>
     );
   }

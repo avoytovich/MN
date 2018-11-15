@@ -10,7 +10,7 @@ function mapStateToProps (state) {
   }
 }
 
-@connect(mapStateToProps)
+@connect(mapStateToProps, { toggleSnackbar })
 export default class GlobalSnackbar extends Component {
   render() {
     const { snackbar } = this.props;

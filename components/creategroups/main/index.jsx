@@ -18,6 +18,7 @@ import {
   IconButton
 } from '@material-ui/core';
 import SS from '@material-ui/icons/ArrowDropDown';
+import { wrapField } from 'services/materialformik';
 
 import styles from './styles.js';
 import withModal from '../../../services/decorators/withModal';
@@ -26,32 +27,7 @@ import { Field } from 'formik';
 import Subgroups from './subgroups.jsx';
 import Questions from './questions';
 
-const questions = [
-  {
-    value: 1,
-    label: 'What is you favorite past-time?'
-  },
-  {
-    value: 2,
-    label: 'What is the maiden name of your mother?'
-  }
-];
-
-@withModal(IconModal)
-@withStyles(styles)
-export default class Main extends Component {
-  state = {
-    question: 1
-  };
-
-  handleChange = name => e => {
-    this.setState({
-      [name]: e.target.value
-    });
-  };
-
-  render() {
-    const { classes, open, close, formik } = this.props;
+const Main  = ({ classes, open, close, setFieldValue, handleChange, errors, values }) => {
     return (
       <div className={classes.wrapper}>
         <Paper elevation={0} className={classes.paper}>
@@ -67,8 +43,8 @@ export default class Main extends Component {
             </Typography>
             <SS />
           </div>
-          <TextField
-            onChange={formik.handleChange}
+          <Field 
+            fullWidth
             InputProps={{
               className: classes.text
             }}
@@ -76,14 +52,16 @@ export default class Main extends Component {
               shrink: true,
               className: classes.label
             }}
-            helperText={formik.errors.name}
-            // error={formik.errors.name !== undefined}
+            className={classes.input}
+            name="name"
+            value={values.name}
+            component={wrapField}
             name="name"
             placeholder="Group name"
-            fullWidth
             margin="normal"
+            value={values.name}
           />
-          <TextField
+          <Field 
             InputProps={{
               className: classes.text
             }}
@@ -91,25 +69,25 @@ export default class Main extends Component {
               shrink: true,
               className: classes.label
             }}
-            helperText={formik.errors.description}
-            error={formik.errors.description !== undefined}
+            value={values.description}
+            component={wrapField}
             name="description"
-            onChange={formik.handleChange}
             placeholder="Description"
             fullWidth
-            name="description"
             margin="normal"
           />
         </Paper>
         <Paper elevation={0} className={classes.paper}>
           <Typography className={classes.title}>Sub Groups</Typography>
-          <Subgroups classes={classes} formik={formik}/>
+          <Subgroups classes={classes} setFieldValue={setFieldValue}/>
         </Paper>
         <Paper elevation={0} className={classes.paper}>
           <Typography className={classes.title}>Question Answer</Typography>
-          <Questions classes={classes} formik={formik}/>
+          <Questions classes={classes} setFieldValue={setFieldValue}/>
         </Paper>
-      </div>
-    );
-  }
+      </div>)
 }
+
+export default 
+withModal(IconModal)
+  (withStyles(styles)(Main));

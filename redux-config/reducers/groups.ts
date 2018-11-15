@@ -89,10 +89,7 @@ export default (state = initialState, action: any) => {
             return group;
           })
         };
-      return {
-        ...state,
-        groups: [...state.groups, action.data]
-      };
+        return state;
     case GET_GROUPS:
       const filtered = uniqBy([...state.groups, ...action.data], 'id');
       return Object.assign({}, state, {

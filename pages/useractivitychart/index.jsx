@@ -22,7 +22,6 @@ export default class UserActivityChart extends Component {
             />
             <SearchPanel />
             <ActivityChart />
-            <Footer />
           </Layout>
         </Grid>
         <Grid container spacing={0} justify="center" />

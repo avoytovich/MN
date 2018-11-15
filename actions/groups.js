@@ -1,5 +1,5 @@
 import dispatchSend from '../services/dispatchSend';
-import { START_LOAD, GET_GROUPS,  ADD_GROUP, GET_SINGLE, EDIT_GROUP, DELETE_GROUP, SET_MODAL_DELETE, SEARCH_GROUPS, UPDATE_SPEC_DATA, SET_RUNTIME_VARIABLE } from '../constants/actions';
+import { START_LOAD, GET_GROUPS,  ADD_GROUP, GET_SINGLE, EDIT_GROUP, DELETE_GROUP, SET_MODAL_DELETE, SEARCH_GROUPS, UPDATE_SPEC_DATA, SET_RUNTIME_VARIABLE, END_LOAD } from '../constants/actions';
 
 import { GROUP_URL } from '../constants/api';
 import { getAxiosInstance } from '../shared/request';
@@ -34,7 +34,7 @@ export const getSingle = params =>
 export const createGroup = data =>
   dispatchSend('create_group', request.put('/CreateGroup', data), {
     start_action: START_LOAD,
-    receiveAction: ADD_GROUP,
+    receiveAction: END_LOAD,
     adaptData: resp => {
       console.log(resp);
       return resp;

@@ -7,7 +7,6 @@ import { deleteGroup } from 'actions/groups';
 
 import '../../../sass/common.scss';
 import './groupinfo.scss';
-import './groupInfo.sass';
 
 const replaceUrl = (word) => {
   word = word.replace(/\s/g, '-');
@@ -56,7 +55,7 @@ export default class GroupInfo extends Component {
             href={{ pathname: '/home/manage-groups/group', query: { id, name } }}
             as={`/home/manage-groups/group/${this.titleCase(name)}`}
           >
-            <a>
+            <a style={{margin: 0}}>
               <Typography
                 className="group-name"
                 variant="subheading"
@@ -79,7 +78,7 @@ export default class GroupInfo extends Component {
                 href={{ pathname: '/editgroup', query: { id: info.id } }}
                 // as={`/editgroup/${replaceUrl(info.name)}`}
                 >
-                <a>
+                <a >
                   <Typography className="edit-text" variant="caption">
                     edit
                   </Typography>

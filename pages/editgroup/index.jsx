@@ -15,7 +15,6 @@ export default class EditGroupPage extends Component{
         <Grid item xs={12} sm={12}>
           <Layout>
             <EditGroup />
-            <Footer />
           </Layout>
         </Grid>
         <Grid container spacing={0} justify="center" />

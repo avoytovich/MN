@@ -32,12 +32,15 @@ const styles = theme => ({
 
 function NextArrow(props) {
   const { className, style, onClick } = props;
+  console.log(props);
   return (
     <div
-      className={className}
+      // className={className}
       style={{
-        ...style,
-        display: 'block',
+        position: 'absolute',
+        top: '44%',
+        right: -20,
+        cursor: 'pointer',
         width: 22,
         height: 31,
         backgroundSize: 'cover',
@@ -55,7 +58,7 @@ const settings = {
   variableWidth: true,
   slidesToShow: 2,
   nextArrow: <NextArrow />,
-  prevArrow: <div />
+  prevArrow: null
 };
 
 @withStyles(styles)

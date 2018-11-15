@@ -30,7 +30,7 @@ export default class Subgroups extends Component {
     if (!this.state.val.length) return;
     // TODO: solve empty description
     const newGroups = [...this.state.subgroups, {name: this.state.val, description: ''}];
-    this.props.formik.setFieldValue('subgroups', newGroups);
+    this.props.setFieldValue('subgroups', newGroups);
     this.setState({
       subgroups: newGroups,
       val: ''
@@ -47,7 +47,7 @@ export default class Subgroups extends Component {
   };
   deleteGroup = k => e => {
     const newGroups = _.filter(this.state.subgroups, (sg, key) => key !== k);
-    this.props.formik.setFieldValue('subgroups', newGroups);
+    this.props.setFieldValue('subgroups', newGroups);
     this.setState({
       subgroups: newGroups
     });
