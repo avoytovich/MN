@@ -1,7 +1,6 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-
-import { Snackbar, SnackbarContent } from '@material-ui/core/'
+import { Snackbar, SnackbarContent } from '@material-ui/core'
 
 import { toggleSnackbar } from '../../actions/snackbar'
 
@@ -11,11 +10,10 @@ function mapStateToProps (state) {
   }
 }
 
-@connect(mapStateToProps, { toggleSnackbar })
-class GlobalSnackbar extends Component {
-  render () {
-    const { snackbar } = this.props
-
+@connect(mapStateToProps)
+export default class GlobalSnackbar extends Component {
+  render() {
+    const { snackbar } = this.props;
     return (
       <Snackbar
         anchorOrigin={{ vertical: 'top', horizontal: 'right' }}
@@ -31,4 +29,3 @@ class GlobalSnackbar extends Component {
   }
 }
 
-export default GlobalSnackbar

@@ -3,6 +3,7 @@ import App, { Container } from 'next/app';
 import { Provider } from 'react-redux';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import { MuiThemeProvider } from '@material-ui/core/styles';
+import { NoSsr } from '@material-ui/core'
 import JssProvider from 'react-jss/lib/JssProvider';
 import GlobalSnackbar from '../components/GlobalSnackbar'
 import getPageContext from '../page-context';

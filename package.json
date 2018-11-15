@@ -15,7 +15,7 @@
     "@babel/runtime": "^7.1.5",
     "@material-ui/core": "^1.3.1",
     "@material-ui/icons": "^1.1.0",
-    "@types/next": "^7.0.4",
+    "@types/next": "^7.0.5",
     "@zeit/next-sass": "^1.0.1",
     "@zeit/next-typescript": "^1.1.1",
     "axios": "^0.18.0",
@@ -38,13 +38,13 @@
     "node-sass": "^4.10.0",
     "owl.carousel": "^2.3.4",
     "prop-types": "^15.6.2",
-    "react": "^16.6.1",
-    "react-dom": "^16.6.1",
+    "react": "^16.6.3",
+    "react-dom": "^16.6.3",
     "react-infinite-scroller": "^1.2.2",
     "react-intl": "^2.7.2",
     "react-jss": "^8.6.0",
     "react-no-ssr": "^1.1.0",
-    "react-redux": "^5.1.0",
+    "react-redux": "^5.1.1",
     "react-slick": "^0.23.2",
     "redux": "^4.0.1",
     "redux-devtools-extension": "^2.13.5",
@@ -55,7 +55,7 @@
     "yup": "^0.26.6"
   },
   "devDependencies": {
-    "@babel/plugin-proposal-decorators": "^7.0.0-beta.51",
+    "@babel/plugin-proposal-decorators": "^7.1.6",
     "@babel/preset-react": "^7.0.0-beta.51",
     "@babel/preset-stage-0": "^7.0.0-beta.51",
     "babel-core": "^6.26.3",
@@ -72,6 +72,6 @@
     "eslint-plugin-jsx-a11y": "~2.1.0",
     "eslint-plugin-prettier": "^2.4.0",
     "eslint-plugin-react": "~6.1.1",
-    "prettier": "^1.15.1"
+    "prettier": "^1.15.2"
   }
 }

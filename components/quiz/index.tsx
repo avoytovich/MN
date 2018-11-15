@@ -11,7 +11,7 @@ import * as StaticAvatar from 'static/png/image-member.png';
 import * as Line from 'static/png/line.png';
 import AnswerButton, { Status } from './button';
 
-const styles = () =>
+const styles = (theme:Theme) =>
   createStyles({
     wrapper: {
       display: 'flex',

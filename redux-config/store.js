@@ -5,7 +5,7 @@ import _ from 'lodash';
 
 // Load reducers here
 import runtime from './runtime';
-import localization from './localization';
+// import localization from './localization';
 import groups from './reducers/groups';
 import questions from './reducers/questions';
 import { saveState, loadState } from 'helpers/cache';
@@ -18,9 +18,9 @@ export function initializeStore(initialState = {}) {
   Object.assign(initialState, loadState());
   
   const root = combineReducers({
-     runtime, localization, groups, snackbar, questions
+     runtime,  groups, snackbar, questions
   });
-  const store = createStore(
+  const store = createStore( 
     root,
     initialState,
     composeWithDevTools(applyMiddleware(thunkMiddleware))

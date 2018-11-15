@@ -2,8 +2,6 @@ import * as React from 'react';
 import {
   withRouter,
   WithRouterProps,
-  SingletonRouter,
-  RouterProps
 } from 'next/router';
 import Link from 'next/link';
 import { Grid, Button } from '@material-ui/core';
@@ -33,8 +31,8 @@ export default class Quiz extends React.Component<WithRouterProps> {
                   </a>
                 </Link>
               ]}
-            />
-            <QuizShow 
+            /> 
+             <QuizShow 
                 groupId={groupId}
             />
             <Footer />
