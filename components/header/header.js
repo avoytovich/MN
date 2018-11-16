@@ -29,8 +29,13 @@ export default class Header extends Component {
       variant: 'display1'
     },
     {
-      href: '/home/manage-groups',
+      href: '/',
+      title: 'ADMIN',
+      variant: 'display2',
       className: 'group-first-item',
+    },
+    {
+      href: '/home/manage-groups',
       title: 'GROUPS',
       variant: 'display2'
     },

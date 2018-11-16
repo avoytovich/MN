@@ -8,6 +8,9 @@ import {
 } from '../../constants/actions';
 import find from 'lodash/find';
 import uniqBy from 'lodash/uniqBy';
+import sortBy from 'lodash/sortBy';
+import moment from 'moment';
+import reverse from 'lodash/reverse';
 
 const initialState = {
   groups: [],
@@ -91,7 +94,8 @@ export default (state = initialState, action: any) => {
         };
         return state;
     case GET_GROUPS:
-      const filtered = uniqBy([...state.groups, ...action.data], 'id');
+        
+      const filtered = reverse(sortBy(uniqBy([...state.groups, ...action.data], 'id'), group => moment(group.dateOfLastUpdate).unix()));
       return Object.assign({}, state, {
         ...state,
         groups: filtered

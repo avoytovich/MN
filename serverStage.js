@@ -7,14 +7,23 @@ const app = next({ dev: isDev });
 const handler = routes.getRequestHandler(app);
 const proxy = require('http-proxy-middleware');
 const axios = require('axios');
+const express = require('express');
 
 // With express
-const express = require('express');
-const port = isDev ? 3000 : 8080;
+const port = isDev ? 3001 : 8081;
 app.prepare().then(() => {
-  express()
-     .use('/api',  proxy({target: process.env.API_HOST,  changeOrigin: true}))
+  const server = express();
+  server.get('/home/manage-groups/group/:name', (req, res) => {
+    const actualPage = '/home/manage-groups/group';
+    const queryParams = { name: req.params.name };
+    app.render(req, res, actualPage, queryParams);
+  });
+  server
+    .use('/api',  proxy({target: process.env.API_HOST,  changeOrigin: true}))
     .use(handler)
     .use(cookieParser())
-    .listen(port);
+    .listen(port, err => {
+      if (err) throw err;
+      console.log(`> Ready on http://localhost:${port}`);
+    });
 });
