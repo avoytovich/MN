@@ -24,7 +24,8 @@ const mapStateToProps = ({ groups, questions, runtime }, { router }) => ({
 @withRouter
 @connect(
   mapStateToProps,
-  { editGroup, getSingle, createQuestions,
+  {
+    editGroup, getSingle, createQuestions,
     loadIcons, resetData
   }
 )
@@ -46,9 +47,13 @@ const mapStateToProps = ({ groups, questions, runtime }, { router }) => ({
     };
   },
   handleSubmit: async (values, { props }) => {
-    await props.editGroup({ name: values.name, 
+    const iconId = get(props, 'icon.id');
+    await props.editGroup({
+      name: values.name,
       description: values.description,
-       id: values.id })
+      id: values.id,
+      iconId: iconId
+    })
     await props.createQuestions({
       groupId: values.id,
       text: values.questions
@@ -60,12 +65,12 @@ export default class EditGroup extends Component {
   componentDidMount = () => {
     this.props.loadIcons();
   };
-  componentWillUnmount = () =>
-  {
+  componentWillUnmount = () => {
     this.props.resetData('chosenIcon');
   }
   render() {
     const { router, group } = this.props;
+    const { handleChange, values, errors, setFieldValue, icon } = this.props;
     return (
       <Form>
         <SecondPanel
@@ -84,9 +89,14 @@ export default class EditGroup extends Component {
             </Button>
           ]}
         />
-          <Main 
+        <Main
           chosenIcon={this.props.icon}
-          formik={this.props} group={group} />
+          group={group}
+          errors={errors}
+          handleChange={handleChange}
+          setFieldValue={setFieldValue}
+          values={values}
+        />
       </Form>
     );
   }

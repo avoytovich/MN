@@ -27,7 +27,7 @@ import { Field } from 'formik';
 import Subgroups from './subgroups.jsx';
 import Questions from './questions';
 
-const Main  = ({ classes, open, close, setFieldValue, handleChange, errors, icon, values }) => {
+const Main  = ({ classes, open, setFieldValue, errors, icon, values }) => {
     return (
       <div className={classes.wrapper}>
         <Paper elevation={0} className={classes.paper}>

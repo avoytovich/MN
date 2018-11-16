@@ -46,7 +46,7 @@ export default class Questions extends Component {
   addSubgroup = () => {
     if (!this.state.val.length) return;
     const newQuestions = [...this.state.questions, this.state.val];
-    this.props.formik.setFieldValue('questions', newQuestions);
+    this.props.setFieldValue('questions', newQuestions);
     this.setState({
       questions: newQuestions,
       val: ''
@@ -57,7 +57,7 @@ export default class Questions extends Component {
   };
   deleteQuestionState = k => e => {
     const st = this.state.questions.filter((el, key) => key !== k);
-    this.props.formik.setFieldValue('questions', st);
+    this.props.setFieldValue('questions', st);
     this.setState({
       questions: st
     })
