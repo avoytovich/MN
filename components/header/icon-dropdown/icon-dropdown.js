@@ -5,7 +5,7 @@ import ExpandMore from '@material-ui/icons/ExpandMore';
 // import i18n from '../../../services/decorators/i18n';
 
 import { menuProps } from '../../../constants/texts';
-
+import Link from 'next/link';
 /*const options = [
   'Profile',
   'Edit',
@@ -55,10 +55,12 @@ class LongMenu extends React.Component {
           }}
         >
           {menuProps.map(option => (
-            <MenuItem key={option.translateVariable} selected={option.translateVariable === 'LogIn'} onClick={this.handleClose}>
-              {option.translateVariable}
-              {/* {this.props.translate(option.translateVariable)} */}
-            </MenuItem>
+            <Link href={{ pathname: '/edit-profile' } }>
+
+              <MenuItem key={option.translateVariable} selected={option.translateVariable === 'LogIn'} onClick={this.handleClose}>
+                {(option.translateVariable)}
+              </MenuItem>
+            </Link>
           ))}
         </Menu>
       </>

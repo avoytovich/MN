@@ -73,7 +73,7 @@ export default class IconModal extends Component {
             error={this.props.errors.OrganizationId !== undefined}
             type="text"
             name="OrganizationId"
-            placeholder="Organization Id"
+            placeholder="OrganizationId"
             fullWidth
             margin="normal"
           />
