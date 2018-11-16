@@ -10,7 +10,7 @@ const axios = require('axios');
 const express = require('express');
 
 // With express
-const port = isDev ? 3001 : 8081;
+const port = isDev ? 3000 : 8081;
 app.prepare().then(() => {
   const server = express();
   server.get('/home/manage-groups/group/:name', (req, res) => {
