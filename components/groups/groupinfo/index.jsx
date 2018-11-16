@@ -2,11 +2,14 @@ import React, { Component } from 'react';
 import { Typography, Divider, withStyles, Avatar } from '@material-ui/core';
 import moment from 'moment';
 import Link from 'next/link';
-import { connect } from 'react-redux';
-import { deleteGroup } from 'actions/groups';
 import { Link as TheLink } from '../../../routes';
 import '../../../sass/common.scss';
 import './groupinfo.scss';
+import withModal from 'services/decorators/withModal/index';
+import { connect } from 'react-redux'
+import { updateSpecData } from 'actions/updateData';
+
+import GroupDeleteModal from './groupModal';
 
 const replaceUrl = (word) => {
   word = word.replace(/\s/g, '-');
@@ -35,17 +38,18 @@ const styles = theme => ({
   }
 });
 
+@withModal(GroupDeleteModal)
 @withStyles(styles)
-@connect(
-  null,
-  {
-    deleteGroup
-  }
-)
+@connect(null, {
+  updateSpecData
+})
 export default class GroupInfo extends Component {
 
   titleCase = str => str.toLowerCase().split(' ').join('-');
-
+  handleDelete = group => () => {
+    this.props.updateSpecData('deleteGroup', group);
+    this.props.open(true);
+  }
   render() {
     const {
       classes,
@@ -94,7 +98,7 @@ export default class GroupInfo extends Component {
             </div>
             <div className="divider" />
             <div
-              onClick={() => this.props.deleteGroup(info)}
+              onClick={this.handleDelete(info)}
               className="move d-flex ai-center">
               <div className="icon" />
               <Typography className="move-text" variant="caption">
