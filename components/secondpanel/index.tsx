@@ -31,20 +31,20 @@ export default class SecondPanel extends Component<PanelProps> {
 
     return (
         <Grid container className={classes.root} alignItems="center">
-          <Grid item xs={4} sm={4}>
+          <Grid item xs={6} sm={6}>
             <div className={classes.title}>
               <Typography variant="title">{title}</Typography>
               <BreadCrumbs text={breadCrumb} />
             </div>
           </Grid>
-          <Grid item xs={4} sm={4}>
+          <Grid item xs={6} sm={6} className="custom-button">
             {centerButtons.map((Element, k) => <Fragment key={`center-${k}`}>{Element}</Fragment>)}
           </Grid>
-          <Grid item xs={4} className={classes.actionButtons} sm={4}>
+          {/*<Grid item xs={4} className={classes.actionButtons} sm={4}>
               <Grid container justify="flex-end" spacing={8}>
                 {actionButtons.map((Element, k) => <div key={`action-${k}`} style={{margin: 5}}>{Element}</div>)}
               </Grid>
-          </Grid>
+          </Grid>*/}
         </Grid>
     );
   }

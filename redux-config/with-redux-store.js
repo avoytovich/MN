@@ -10,11 +10,11 @@ let GLOBAL_LANG = null;
 export function getOrCreateStore(initialState, lang) {
   // Always make a new store if server, otherwise state is shared between requests
   if (isServer) {
-    const state = cloneDeep(initialState);
+    /*const state = cloneDeep(initialState);
     if (lang) GLOBAL_LANG = lang;
     if (GLOBAL_LANG && initialState) {
       state.localization.lang = GLOBAL_LANG;
-    }
+    }*/
     const store = initializeStore(initialState);
     return store;
   }

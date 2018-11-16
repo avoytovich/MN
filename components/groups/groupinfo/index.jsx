@@ -54,7 +54,7 @@ export default class GroupInfo extends Component {
     const {
       classes,
       info,
-      info: { id, name },
+      info: { id },
     } = this.props;
     return (
       <div className="d-flex f-row group-info-wrapper">
@@ -62,8 +62,8 @@ export default class GroupInfo extends Component {
         <div className="group-icon" />
         <div className="d-flex f-column margin-info">
           <Link
-            href={{ pathname: '/home/manage-groups/group', query: { id, name } }}
-            as={`/home/manage-groups/group/${this.titleCase(name)}`}
+            href={{ pathname: '/home/manage-groups/group', query: { id } }}
+            as={`/home/manage-groups/group/${id}`}
           >
             <a style={{margin: 0}}>
               <Typography
