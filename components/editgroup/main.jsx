@@ -16,7 +16,7 @@ import {
     ListItemSecondaryAction,
     IconButton,
     NoSsr
-  } from '@material-ui/core';import styles from './styles';
+} from '@material-ui/core'; import styles from './styles';
 import get from 'lodash/get';
 import Subgroups from './subgroups';
 import Questions from './questions';
@@ -26,7 +26,7 @@ import IconModal from 'components/iconmodal';
 @withModal(IconModal)
 @withStyles(styles)
 export default class Main extends Component {
-    
+
     render() {
         const { classes, formik, group, open, chosenIcon } = this.props;
         const subgroups = get(group, 'subgroups', []);
@@ -37,14 +37,14 @@ export default class Main extends Component {
         return (
             <div className={classes.wrapper}>
                 <Paper elevation={0} className={classes.paper}>
-                        <Typography className={classes.title}>Edit Group</Typography>
+                    <Typography className={classes.title}>Edit Group</Typography>
                     <div className={classes.iconWrapper}>
                         <NoSsr>
-                        <Avatar
-                            onClick={() => open(true)}
-                            src={icon}
-                            className={classes.icon}
-                        />
+                            <Avatar
+                                onClick={() => open(true)}
+                                src={icon}
+                                className={classes.icon}
+                            />
                         </NoSsr>
                         <Typography onClick={() => open(true)} className={classes.sgi}>
                             Select Group Icon
@@ -92,8 +92,9 @@ export default class Main extends Component {
                         subgroups={subgroups}
                         classes={classes}
                         id={id}
-                        />
+                    />
                 </Paper>
+                
                 <Paper elevation={0} className={classes.paper}>
                     <Typography className={classes.title}>Question Answer</Typography>
                     <Questions formik={formik} classes={classes} />
