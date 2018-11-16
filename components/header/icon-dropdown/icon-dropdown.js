@@ -58,7 +58,7 @@ class LongMenu extends React.Component {
             <Link href={{ pathname: '/edit-profile' } }>
 
               <MenuItem key={option.translateVariable} selected={option.translateVariable === 'LogIn'} onClick={this.handleClose}>
-                {this.props.translate(option.translateVariable)}
+                {(option.translateVariable)}
               </MenuItem>
             </Link>
           ))}
