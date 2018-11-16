@@ -38,7 +38,6 @@ const mapStateToProps = ({ groups, questions, runtime }, { router }) => ({
     const name = get(props, 'group.name');
     const desc = get(props, 'group.description');
     const id = get(props, 'group.id');
-    
     return {
       subgroups: [],
       questions: [],
@@ -49,20 +48,12 @@ const mapStateToProps = ({ groups, questions, runtime }, { router }) => ({
   },
   handleSubmit: async (values, { props }) => {
     const iconId = get(props, 'icon.id');
-<<<<<<< HEAD
     await props.editGroup({
       name: values.name,
       description: values.description,
       id: values.id,
       iconId: iconId
     })
-=======
-    await props.editGroup({ name: values.name, 
-      description: values.description,
-       id: values.id,
-       iconId: iconId
-      })
->>>>>>> dev
     await props.createQuestions({
       groupId: values.id,
       text: values.questions

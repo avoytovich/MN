@@ -4,7 +4,7 @@ const request = getAxiosInstance(ACCOUNT_URL, false)
 
 export async function signIn (payload) {
   try {
-    const { data } = await request.post('/Login', payload)
+    const { data } = await request.post('/Login', payload);
     localStorage.removeItem('state');
     localStorage.setItem(
       'user',
