@@ -31,8 +31,6 @@ import { resetData, updateSpecData } from 'actions/updateData';
       const { name, memberName } = values;
       // TODO: fix
       const data = await props.props.searchGroups({
-        limit: 1000,
-        offset: 0,
         name,
         membername: memberName
       });

@@ -4,7 +4,7 @@ import moment from 'moment';
 import Link from 'next/link';
 import { connect } from 'react-redux';
 import { deleteGroup } from 'actions/groups';
-
+import { Link as TheLink } from '../../../routes';
 import '../../../sass/common.scss';
 import './groupinfo.scss';
 
@@ -80,16 +80,17 @@ export default class GroupInfo extends Component {
           <div className="actions-block d-flex jcc ai-center">
             <div className="d-flex edit ai-center">
               <div className="icon" />
-              <Link
-                href={{ pathname: '/editgroup', query: { id: info.id } }}
-                // as={`/editgroup/${replaceUrl(info.name)}`}
+              <TheLink
+                route="editgroup" params={{
+                  id: info.id
+                }}
                 >
                 <a >
                   <Typography className="edit-text" variant="caption">
                     edit
                   </Typography>
                 </a>
-              </Link>
+              </TheLink>
             </div>
             <div className="divider" />
             <div
