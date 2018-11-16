@@ -1,4 +1,5 @@
 import React from 'react';
+import Link from 'next/link';
 import NoSSR from 'react-no-ssr';
 import { Button, Grid } from '@material-ui/core';
 import CWAG_Logo from '../static/png/CWAG_Logo.png';
@@ -59,8 +60,8 @@ export default class App extends React.Component {
             <Grid container wrap="nowrap">
               <SigInBtn />
               <SignUpBtn />
-              <p className="landing-auth-btn">Create Group</p>
-            </Grid>
+                <p className="landing-auth-btn">Create Group</p>
+              </Grid>
           </Grid>
         </Grid>
         <Grid className="landing-top-container">
@@ -231,7 +232,7 @@ export default class App extends React.Component {
               <div className="landing-contact-us-item">
                 <PhoneIcon className="landing-contact-us-item-icon" />
                 <p className="landing-contact-us-item-text">
-                  +1 (918) 289-4817
+                  +(965)463-7382
                 </p>
               </div>
             </div>
