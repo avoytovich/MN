@@ -21,7 +21,7 @@ export default class UserActivityChart extends Component {
               actionButtons={[<BackToGroupBtn label="Back" key={'one'} />]}
             />
             <SearchPanel />
-            <ActivityChart />
+            {/* <ActivityChart /> */}
           </Layout>
         </Grid>
         <Grid container spacing={0} justify="center" />
