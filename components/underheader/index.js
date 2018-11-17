@@ -4,7 +4,7 @@ import SecondPanel from 'components/secondpanel';
 import { Button } from '@material-ui/core';
 
 @withRouter
-export class Group extends Component {
+export class Underheader extends Component {
 
   titleCase = (str) => {
     if (str.search('-') !== -1) {
@@ -32,24 +32,25 @@ export class Group extends Component {
       query: { name },
       pathname
     } = this.props.router;
+    const { customStyle } = this.props;
     return (
-      <Fragment>
+      <div className={customStyle || ''}>
         <SecondPanel
           actionButtons={[
             <Button variant="outlined" color="secondary"> INVITE
             </Button>
           ]}
           centerButtons={[
-            <Button variant="contained" color="primary">
+            <Button variant="contained" color="primary" className="custom-button-material">
               ? Start A QUIZ
             </Button>
           ]}
           breadCrumb={`${this.titlePath(pathname)} / ${this.titleCase(name)}`}
           title="Group Content"
         />
-      </Fragment>
+      </div>
     );
   }
 }
 
-export default Group;
+export default Underheader;
