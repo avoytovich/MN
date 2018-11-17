@@ -91,7 +91,7 @@ export class Group extends Component {
                 <Button variant="outlined" color="secondary"> INVITE
                 </Button>
               ]}*/
-              centerButtons={[
+              actionButtons={[
                 <Button variant="contained" color="primary" className="custom-button-material">
                   ? Start A QUIZ
                 </Button>
