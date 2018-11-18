@@ -9,7 +9,7 @@ export default class SearchPanel extends Component {
     return (
       <div className="d-flex jcc f-column wrapper gray-background">
         <Typography align="center" variant="title">
-          Search Manage Group
+          Search Groups
         </Typography>
         <SearchForm />
       </div>

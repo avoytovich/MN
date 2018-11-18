@@ -60,8 +60,7 @@ export default class App extends React.Component {
             <Grid container wrap="nowrap">
               <SigInBtn />
               <SignUpBtn />
-                <p className="landing-auth-btn">Create Group</p>
-              </Grid>
+            </Grid>
           </Grid>
         </Grid>
         <Grid className="landing-top-container">
@@ -70,8 +69,10 @@ export default class App extends React.Component {
               Build a stronger community in your organization
             </h1>
             <Grid container className="landing-top-btns-container">
-              <Button className="landing-white-btn">Learn More</Button>
-              <Button className="landing-green-btn">
+              <Button className="landing-white-btn" href="#video">
+                Learn More
+              </Button>
+              <Button className="landing-green-btn" href="#landing-contact-us">
                 Contact Us For a Demo
               </Button>
             </Grid>
@@ -111,7 +112,7 @@ export default class App extends React.Component {
             </Grid>
           </div>
         </Grid>
-        <Grid className="landing-video-container">
+        <Grid id="video" className="landing-video-container">
           <Grid className="landing-video-dots-container">
             <div className="landing-wrapper">
               <h1 className="landing-title">Video</h1>
@@ -123,7 +124,7 @@ export default class App extends React.Component {
             </Player>
           </div>
         </Grid>
-
+        <br />
         <Grid className="landing-advantages-container">
           <Grid className="landing-advantage">
             <h3 className="landing-advantage-title">70%</h3>
@@ -210,7 +211,7 @@ export default class App extends React.Component {
           </div>
         </Grid>
 
-        <Grid className="landing-contact-us-container">
+        <Grid id="landing-contact-us" className="landing-contact-us-container">
           <div className="landing-wrapper">
             <h1 className="landing-contact-us-title">MetKnow</h1>
             <p className="landing-contact-us-text">
@@ -224,16 +225,17 @@ export default class App extends React.Component {
                 </p>
               </div>
               <div className="landing-contact-us-item">
-                <MailIcon className="landing-contact-us-item-icon" />
+                <MailIcon
+                  href="mailto:support@metknow.com"
+                  className="landing-contact-us-item-icon"
+                />
                 <p className="landing-contact-us-item-text">
                   support@metknow.com
                 </p>
               </div>
               <div className="landing-contact-us-item">
                 <PhoneIcon className="landing-contact-us-item-icon" />
-                <p className="landing-contact-us-item-text">
-                  +(965)463-7382
-                </p>
+                <p className="landing-contact-us-item-text">+(965)463-7382</p>
               </div>
             </div>
           </div>
