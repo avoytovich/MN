@@ -6,7 +6,7 @@ import TickIcon from 'static/svg/check.svg'
 const styles = (theme: Theme) => createStyles({
     button: {
         width: '100%',
-        fontSize: 20,
+        fontSize: 17,
         backgroundColor: '#fff',
         boxShadow: '-4.7px 3.8px 6px 0 rgba(105, 105, 105, 0.08)',
         height: 47,
@@ -65,17 +65,17 @@ const styles = (theme: Theme) => createStyles({
 });
 
 
-
+export type Status =  "right" | "wrong" | "neutral";
 
 export interface ButtonProps extends WithStyles<typeof styles> {
     title: string,
     letter: string,
-    callback: Function,
-    status: "right" | "wrong" | "neutral"
+    callback: (key:number) => (any),
+    status: Status
 }
 
-const AnswerButton: React.SFC<ButtonProps> = ({ status, classes, title, letter }) => (
-    <Button className={classNames(classes.button, classes[status])} variant="contained" color="primary">
+const AnswerButton: React.SFC<ButtonProps> = ({ status, callback, classes, title, letter }) => (
+    <Button onClick={callback} className={classNames(classes.button, classes[status])} variant="contained" color="primary">
         <div className={classNames(classes.letter)}>{letter}</div>
         {title}
     </Button>
