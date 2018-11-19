@@ -1,5 +1,5 @@
 import { Component, Fragment } from 'react';
-import { Grid, IconButton, TextField } from '@material-ui/core';
+import { Grid, IconButton, TextField, FormControl, MenuItem } from '@material-ui/core';
 import CreateIcon from '@material-ui/icons/Create';
 import { withRouter } from 'next/router';
 import InfiniteScroll from 'react-infinite-scroll-component';
@@ -13,6 +13,21 @@ import { members } from '../../services/cruds';
 import loading from '../../services/decorators/loading';
 
 import "./features.sass";
+
+const orderBy = [
+  {
+    value: 'Sort By:',
+    label: 'Sort By:'
+  },
+  {
+    value: 'firstname',
+    label: 'firstname',
+  },
+  {
+    value: 'lastname',
+    label: 'lastname',
+  },
+];
 
 const mapDispatchToProps = dispatch =>
   bindActionCreators({ setData }, dispatch);
@@ -34,7 +49,13 @@ export class Features extends Component {
     this.state = {
       offset: 0,
       elements: [],
-      membersInfo: {},
+      search: null,
+      membersInfo: {
+        pagination: {
+          total_count: 0
+        }
+      },
+      orderBy: 'Sort By:',
     }
   }
 
@@ -49,13 +70,29 @@ export class Features extends Component {
   }
 
   loadAndSaveMembersList = async condition => {
+    if (condition && condition !== '') {
+      this.setState({
+        offset: 0,
+        elements: [],
+        search: condition
+      });
+    }
+    if (condition == '') {
+      this.setState({
+        offset: 0,
+        elements: [],
+        search: null
+      });
+    }
     const { groupDetails, groupMembers } = this.props;
+    const { offset, search } = this.state;
     const resp = await this.props.loadData(
       members.get(
         {
           groupId: groupDetails.id,
           limit: 12,
-          offset: this.state.offset
+          offset: offset,
+          search: search
         },
         '/GetGroupMembers',
         false,
@@ -71,6 +108,27 @@ export class Features extends Component {
       membersInfo: {...resp.data},
     });
     this.props.setData(resp.data, 'groupMembers');
+  };
+
+  handleChange = name => event => {
+    this.setState({
+      [name]: event.target.value,
+    });
+  };
+
+  handleSubmit = (e) => {
+    if(e.charCode === 13) {
+      const condition = e.target.value;
+      this.loadAndSaveMembersList(condition);
+    }
+  };
+
+  handleBlur = () => {
+    document.removeEventListener('keypress', this.handleSubmit);
+  };
+
+  handleFocus = () => {
+    document.addEventListener('keypress', this.handleSubmit);
   };
 
   render() {
@@ -105,34 +163,46 @@ export class Features extends Component {
                   </div>
                 </Grid>
                 <Grid item xs={4} sm={4}>
+                  <FormControl>
+                    <TextField
+                      InputProps={{
+                        className: "field-search-input",
+                        onBlur: this.handleBlur,
+                        onFocus: this.handleFocus,
+                      }}
+                      id="outlined-search"
+                      className='field-search'
+                      placeholder='Search in Group'
+                      type="search"
+                      /*onChange={(e) => this.handleChange(e)}*/
+                      margin="normal"
+                      variant="filled"
+                    />
+                  </FormControl>
                   <TextField
+                    id="outlined-select"
                     InputProps={{
-                      className: "field-search-input"
+                      className: "field-search-input",
                     }}
-                    id="outlined-search"
-                    className='field-search'
-                    placeholder='Search in Group'
-                    type="search"
-                    /*onChange={this.handleChange('age')}*/
-                    margin="normal"
-                    variant="filled"
-                  />
-                  <TextField
-                    InputProps={{
-                      className: "field-search-input"
-                    }}
-                    id="outlined-number"
-                    className='field-sort'
+                    select
+                    className='field-select'
+                    value={this.state.orderBy}
+                    onChange={this.handleChange('orderBy')}
                     placeholder='Sort By:'
-                    value='STATE'
-                    /*onChange={this.handleChange('age')}*/
-                    type="number"
-                    InputLabelProps={{
-                      shrink: true,
-                    }}
+                    /*SelectProps={{
+                      MenuProps: {
+                        className: classes.menu,
+                      },
+                    }}*/
                     margin="normal"
                     variant="outlined"
-                  />
+                  >
+                    {orderBy.map(option => (
+                      <MenuItem key={option.value} value={option.value} disabled={(option.value == 'Sort By:')}>
+                        {option.label}
+                      </MenuItem>
+                    ))}
+                  </TextField>
                 </Grid>
               </Grid>
             </Grid>
@@ -174,7 +244,7 @@ export class Features extends Component {
           <Grid container spacing={0} justify="center">
             <Grid item xs={10} sm={10}>
               <InfiniteScroll
-                next={() => this.loadAndSaveMembersList('scroll')}
+                next={() => this.loadAndSaveMembersList()}
                 dataLength={this.state.elements.length}
                 hasMore={
                   elements.length <
@@ -196,7 +266,12 @@ export class Features extends Component {
                           backgroundImage: `url(${'/static/svg/placeholder_add.svg'})`,
                         }}
                         className="grid-info-list"
-                      />
+                      >
+                        <div className="grid-info-list-info">
+                          <p className="info-member-name">+ Add Profile</p>
+                          <p className="info-member-title">Press here</p>
+                        </div>
+                      </div>
                     </div>
                   </Grid>
                   {elements.map((item, index) => {
