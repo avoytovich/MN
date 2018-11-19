@@ -1,15 +1,15 @@
-
-.landing{
+.landing {
   &-container {
-    background-color:  white;
+    background-color: white;
     background-repeat: no-repeat, no-repeat;
     background-size: cover;
 
-    .landing-green-btn, .landing-white-btn{
+    .landing-green-btn,
+    .landing-white-btn {
       padding: 10px 23px;
-      border-radius:50px;
+      border-radius: 50px;
       border: solid 2px #22b6b6;
-      span{
+      span {
         font-family: Roboto, Helvetica, sans-serif;
         font-size: 17px;
         font-weight: 500;
@@ -20,39 +20,35 @@
         color: #ffffff;
       }
     }
-    .landing-green-btn{
+    .landing-green-btn {
       padding: 10px 34px;
       margin-left: 13px;
       background-color: #22b6b6;
-      span{
-        color:#ffffff;
+      span {
+        color: #ffffff;
       }
 
-      &:hover{
-
+      &:hover {
         background-color: white;
-        span{
-          color:#22b6b6;
+        span {
+          color: #22b6b6;
         }
       }
     }
-    .landing-white-btn{
-
+    .landing-white-btn {
       background-color: white;
-      span{
-        color:#22b6b6;
+      span {
+        color: #22b6b6;
       }
-      &:hover{
+      &:hover {
         background-color: #22b6b6;
-        span{
-          color:#ffffff;
+        span {
+          color: #ffffff;
         }
-
       }
     }
-
   }
-  &-auth-btn{
+  &-auth-btn {
     font-family: Poppins;
     font-size: 20px;
     font-weight: normal;
@@ -62,55 +58,54 @@
     letter-spacing: normal;
     color: #ffffff;
     margin-top: 15px;
-    position:relative;
+    position: relative;
     cursor: pointer;
-    &:after{
-      content:"";
-      position:absolute;
-      width:1px;
-      height:13px;
+    &:after {
+      content: '';
+      position: absolute;
+      width: 1px;
+      height: 13px;
       border-left: dotted 1px white;
       top: 9px;
       left: 106px;
     }
-    &:first-child{
+    &:first-child {
       margin-top: 17px;
       margin-right: 74px;
     }
-    &:nth-child(2){
+    &:nth-child(2) {
       margin-right: 51px;
       margin-top: 17px;
-      &:after{
-        left:99px;
+      &:after {
+        left: 99px;
       }
     }
-    &:last-child{
+    &:last-child {
       margin-right: 25px;
-      margin-top:16px;
-      &:after{
-        content:none;
+      margin-top: 16px;
+      &:after {
+        content: none;
       }
     }
   }
-  &-wrapper{
+  &-wrapper {
     margin: 0 auto;
     max-width: 1168px;
   }
-  &-header{
+  &-header {
     position: absolute;
     height: 80px;
     background-color: transparent;
-
   }
-  &-logo{
+  &-logo {
     width: 64px;
     height: 60px;
-    background-image: url("/static/png/logo-image.png");
+    background-image: url('/static/png/logo-image.png');
     background-repeat: no-repeat;
     background-position: center;
     background-size: cover;
     margin: 8px 9px 0 24px;
-    &-title{
+    &-title {
       font-family: Poppins;
       font-size: 39px;
       font-weight: 500;
@@ -121,16 +116,16 @@
       color: #000000;
     }
   }
-  &-top{
-    &-container{
+  &-top {
+    &-container {
       height: 100vh;
-      margin:0;
-      background-image: url("/static/png/landing-bg.png");
+      margin: 0;
+      background-image: url('/static/png/landing-bg.png');
       background-repeat: no-repeat;
       background-position: center;
       background-size: cover;
     }
-    &-title{
+    &-title {
       margin: 0;
       padding-top: 25.5vh;
       font-family: Poppins;
@@ -143,11 +138,11 @@
       line-height: 70.8px;
       font-weight: 900;
     }
-    &-btns-container{
+    &-btns-container {
       margin-top: 43px;
     }
   }
-  &-title{
+  &-title {
     font-family: Poppins;
     font-size: 58px;
     font-weight: 600;
@@ -156,9 +151,9 @@
     line-height: normal;
     letter-spacing: 1.4px;
     color: #191a1b;
-    text-transform:uppercase
+    text-transform: uppercase;
   }
-  &-description{
+  &-description {
     font-family: Poppins;
     font-size: 30px;
     font-weight: normal;
@@ -169,18 +164,18 @@
     color: #32335f;
   }
 
-  &-introducing{
-    &-dots-container{
+  &-introducing {
+    &-dots-container {
       height: 89px;
-      background-image: url("/static/png/landing-dots.png");
+      background-image: url('/static/png/landing-dots.png');
     }
-    &-container{
-      .landing-title{
+    &-container {
+      .landing-title {
         transform: translateY(34px);
       }
 
-      .landing-introducing-top{
-        .landing-description{
+      .landing-introducing-top {
+        .landing-description {
           width: 501px;
           margin-top: 271px;
           margin-left: 86.8px;
@@ -188,8 +183,8 @@
           letter-spacing: 0.1px;
         }
       }
-      .landing-introducing-bottom{
-        .landing-description{
+      .landing-introducing-bottom {
+        .landing-description {
           width: 569px;
           margin-left: 58.2px;
           margin-top: 219px;
@@ -206,13 +201,13 @@
       }
     }
 
-    &-left-img{
+    &-left-img {
       margin-top: 81px;
       width: 442.5px;
       height: 542px;
       margin-left: 7px;
     }
-    &-right-img{
+    &-right-img {
       width: 455px;
       margin-left: 77px;
       margin-top: 26px;
@@ -220,59 +215,58 @@
     }
   }
 
-  &-advantages-container{
+  &-advantages-container {
     height: 681px;
-    background-image: url("/static/jpg/landeeng-adnantages-bg.jpg");
+    background-image: url('/static/jpg/landeeng-adnantages-bg.jpg');
     background-repeat: no-repeat;
     background-size: cover;
     background-position: center;
-    position:relative;
+    position: relative;
     display: flex;
-    &:after{
-      content:'';
+    &:after {
+      content: '';
       position: absolute;
       left: 0;
       right: 0;
-      top:0;
+      top: 0;
       bottom: 0;
-      background-color:rgba(34, 182, 182, 0.33);
+      background-color: rgba(34, 182, 182, 0.33);
     }
   }
 
-  &-video{
+  &-video {
     height: 465px;
-    &-container{
+    &-container {
       .landing-title {
         margin: 58px 0 0;
         transform: translateY(-2px);
       }
     }
 
-    .video-react{
+    .video-react {
       margin: 0 auto;
     }
 
-    &-dots-container{
+    &-dots-container {
       height: 89px;
-      background-image: url("/static/png/landing-dots.png");
+      background-image: url('/static/png/landing-dots.png');
     }
   }
 
-  &-advantage{
+  &-advantage {
     width: 20%;
     position: relative;
-    &:not(:last-child):after{
+    &:not(:last-child):after {
       content: '';
       position: absolute;
       right: 0;
       top: 0;
       height: 100%;
-      width:4px;
+      width: 4px;
       opacity: 0.2;
       background-color: #ffffff;
-
     }
-    &-title{
+    &-title {
       font-family: Poppins;
       font-size: 70px;
       font-weight: 500;
@@ -285,7 +279,7 @@
       margin-bottom: 36px;
       margin-left: 42px;
     }
-    &-description{
+    &-description {
       font-family: Poppins;
       font-size: 16px;
       font-weight: 300;
@@ -298,8 +292,8 @@
       margin: 0 auto;
     }
   }
-  &-responses{
-    &-title{
+  &-responses {
+    &-title {
       font-family: Poppins;
       font-size: 48px;
       font-weight: normal;
@@ -308,19 +302,19 @@
       line-height: normal;
       letter-spacing: normal;
       color: #191a1b;
-      text-align:center;
+      text-align: center;
       margin: 159px auto 67px;
     }
-   &-wrapper{
-     margin: 0 auto;
-     display: flex;
-     justify-content: space-between;
-   }
-    &-container{
+    &-wrapper {
+      margin: 0 auto;
+      display: flex;
+      justify-content: space-between;
+    }
+    &-container {
       padding-bottom: 151px;
       position: relative;
     }
-    &-circle{
+    &-circle {
       position: absolute;
       width: 912px;
       height: 912px;
@@ -328,7 +322,7 @@
       left: -257px;
       bottom: 123px;
       transform: rotate(28deg);
-      &:after{
+      &:after {
         content: '';
         position: absolute;
         width: 912px;
@@ -337,7 +331,7 @@
         border-radius: 100%;
         height: 912px;
       }
-      &:before{
+      &:before {
         content: '';
         position: absolute;
         width: 250px;
@@ -350,16 +344,15 @@
         z-index: 2;
       }
     }
-
   }
-  &-response{
-    max-width:366px;
-    min-height:222px;
+  &-response {
+    max-width: 366px;
+    min-height: 222px;
     box-shadow: 0 8px 24px 0 rgba(0, 0, 0, 0.1);
     position: relative;
     z-index: 2;
     background-color: white;
-    &-triangle{
+    &-triangle {
       z-index: 1;
       width: 84px;
       height: 82px;
@@ -368,8 +361,8 @@
       bottom: -30px;
       left: -57.4px;
       transform: rotate(-33deg);
-      &:after{
-        content: "";
+      &:after {
+        content: '';
         position: absolute;
         width: 41px;
         height: 32px;
@@ -381,7 +374,7 @@
       }
     }
 
-    &-title{
+    &-title {
       font-family: Lato;
       font-size: 17px;
       font-weight: 300;
@@ -392,7 +385,7 @@
       color: #666c77;
       margin: 17.5px 26px 0 26px;
     }
-    &-author{
+    &-author {
       font-family: Lato;
       font-size: 17px;
       font-weight: bold;
@@ -403,53 +396,51 @@
       color: #344554;
       margin: 40.5px 0 0 19px;
     }
-    &-icon{
-      margin-left:auto;
+    &-icon {
+      margin-left: auto;
     }
-    &:nth-child(1){
+    &:nth-child(1) {
       transform: translateY(-31px);
       .landing-response-author {
         margin: 13.5px 0 0 25px;
-
       }
 
-      .landing-response-icon{
+      .landing-response-icon {
         width: 55px;
         height: 55px;
-        margin-right:1px
+        margin-right: 1px;
       }
     }
-    &:nth-child(2){
+    &:nth-child(2) {
       .landing-response-author {
         margin: 15.5px 0 0 27px;
-
       }
-      .landing-response-icon{
+      .landing-response-icon {
         width: 87px;
         height: 27px;
         margin-top: 16px;
         margin-right: 13px;
       }
     }
-    &:nth-child(3){
-      .landing-response-author{
+    &:nth-child(3) {
+      .landing-response-author {
         margin: 41.5px 0 0 25px;
       }
-      .landing-response-icon{
-        width:61px;
-        height:61px;
+      .landing-response-icon {
+        width: 61px;
+        height: 61px;
         margin-right: 11px;
         margin-top: 25px;
       }
     }
   }
 
-  &-contact-us{
-    &-container{
+  &-contact-us {
+    &-container {
       background-color: #f3f6fd;
       padding-bottom: 28px;
     }
-    &-title{
+    &-title {
       font-family: Poppins;
       font-size: 41px;
       font-weight: 500;
@@ -462,7 +453,7 @@
       text-align: center;
       padding-top: 58px;
     }
-    &-text{
+    &-text {
       font-family: Poppins;
       text-align: center;
       font-size: 23px;
@@ -474,14 +465,14 @@
       color: #191a1b;
       margin: 23px auto 0;
     }
-    &-wrapper{
+    &-wrapper {
       display: flex;
       margin-top: 39.5px;
-      justify-content:space-around;
+      justify-content: space-around;
     }
-    &-item{
-      max-width:269px;
-      &-text{
+    &-item {
+      max-width: 269px;
+      &-text {
         font-family: Poppins;
         font-size: 18px;
         font-weight: 300;
@@ -491,15 +482,13 @@
         letter-spacing: normal;
         text-align: center;
         color: #191a1b;
-
       }
-      &-icon{
-        display:block !important;
+      &-icon {
+        display: block !important;
         margin: 0 auto;
       }
-      &:first-child{
+      &:first-child {
         .landing-contact-us-item-text {
-
           margin-top: 4px;
         }
         .landing-contact-us-item-icon {
@@ -508,9 +497,8 @@
           font-size: 15.5px;
         }
       }
-      &:nth-child(2){
+      &:nth-child(2) {
         .landing-contact-us-item-text {
-
           margin-top: 6px;
         }
         .landing-contact-us-item-icon {
@@ -519,9 +507,8 @@
           font-size: 15.5px;
         }
       }
-      &:last-child{
+      &:last-child {
         .landing-contact-us-item-text {
-
           margin-top: 4px;
         }
         .landing-contact-us-item-icon {
@@ -529,16 +516,18 @@
           height: 3.6em;
           font-size: 15.5px;
           margin-top: 7px;
+          color: black;
         }
       }
     }
   }
-  &-footer{
-    &-container{
+  &-footer {
+    &-container {
       height: 80px;
       background-color: #1c3d77;
     }
-    &-link, &-copyright{
+    &-link,
+    &-copyright {
       font-family: Poppins;
       font-size: 15px;
       font-weight: 300;
@@ -550,18 +539,17 @@
 
       margin-top: 27px;
     }
-    &-link{
+    &-link {
       text-decoration: none;
 
-      &:first-child{
+      &:first-child {
         margin-left: 41px;
         margin-right: 52px;
       }
     }
-    &-copyright{
+    &-copyright {
       margin-left: auto;
       margin-right: 34px;
     }
   }
-
 }

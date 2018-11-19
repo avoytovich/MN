@@ -218,25 +218,28 @@ export default class App extends React.Component {
               Interested in signing your organization up? Contact us.
             </p>
             <div className="landing-contact-us-wrapper">
-              <div className="landing-contact-us-item">
-                <PlaceIcon className="landing-contact-us-item-icon" />
-                <p className="landing-contact-us-item-text">
-                  202 Bicknell Ave, Ground Floor Santa Monica CA 90405
-                </p>
-              </div>
-              <div className="landing-contact-us-item">
-                <MailIcon
-                  href="mailto:support@metknow.com"
-                  className="landing-contact-us-item-icon"
-                />
-                <p className="landing-contact-us-item-text">
-                  support@metknow.com
-                </p>
-              </div>
-              <div className="landing-contact-us-item">
-                <PhoneIcon className="landing-contact-us-item-icon" />
-                <p className="landing-contact-us-item-text">+(965)463-7382</p>
-              </div>
+              <a href="https://www.google.com/maps/place/202+Bicknell+Ave,+Santa+Monica,+CA+90405">
+                <div className="landing-contact-us-item">
+                  <PlaceIcon className="landing-contact-us-item-icon" />
+                  <p className="landing-contact-us-item-text">
+                    202 Bicknell Ave, Ground Floor Santa Monica CA 90405
+                  </p>
+                </div>
+              </a>
+              <a href="mailto:support@metknow.com">
+                <div className="landing-contact-us-item">
+                  <MailIcon className="landing-contact-us-item-icon" />
+                  <p className="landing-contact-us-item-text">
+                    support@metknow.com
+                  </p>
+                </div>
+              </a>
+              <a href="tel:965-463-7382">
+                <div className="landing-contact-us-item">
+                  <PhoneIcon className="landing-contact-us-item-icon" />
+                  <p className="landing-contact-us-item-text">+(965)463-7382</p>
+                </div>
+              </a>
             </div>
           </div>
         </Grid>
