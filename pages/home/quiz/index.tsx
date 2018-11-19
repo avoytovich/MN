@@ -4,8 +4,8 @@ import {
   WithRouterProps,
   SingletonRouter,
 } from 'next/router';
-import Link from 'next/link';
-import { Grid, Button } from '@material-ui/core';
+import { Link } from '../../../routes';
+import { Grid, Button, NoSsr } from '@material-ui/core';
 import Layout from 'components/MyLayout';
 import SecondPanel from 'components/secondpanel';
 import QuizShow from 'components/quiz';
@@ -32,7 +32,7 @@ class Quiz extends React.Component<Props> {
                 key={'quiz-progress'}/>
               ]}
               actionButtons={[
-                <Link href="/home/manage-groups" key={'buttonone'}>
+                <Link route="group" params={{ id: query.id }} key={'buttonone'}>
                   <a>
                     <Button variant="outlined" color="primary">
                       Back

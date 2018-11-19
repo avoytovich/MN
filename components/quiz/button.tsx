@@ -71,11 +71,12 @@ export interface ButtonProps extends WithStyles<typeof styles> {
     title: string,
     letter: string,
     callback: (key:number) => (any),
-    status: Status
+    status: Status,
+    disabled: boolean
 }
 
-const AnswerButton: React.SFC<ButtonProps> = ({ status, callback, classes, title, letter }) => (
-    <Button onClick={callback} className={classNames(classes.button, classes[status])} variant="contained" color="primary">
+const AnswerButton: React.SFC<ButtonProps> = ({ disabled, status, callback, classes, title, letter }) => (
+    <Button disabled={disabled}  onClick={callback} className={classNames(classes.button, classes[status])} variant="contained" color="primary">
         <div className={classNames(classes.letter)}>{letter}</div>
         {title}
     </Button>

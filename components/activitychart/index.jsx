@@ -163,10 +163,10 @@ export default class ActivityChart extends Component {
               <SelectGroup items={['Some subgroup', 'Brand new subgroup']} />
             </Grid>
             <Grid item xs={3}>
-              <SearchField label="Search by Name" />
+              {/* <SearchField label="Search by Name" /> */}
             </Grid>
           </Grid>
-          <ActivityTable keys={keys} data={data} />
+          {/* <ActivityTable keys={keys} data={data} /> */}
         </Paper>
       </div>
     );
