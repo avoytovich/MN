@@ -92,9 +92,15 @@ export default (state = initialState, action: any) => {
             return group;
           })
         };
+      else{
+        const filtered = reverse(sortBy([...state.groups, action.data], group => moment(group.dateOfLastUpdate).unix()));
+        return {
+          ...state,
+          groups: filtered
+        }
+      }
         return state;
     case GET_GROUPS:
-        
       const filtered = reverse(sortBy(uniqBy([...state.groups, ...action.data], 'id'), group => moment(group.dateOfLastUpdate).unix()));
       return Object.assign({}, state, {
         ...state,

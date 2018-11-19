@@ -34,7 +34,7 @@ export const getSingle = params =>
 export const createGroup = data =>
   dispatchSend('create_group', request.put('/CreateGroup', data), {
     start_action: START_LOAD,
-    receiveAction: END_LOAD,
+    receiveAction: ADD_GROUP,
     adaptData: resp => {
       console.log(resp);
       return resp;
