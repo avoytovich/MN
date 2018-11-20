@@ -114,3 +114,13 @@ export const moveOnQuiz = () => (dispatch, getState) => {
     name: 'currentQuiz'
   })
 } 
+export const sendResults = (results) => 
+  dispatchSend('send_results', quizRequest.post('/SaveQuizResult', results), {
+    receiveAction: END_LOAD,
+    adaptData: r => r,
+    adaptError: err => {
+      if (err.response)
+        return err.response.data.errors[0].message;
+      else return "Error load quiz";
+    }
+  })

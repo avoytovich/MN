@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Typography, Divider, withStyles, Avatar } from '@material-ui/core';
+import { Typography, Divider, withStyles, List, ListItem, ListItemText, Avatar } from '@material-ui/core';
 import moment from 'moment';
 import Link from 'next/link';
 import { Link as TheLink } from '../../../routes';
@@ -32,9 +32,22 @@ const styles = theme => ({
     lineHeight: 'normal'
   },
   avatar: {
+    marginTop: 15,
     width: 80,
     height: 80,
-    
+  },
+  subgroupText: {
+    fontSize: 17,
+    fontWeight: 'bold'
+  },
+  subgroupList: {
+    position: 'relative',
+    overflow: 'auto',
+    maxHeight: 88,
+  },
+  listItem: {
+    paddingTop: 0,
+    paddingBottom: 0
   }
 });
 
@@ -58,14 +71,14 @@ export default class GroupInfo extends Component {
     } = this.props;
     return (
       <div className="d-flex f-row group-info-wrapper">
-        <Avatar className={classes.avatar} src={info.icon || '/static/png/icon-group.png'}/>
+        <Avatar className={classes.avatar} src={info.icon || '/static/png/icon-group.png'} />
         <div className="group-icon" />
         <div className="d-flex f-column margin-info">
           <Link
             href={{ pathname: '/home/manage-groups/group', query: { id } }}
             as={`/home/manage-groups/group/${id}`}
           >
-            <a style={{margin: 0}}>
+            <a style={{ margin: 0 }}>
               <Typography
                 className="group-name"
                 variant="subheading"
@@ -81,6 +94,17 @@ export default class GroupInfo extends Component {
             Last update{' '}
             {moment(info.dateOfLastUpdate).format('DD/MM/YYYY h:mm a')}
           </Typography>
+          <List className={classes.subgroupList}>
+            {
+              info.subgroups.map((subgroup, key) => (
+                <ListItem className={classes.listItem}  key={`subgroup-${key}`}> 
+                  <ListItemText className={classes.subgroupText}>
+                    {subgroup.name}
+                  </ListItemText>
+                </ListItem>
+              ))
+            }
+          </List>
           <div className="actions-block d-flex jcc ai-center">
             <div className="d-flex edit ai-center">
               <div className="icon" />
@@ -88,7 +112,7 @@ export default class GroupInfo extends Component {
                 route="editgroup" params={{
                   id: info.id
                 }}
-                >
+              >
                 <a >
                   <Typography className="edit-text" variant="caption">
                     edit

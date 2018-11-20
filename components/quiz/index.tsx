@@ -13,7 +13,7 @@ import * as StaticAvatar from 'static/png/image-member.png';
 import * as Line from 'static/png/line.png';
 import AnswerButton, { Status } from './button';
 import styles from './styles';
-import { loadQuiz, moveOnQuiz } from 'actions/groups';
+import { loadQuiz, moveOnQuiz, sendResults } from 'actions/groups';
 import { connect } from 'react-redux';
 import { updateSpecData, resetData } from 'actions/updateData';
 import get from 'lodash/get';
@@ -21,6 +21,7 @@ import map from 'lodash/map';
 import { number } from 'prop-types';
 import { bindActionCreators, Dispatch } from 'redux';
 import { UPDATE_SPEC_DATA } from 'constants/actions';
+
 class QuizShow extends React.Component<Props> {
   componentDidMount = async () => {
     const data = await this.props.loadQuiz({ groupId: this.props.groupId });
@@ -48,6 +49,14 @@ class QuizShow extends React.Component<Props> {
   componentWillUnmount = () => {
     this.props.resetData('currentQuiz');
   }
+
+  componentDidUpdate = async(prevProps: Props) => {
+    if(this.props.isFinished === true)
+    {
+      // await  
+    }
+  }
+
   render() {
     const { classes } = this.props;
     let inner = null;
@@ -143,7 +152,8 @@ interface Props extends WithStyles<typeof styles> {
   loading: boolean, 
   correct: number,
   wrong: number,
-  resetData: Function
+  resetData: Function,
+  sendResults: Function
 }
 
 
@@ -154,5 +164,6 @@ export default connect(
     loadQuiz,
     moveOnQuiz,
     updateSpecData,
+    sendResults
   }
 )(withStyles(styles)(QuizShow));

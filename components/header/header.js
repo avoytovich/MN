@@ -71,7 +71,7 @@ export default class Header extends Component {
         <Grid alignItems="center" justify="flex-end" container>
           <Avatar
             className={classes.avatar}
-            src="/static/png/image-member.png"
+            src="/static/png/defaultAvatar.png"
           />
           <div className="icon-dropdown">
             <LongMenu />

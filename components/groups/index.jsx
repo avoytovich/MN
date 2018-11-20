@@ -18,7 +18,9 @@ const styles = theme => ({
   item: {
     display: 'flex',
     flexDirection: 'row',
-    height: 225
+    minHeight: 225,
+    paddingTop: 0,
+    paddingBottom: 0
   },
   list: {
     minHeight: 700
