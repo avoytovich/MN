@@ -2,6 +2,7 @@ import { Component, Fragment } from 'react';
 import { Grid, IconButton, TextField, FormControl, MenuItem } from '@material-ui/core';
 import CreateIcon from '@material-ui/icons/Create';
 import { withRouter } from 'next/router';
+import Link from 'next/link';
 import InfiniteScroll from 'react-infinite-scroll-component';
 import qs from "qs";
 import { connect } from 'react-redux';
@@ -15,10 +16,6 @@ import loading from '../../services/decorators/loading';
 import "./features.sass";
 
 const orderBy = [
-  {
-    value: 'Sort By:',
-    label: 'Sort By:'
-  },
   {
     value: 'firstname',
     label: 'firstname',
@@ -55,7 +52,7 @@ export class Features extends Component {
           total_count: 0
         }
       },
-      orderBy: 'Sort By:',
+      orderBy: '',
     }
   }
 
@@ -64,13 +61,20 @@ export class Features extends Component {
   }
 
   componentDidUpdate(prevProps, prevState) {
-    if (this.state.membersInfo === {}) {
-      this.loadAndSaveMembersList();
+    const { orderBy } = this.state;
+    if (orderBy !== prevState.orderBy) {
+      this.loadAndSaveMembersList(orderBy);
     }
   }
 
   loadAndSaveMembersList = async condition => {
-    if (condition && condition !== '') {
+    if (condition == 'firstname' || condition ==  'lastname') {
+      this.setState({
+        offset: 0,
+        orderBy: condition
+      });
+    }
+    if (condition && condition !== '' && condition != 'firstname' && condition != 'lastname') {
       this.setState({
         offset: 0,
         elements: [],
@@ -85,14 +89,15 @@ export class Features extends Component {
       });
     }
     const { groupDetails, groupMembers } = this.props;
-    const { offset, search } = this.state;
+    const { offset, search, orderBy } = this.state;
     const resp = await this.props.loadData(
       members.get(
         {
           groupId: groupDetails.id,
           limit: 12,
           offset: offset,
-          search: search
+          search: search,
+          orderBy: orderBy,
         },
         '/GetGroupMembers',
         false,
@@ -259,19 +264,21 @@ export class Features extends Component {
                   className="infinite-scroll-component-list">
                   <Grid item xs={6} sm={3}>
                     <div className="grid-info">
-                      <div
-                        //ref={this.member}
-                        //onClick={() => this.handleClick(slug)}
-                        style={{
-                          backgroundImage: `url(${'/static/svg/placeholder_add.svg'})`,
-                        }}
-                        className="grid-info-list"
-                      >
-                        <div className="grid-info-list-info">
-                          <p className="info-member-name">+ Add Profile</p>
-                          <p className="info-member-title">Press here</p>
+                      <Link href={{ pathname: '/edit-member', query: { groupId: groupDetails.id } }}>
+                        <div
+                          //ref={this.member}
+                          //onClick={() => this.handleClick(slug)}
+                          style={{
+                            backgroundImage: `url(${'/static/svg/placeholder_add.svg'})`,
+                          }}
+                          className="grid-info-list"
+                        >
+                          <div className="grid-info-list-info">
+                            <p className="info-member-name">+ Add Profile</p>
+                            <p className="info-member-title">Press here</p>
+                          </div>
                         </div>
-                      </div>
+                      </Link>
                     </div>
                   </Grid>
                   {elements.map((item, index) => {
@@ -280,24 +287,27 @@ export class Features extends Component {
                       lastName,
                       title,
                       imageContent,
+                      id
                     } = item;
                     return (
                       <Grid key={index} item xs={6} sm={3}>
                         <div className="grid-info">
-                          <div
-                            //ref={this.member}
-                            //onClick={() => this.handleClick(slug)}
-                            style={{
-                              backgroundImage: `url(${_get(imageContent, 'mediumImage') ||
-                              '/static/svg/placeholder.svg'})`,
-                            }}
-                            className="grid-info-list"
-                          >
-                            <div className="grid-info-list-info">
-                              <p className="info-member-name">{`${firstName} ${lastName}`}</p>
-                              <p className="info-member-title">{title}</p>
+                          <Link href={{ pathname: '/edit-member', query: { memberId: id } }}>
+                            <div
+                              //ref={this.member}
+                              //onClick={() => this.handleClick(slug)}
+                              style={{
+                                backgroundImage: `url(${_get(imageContent, 'mediumImage') ||
+                                '/static/svg/placeholder.svg'})`,
+                              }}
+                              className="grid-info-list"
+                            >
+                              <div className="grid-info-list-info">
+                                <p className="info-member-name">{`${firstName} ${lastName}`}</p>
+                                <p className="info-member-title">{title}</p>
+                              </div>
                             </div>
-                          </div>
+                          </Link>
                           {/*<div className="info">
                             <Typography
                               variant="button"
