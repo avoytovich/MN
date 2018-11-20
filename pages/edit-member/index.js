@@ -61,7 +61,6 @@ export default class Member extends Component {
               groupId={groupId}
               memberId = {memberId}
             />
-            <Footer />
           </Layout>
         </Grid>
       </Grid>
