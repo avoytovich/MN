@@ -1,6 +1,12 @@
 import React, { Component } from 'react';
 import Link from 'next/link';
-import { Grid, Typography, AppBar, withStyles, Avatar } from '@material-ui/core';
+import {
+  Grid,
+  Typography,
+  AppBar,
+  withStyles,
+  Avatar
+} from '@material-ui/core';
 import LongMenu from './icon-dropdown/icon-dropdown';
 
 import '../../sass/common.scss';
@@ -32,14 +38,14 @@ export default class Header extends Component {
       href: '/',
       title: 'ADMIN',
       variant: 'display2',
-      className: 'group-first-item',
+      className: 'group-first-item'
     },
     {
       href: '/home/manage-groups',
       title: 'GROUPS',
       variant: 'display2'
     },
-    { href: '/contact', title: 'CONTACT US', variant: 'display2' }
+    { href: '/#landing-contact-us', title: 'CONTACT US', variant: 'display2' }
   ];
 
   render() {
