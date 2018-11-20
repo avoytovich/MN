@@ -57,7 +57,6 @@ export default class Profile extends Component {
               user={this.state}
               handleEdit={this.handleEdit}
             />
-            <Footer />
           </Layout>
         </Grid>
       </Grid>
