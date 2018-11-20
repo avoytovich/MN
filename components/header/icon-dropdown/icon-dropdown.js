@@ -17,7 +17,7 @@ const ITEM_HEIGHT = 48;
 // @i18n('menu')
 class LongMenu extends React.Component {
   state = {
-    anchorEl: null,
+    anchorEl: null
   };
 
   handleClick = event => {
@@ -38,9 +38,8 @@ class LongMenu extends React.Component {
           aria-label="More"
           aria-owns={open ? 'long-menu' : null}
           aria-haspopup="true"
-          onClick={this.handleClick}
-        >
-          <ExpandMore style={{color: "white"}}/>
+          onClick={this.handleClick}>
+          <ExpandMore style={{ color: 'white' }} />
         </IconButton>
         <Menu
           id="long-menu"
@@ -50,15 +49,16 @@ class LongMenu extends React.Component {
           PaperProps={{
             style: {
               maxHeight: ITEM_HEIGHT * 4.5,
-              width: 200,
-            },
-          }}
-        >
+              width: 200
+            }
+          }}>
           {menuProps.map(option => (
-            <Link href={{ pathname: '/edit-profile' } }>
-
-              <MenuItem key={option.translateVariable} selected={option.translateVariable === 'LogIn'} onClick={this.handleClose}>
-                {(option.translateVariable)}
+            <Link href={{ pathname: '/edit-profile' }}>
+              <MenuItem
+                key={option.translateVariable}
+                selected={option.translateVariable === 'Login'}
+                onClick={this.handleClose}>
+                {option.translateVariable}
               </MenuItem>
             </Link>
           ))}
