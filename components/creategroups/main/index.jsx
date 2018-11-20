@@ -41,7 +41,6 @@ const Main = ({ classes, open, setFieldValue, errors, icon, values }) => {
           <Typography onClick={() => open(true)} className={classes.sgi}>
             Select Group Icon
           </Typography>
-          <SS />
         </div>
         <Field
           fullWidth

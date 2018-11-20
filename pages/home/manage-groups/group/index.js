@@ -1,7 +1,8 @@
 import { Component, Fragment } from 'react';
 import { withRouter } from 'next/router';
+import { Link } from '../../../../routes';
 import { connect } from 'react-redux';
-import {bindActionCreators} from "redux";
+import { bindActionCreators } from "redux";
 import { get as _get } from 'lodash';
 import qs from "qs";
 import { Button } from '@material-ui/core';
@@ -9,9 +10,9 @@ import { Button } from '@material-ui/core';
 import Layout from 'components/MyLayout';
 import SecondPanel from 'components/secondpanel';
 import Features from 'components/features';
-import {group} from "../../../../services/cruds";
+import { group } from "../../../../services/cruds";
 import loading from "../../../../services/decorators/loading";
-import {setData} from "../../../../actions/updateData";
+import { setData } from "../../../../actions/updateData";
 
 import "./group.sass";
 
@@ -82,6 +83,7 @@ export class Group extends Component {
     const { groupDetails } = this.props;
     if (!groupDetails) return null;
     const data = _get(groupDetails, 'data');
+    const quizAvailable = !!data.images.length;
     return (
       <Fragment>
         <Layout>
@@ -92,15 +94,23 @@ export class Group extends Component {
                 </Button>
               ]}*/
               actionButtons={[
-                <Button variant="contained" color="primary" className="custom-button-material">
-                  ? Start A QUIZ
-                </Button>
+                quizAvailable === true?
+                <Link key="link-quiz" route="quiz" params={{
+                  id: data.id
+                }}>
+                  <a>
+                    <Button variant="contained" color="primary" className="custom-button-material">
+                      ? Start A QUIZ
+                  </Button>
+                  </a>
+                </Link>
+                : undefined
               ]}
               breadCrumb={`${this.titlePath(pathname)} / ${this.titleCase(data.name)}`}
               title="Group Content"
             />
           </div>
-          <Features groupDetails={data}/>
+          <Features groupDetails={data} />
         </Layout>
       </Fragment>
     );

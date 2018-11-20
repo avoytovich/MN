@@ -1,5 +1,5 @@
 import { Component, Fragment } from 'react';
-import { Typography, Grid, withStyles, createStyles, WithStyles } from '@material-ui/core';
+import { Typography, Grid, withStyles, createStyles, WithStyles, Theme } from '@material-ui/core';
 
 import BreadCrumbs from './breadcrumbs';
 
@@ -24,8 +24,7 @@ const styles = (theme:Theme) => createStyles({
   }
 })
 
-@withStyles(styles)
-export default class SecondPanel extends Component<PanelProps> {
+class SecondPanel extends Component<PanelProps> {
   render() {
     const { title, breadCrumb, actionButtons = [], centerButtons = [], classes } = this.props;
 
@@ -49,3 +48,5 @@ export default class SecondPanel extends Component<PanelProps> {
     );
   }
 }
+
+export default withStyles(styles)(SecondPanel);

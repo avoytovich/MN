@@ -5,6 +5,11 @@
   margin-top: 14px;
 }
 
+.group-info-wrapper{
+  align-self: stretch;
+  padding-top: 5px;
+}
+
 .last-update{
   margin-top: 8px;
   font-size: 13px;
@@ -15,14 +20,15 @@
 .margin-info{
   width: 300px;
   margin-left: 21px;
+  padding-top: 10px;
 }
 
 .actions-block{
   position: relative;
-  top: 38px;
+  justify-self: flex-end;
   height: 58px;
   border-top: 1px solid #e7e7e7;
-
+  margin-top: auto;
 }
 .actions-block span {
   text-transform: uppercase;

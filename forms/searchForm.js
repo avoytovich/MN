@@ -34,8 +34,7 @@ import { resetData, updateSpecData } from 'actions/updateData';
         name,
         membername: memberName
       });
-    }
-      
+    }    
   }
 })
 export default class SearchForm extends React.Component {
@@ -45,6 +44,7 @@ export default class SearchForm extends React.Component {
   }
   render() {
     const { values } = this.props;
+
     return (
       <form onSubmit={this.props.handleSubmit}>
         <div className="d-flex search-form f-row jcc ai-center">
@@ -53,6 +53,7 @@ export default class SearchForm extends React.Component {
             value={values.name}
             render={
               props => <SearchField
+                
                 label="Search by name"
                 onRemove={this.remove}
                 {...props} />

@@ -2,19 +2,24 @@ import * as React from 'react';
 import {
   withRouter,
   WithRouterProps,
+  SingletonRouter,
 } from 'next/router';
-import Link from 'next/link';
-import { Grid, Button } from '@material-ui/core';
+import { Link } from '../../../routes';
+import { Grid, Button, NoSsr } from '@material-ui/core';
 import Layout from 'components/MyLayout';
 import SecondPanel from 'components/secondpanel';
-import Footer from 'components/footer';
 import QuizShow from 'components/quiz';
+import QuizProgress from 'components/QuizProgress';
 
-@withRouter
-export default class Quiz extends React.Component<WithRouterProps> {
+type ThreeStringProps = Record<'id', number>
+
+interface Props {
+  router: SingletonRouter<ThreeStringProps>
+}
+
+class Quiz extends React.Component<Props> {
   render() {
-    const groupId: number = this.props.router.query.id;
-
+    const query = this.props.router.query as ThreeStringProps;
     return (
       <Grid container spacing={0} justify="center">
         <Grid item xs={12} sm={12}>
@@ -22,8 +27,12 @@ export default class Quiz extends React.Component<WithRouterProps> {
             <SecondPanel
               title="Quiz"
               breadCrumb="Home / Quiz"
+              centerButtons={[
+                <QuizProgress
+                key={'quiz-progress'}/>
+              ]}
               actionButtons={[
-                <Link href="/home/manage-groups" key={'buttonone'}>
+                <Link route="group" params={{ id: query.id }} key={'buttonone'}>
                   <a>
                     <Button variant="outlined" color="primary">
                       Back
@@ -31,9 +40,9 @@ export default class Quiz extends React.Component<WithRouterProps> {
                   </a>
                 </Link>
               ]}
-            /> 
-             <QuizShow 
-                groupId={groupId}
+            />
+            <QuizShow 
+                groupId={query.id}
             />
           </Layout>
         </Grid>
@@ -41,3 +50,5 @@ export default class Quiz extends React.Component<WithRouterProps> {
     );
   }
 }
+
+export default withRouter(Quiz);

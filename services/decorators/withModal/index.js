@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { Component, Fragment } from 'react';
 
 import Modal from '@material-ui/core/Modal';
 import Close from '@material-ui/icons/Close';
@@ -19,7 +19,7 @@ export default function withModal(ComponentModal, options = {}) {
       };
       render() {
         return (
-          <div>
+          <Fragment>
             <Modal  open={this.state.open} onClose={this.handleClose}>
               <div className="modal-window">
                 {options.withClose && (
@@ -37,7 +37,7 @@ export default function withModal(ComponentModal, options = {}) {
               open={this.handleOpen}
               close={this.handleClose}
             />
-          </div>
+          </Fragment>
         );
       }
     }
