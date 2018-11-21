@@ -41,7 +41,6 @@ const mapStateToProps = ({ runtime }) => ({
 @withRouter
 @loading()
 export class Features extends Component {
-
   constructor(props) {
     super(props);
     this.state = {
@@ -226,10 +225,7 @@ export class Features extends Component {
                   />
                 </Grid>
                 <Grid item xs={6} sm={6} className="user-activity-right">
-                  <div className="user-activity-chat">
-                    <img src='/static/svg/user-activity-chart.svg'/>
-                    <p className="user-activity-chat-signature">USER ACTIVITY CHAT</p>
-                  </div>
+                  
                 </Grid>
               </Grid>
             </Grid>

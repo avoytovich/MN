@@ -7,9 +7,9 @@ import SearchPanel from '../../../components/searchpanel';
 import Groups from '../../../components/groups';
 import Footer from '../../../components/footer';
 import CreateGroupBtn from '../../../components/secondpanel/creategroupbtn';
+import ActivityChartButton from 'components/activitychart/button';
 
-
-@withRouter 
+@withRouter
 export default class About extends Component {
   render() {
     return (
@@ -19,7 +19,10 @@ export default class About extends Component {
             <SecondPanel
               title="Manage Groups"
               breadCrumb="Home / Manage Groups"
-              actionButtons={[<CreateGroupBtn key={'one'} />]}
+              actionButtons={[
+                <ActivityChartButton />,
+                <CreateGroupBtn />
+              ]}
             />
             <SearchPanel />
             <Groups />

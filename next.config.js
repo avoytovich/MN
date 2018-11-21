@@ -5,9 +5,9 @@ const withTypescript = require('@zeit/next-typescript');
 const { parsed: localEnv } = require('dotenv').config()
 const webpack = require('webpack');
 const path = require('path');
+const withCSS = require('@zeit/next-css')
 
-
-module.exports = withTypescript(
+module.exports = withCSS(withTypescript(
   withAssetsImport(
     withSass({
       webpack(config) {
@@ -32,4 +32,4 @@ module.exports = withTypescript(
       }
     })
   )
-);
+));
