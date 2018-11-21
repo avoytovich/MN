@@ -12,17 +12,18 @@ import { get as _get } from 'lodash';
 import { setData } from '../../actions/updateData';
 import { members } from '../../services/cruds';
 import loading from '../../services/decorators/loading';
+import ClassesNesting from './withClassesNesting';
 
 import "./features.sass";
 
 const orderBy = [
   {
     value: 'firstname',
-    label: 'firstname',
+    label: 'First Name',
   },
   {
     value: 'lastname',
-    label: 'lastname',
+    label: 'Last Name',
   },
 ];
 
@@ -52,7 +53,7 @@ export class Features extends Component {
           total_count: 0
         }
       },
-      orderBy: '',
+      orderBy: 'firstname',
     }
   }
 
@@ -60,17 +61,11 @@ export class Features extends Component {
     this.loadAndSaveMembersList();
   }
 
-  componentDidUpdate(prevProps, prevState) {
-    const { orderBy } = this.state;
-    if (orderBy !== prevState.orderBy) {
-      this.loadAndSaveMembersList(orderBy);
-    }
-  }
-
   loadAndSaveMembersList = async condition => {
     if (condition == 'firstname' || condition ==  'lastname') {
-      this.setState({
+      await this.setState({
         offset: 0,
+        elements: [],
         orderBy: condition
       });
     }
@@ -188,24 +183,19 @@ export class Features extends Component {
                     id="outlined-select"
                     InputProps={{
                       className: "field-search-input",
+                      onChange: (e) => this.loadAndSaveMembersList(e.target.value)
                     }}
                     select
                     className='field-select'
                     value={this.state.orderBy}
                     onChange={this.handleChange('orderBy')}
-                    placeholder='Sort By:'
-                    /*SelectProps={{
-                      MenuProps: {
-                        className: classes.menu,
-                      },
-                    }}*/
                     margin="normal"
                     variant="outlined"
                   >
                     {orderBy.map(option => (
-                      <MenuItem key={option.value} value={option.value} disabled={(option.value == 'Sort By:')}>
-                        {option.label}
-                      </MenuItem>
+                      <ClassesNesting key={option.value} value={option.value}>
+                        {`Sort By: ${option.label}`}
+                      </ClassesNesting>
                     ))}
                   </TextField>
                 </Grid>
@@ -226,7 +216,7 @@ export class Features extends Component {
                     className='field-sort'
                     placeholder='Choose View:'
                     value='STATE'
-                    /*onChange={this.handleChange('age')}*/
+                    /*onChange={this.handleChange()}*/
                     type="number"
                     InputLabelProps={{
                       shrink: true,
@@ -266,8 +256,6 @@ export class Features extends Component {
                     <div className="grid-info">
                       <Link href={{ pathname: '/edit-member', query: { groupId: groupDetails.id } }}>
                         <div
-                          //ref={this.member}
-                          //onClick={() => this.handleClick(slug)}
                           style={{
                             backgroundImage: `url(${'/static/svg/placeholder_add.svg'})`,
                           }}
@@ -294,8 +282,6 @@ export class Features extends Component {
                         <div className="grid-info">
                           <Link href={{ pathname: '/edit-member', query: { memberId: id } }}>
                             <div
-                              //ref={this.member}
-                              //onClick={() => this.handleClick(slug)}
                               style={{
                                 backgroundImage: `url(${_get(imageContent, 'mediumImage') ||
                                 '/static/svg/placeholder.svg'})`,
@@ -308,48 +294,6 @@ export class Features extends Component {
                               </div>
                             </div>
                           </Link>
-                          {/*<div className="info">
-                            <Typography
-                              variant="button"
-                              fontSize="16px"
-                              className="info-name">
-                              {username}
-                            </Typography>
-                            <div className="info-rate-left">
-                              <Rate
-                                className="flex-with-margin"
-                                initialRating={rating}
-                                readonly
-                              />
-                              <div className="info-rate-right">
-                                <Typography
-                                  variant="subheading"
-                                  fontSize="14px"
-                                  className="info-rate-current">
-                                  {currency &&
-                                  calculateDisplayedRate(
-                                    parseFloat(
-                                      currentRate / 100,
-                                    ).toFixed(2),
-                                    this.state.commission,
-                                  )}
-                                  {currency &&
-                                  ` ${get(
-                                    currency,
-                                    'name',
-                                  )}`}/{this.props.translate('hour')}
-                                </Typography>
-                              </div>
-                              <div className="info-rate-left">
-                                <Typography
-                                  variant="subheading"
-                                  fontSize="14px"
-                                  className="info-slogan">
-                                  {slogan}
-                                </Typography>
-                              </div>
-                            </div>
-                          </div>*/}
                         </div>
                       </Grid>
                     );
