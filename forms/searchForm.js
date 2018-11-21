@@ -54,7 +54,7 @@ export default class SearchForm extends React.Component {
             render={
               props => <SearchField
                 
-                label="Search by name"
+                label="Search in Groups"
                 onRemove={this.remove}
                 {...props} />
             } />
@@ -64,7 +64,7 @@ export default class SearchForm extends React.Component {
             label="Search by Names"
             render={
               props => <SearchField
-                label="Search by member name"
+                label="Search by Names"
                 onRemove={this.remove}
                 {...props} />
             }

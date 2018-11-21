@@ -22,7 +22,6 @@ export const getGroups = (params) =>
 export const getSingle = params =>
   dispatchSend('get_group', Axios.all(
     request.get('/GetGroupDetails', { params }),
-    request.get('/GetQuestions', { params })
   ),
     {
       adaptData: (r, q) => {

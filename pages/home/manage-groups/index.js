@@ -18,7 +18,7 @@ export default class About extends Component {
           <Layout>
             <SecondPanel
               title="Manage Groups"
-              breadCrumb="Home / Manage Groups"
+              breadCrumb="Manage Groups"
               actionButtons={[
                 <ActivityChartButton />,
                 <CreateGroupBtn />
