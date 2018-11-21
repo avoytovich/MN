@@ -237,7 +237,7 @@ export default class App extends React.Component {
               <a href="tel:965-463-7382">
                 <div className="landing-contact-us-item">
                   <PhoneIcon className="landing-contact-us-item-icon" />
-                  <p className="landing-contact-us-item-text">+(965)463-7382</p>
+                  <p className="landing-contact-us-item-text">(872)215-1683</p>
                 </div>
               </a>
             </div>
