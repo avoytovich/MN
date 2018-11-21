@@ -8,6 +8,7 @@ import JssProvider from 'react-jss/lib/JssProvider';
 import GlobalSnackbar from '../components/GlobalSnackbar'
 import getPageContext from '../page-context';
 import withReduxStore from '../redux-config/with-redux-store';
+import Loader from './_loader';
 // import Localization from '../containers/Localization';
 
 @withReduxStore
@@ -47,6 +48,7 @@ export default class MyApp extends App {
             <Provider store={reduxStore}>
                 <Fragment>
                   <GlobalSnackbar />
+                  <Loader />
                   <Component pageContext={this.pageContext} {...pageProps} />
                 </Fragment>
             </Provider>
