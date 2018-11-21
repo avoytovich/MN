@@ -21,8 +21,19 @@ import map from 'lodash/map';
 import { number } from 'prop-types';
 import { bindActionCreators, Dispatch } from 'redux';
 import { UPDATE_SPEC_DATA } from 'constants/actions';
+import Finished, { Recommendation } from './finished';
+
+interface WrongAnswer {
+  answer: string,
+  rightAnswer: string
+}
+
 
 class QuizShow extends React.Component<Props> {
+  wrong: number = 0;
+  recommendations: Recommendation[] = [];
+  wrongAnswers: WrongAnswer[] = [];
+
   componentDidMount = async () => {
     const data = await this.props.loadQuiz({ groupId: this.props.groupId });
     this.props.updateSpecData('currentQuiz', {
@@ -39,6 +50,12 @@ class QuizShow extends React.Component<Props> {
     }
     if (quiz.answerIndex !== key) {
       newState.wrong = key;
+      this.wrong++;
+      this.recommendations.push({
+        id: quiz.memberId as number,
+        name: quiz.variants[quiz.answerIndex],
+        image: quiz.imageUrl
+      })
     }
     this.props.updateSpecData('wrongCorrect', newState);
     setTimeout(() => {
@@ -50,17 +67,33 @@ class QuizShow extends React.Component<Props> {
     this.props.resetData('currentQuiz');
   }
 
-  componentDidUpdate = async(prevProps: Props) => {
-    if(this.props.isFinished === true)
-    {
-      // await  
+  componentDidUpdate = async (prevProps: Props) => {
+    if (this.props.isFinished === true) {
+      // await this.props.sendResults({
+      //   questionsNumber: this.props.total,
+      //   numberOfRightAnswers: this.props.total - this.wrong,
+      //   createdAt: new Date(),
+      //   groupId: this.props.groupId,
+      //   userId: localStorage.user.id,
+      // });
     }
+  }
+
+  handleTryAgain = async() => {
+    this.wrong = 0;
+    this.recommendations = [];
+    this.wrongAnswers = [];
+    const data = await this.props.loadQuiz({ groupId: this.props.groupId });
+    this.props.updateSpecData('currentQuiz', {
+      current: 0,
+      total: data.data.length
+    });
   }
 
   render() {
     const { classes } = this.props;
-    let inner = null;
 
+    let inner = null;
     if (this.props.loading)
       inner = <CircularProgress
         style={{
@@ -69,10 +102,13 @@ class QuizShow extends React.Component<Props> {
         }}
       />
     else if (this.props.isFinished)
-      inner = <Typography style={{
-        margin: 'auto auto',
-        position: 'relative'
-      }}>Quiz Finished</Typography>;
+      inner = <Finished
+        onTryAgain={this.handleTryAgain}
+        correct={this.props.total - this.wrong}
+        total={this.props.total}
+
+        recommended={this.recommendations}
+      />;
     else
       inner = (
         <React.Fragment>
@@ -92,7 +128,7 @@ class QuizShow extends React.Component<Props> {
                   status = 'right'
                 else if (this.props.wrong === key)
                   status = 'wrong';
-                const disabled = this.props.wrong || this.props.correct;
+                const disabled = !!this.props.wrong || !!this.props.correct;
                 return (<Grid key={key + 'question'} item xs={6}>
                   <AnswerButton
                     disabled={disabled}
@@ -120,42 +156,44 @@ class QuizShow extends React.Component<Props> {
 const mapStateToProps = ({ runtime }) => {
   const quizData = get(runtime, 'quizData');
   const currentNumber = get(runtime, 'currentQuizData.current');
-  if(!quizData || currentNumber === undefined)
+  if (!quizData || currentNumber === undefined)
     return {
-     loading: true 
+      loading: true
     }
 
-  if(currentNumber >= map(quizData).length)
+  if (currentNumber >= map(quizData).length)
     return {
-      isFinished: true
+      isFinished: true,
+      total: map(quizData).length
     }
-    const correct = get(runtime, 'wrongCorrectData.correct');
-    const wrong = get(runtime, 'wrongCorrectData.wrong');
-    let current = map(quizData)[currentNumber];
-    const variants = get(current, 'variants') !== undefined ? map(current.variants) : [];
-    return {
-      correct,
-      wrong,
-      current,
-      variants
-    };
+  const correct = get(runtime, 'wrongCorrectData.correct');
+  const wrong = get(runtime, 'wrongCorrectData.wrong');
+  let current = map(quizData)[currentNumber];
+  const variants = get(current, 'variants') !== undefined ? map(current.variants) : [];
+  
+  return {
+    correct,
+    wrong,
+    current,
+    variants,
+  };
 };
 
 interface Props extends WithStyles<typeof styles> {
-  groupId: number;
-  loadQuiz: Function;
-  current: any;
-  variants: [any];
-  updateSpecData: Function;
-  moveOnQuiz: Function,
-  isFinished: boolean,
-  loading: boolean, 
-  correct: number,
-  wrong: number,
-  resetData: Function,
+  groupId: number
+  total: number
+  loadQuiz: Function
+  current: any
+  variants: [any]
+  isFinished: boolean
+  loading: boolean
+  correct: number
+  wrong: number
+  resetData: Function
   sendResults: Function
+  updateSpecData: Function
+  moveOnQuiz: Function
 }
-
 
 export default connect(
   mapStateToProps,

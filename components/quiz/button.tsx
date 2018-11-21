@@ -13,10 +13,11 @@ const styles = (theme: Theme) => createStyles({
         color: '#748191',
         '& span': {
             display: 'block',
-            float: 'left'
+            float: 'left',
+            paddingLeft: 20,
         },
         '&:hover': {
-
+            backgroundColor: 'initial'
         }
     },
     letter: {
@@ -76,9 +77,9 @@ export interface ButtonProps extends WithStyles<typeof styles> {
 }
 
 const AnswerButton: React.SFC<ButtonProps> = ({ disabled, status, callback, classes, title, letter }) => (
-    <Button disabled={disabled}  onClick={callback} className={classNames(classes.button, classes[status])} variant="contained" color="primary">
+    <Button disabled={disabled} onClick={callback} className={classNames(classes.button, classes[status])} variant="contained" color="primary">
         <div className={classNames(classes.letter)}>{letter}</div>
-        {title}
+            {title.slice(0, 15)}
     </Button>
 )
 
