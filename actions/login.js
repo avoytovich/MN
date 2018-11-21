@@ -9,7 +9,6 @@ export const login = data =>
     start_action: START_LOAD,
     receiveAction: LOGIN_SUCCESS,
     adaptData: resp => {
-      console.log(resp);
       return resp.data;
     }
   });

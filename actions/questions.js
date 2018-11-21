@@ -22,7 +22,6 @@ export const createQuestions = data =>
     start_action: START_LOAD,
     receiveAction: ADD_QUESTIONS,
     adaptData: resp => {
-      console.log(resp);
       return resp;
     }
   });
@@ -33,7 +32,6 @@ dispatchSend('delete_question', request.delete('/DeleteQuestion', {params: {
   start_action: START_LOAD,
   receiveAction: DELETE_QUESTION,
   adaptData: resp => {
-    console.log(resp);
     return resp;
   }
 });

@@ -37,7 +37,6 @@ export const createGroup = data =>
     start_action: START_LOAD,
     receiveAction: ADD_GROUP,
     adaptData: resp => {
-      console.log(resp);
       return resp;
     }
   });
@@ -46,7 +45,6 @@ export const editGroup = data =>
   dispatchSend('edit_group', request.post('/EditGroup', data), {
     receiveAction: EDIT_GROUP,
     adaptData: resp => {
-      console.log(resp);
       return resp;
     },
     adaptError: err => {

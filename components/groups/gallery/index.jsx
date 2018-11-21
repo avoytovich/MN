@@ -32,7 +32,6 @@ const styles = theme => ({
 
 function NextArrow(props) {
   const { className, style, onClick } = props;
-  console.log(props);
   return (
     <div
       // className={className}
