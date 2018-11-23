@@ -71,7 +71,9 @@ export default {
     marginLeft:'10px',
     cursor: 'pointer',
     marginTop: '-3px'
-
+  },
+  changePassword:{
+    marginTop: '10px',
+    marginBottom: '30px'
   }
-
 }

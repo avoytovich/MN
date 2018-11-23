@@ -1,8 +1,5 @@
 const menuProps = [
-  {
-    translateVariable: 'SignUp',
-    href: '#',
-  },
+  { name: 'Edit Profile' },
   {
     translateVariable: 'LogIn',
     href: '#',

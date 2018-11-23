@@ -8,6 +8,8 @@ import {
   Avatar
 } from '@material-ui/core';
 import LongMenu from './icon-dropdown/icon-dropdown';
+import get from 'lodash/get'
+import DefaultAvatar from 'static/png/defaultAvatar.png'
 
 import '../../sass/common.scss';
 import './header.sass';
@@ -27,6 +29,10 @@ const styles = theme => ({
 
 @withStyles(styles)
 export default class Header extends Component {
+  state = {
+    previewImage: DefaultAvatar
+  }
+
   getLink = () => [
     {
       href: '/',
@@ -48,8 +54,16 @@ export default class Header extends Component {
     { href: '/#landing-contact-us', title: 'CONTACT US', variant: 'display2' }
   ];
 
+  componentDidMount(){
+    const user = JSON.parse(window.localStorage.getItem('user'))
+    const previewImage = get(user, 'profile.imageContent.previewImage')
+    this.setState({ previewImage })
+
+  }
+
   render() {
     const { classes } = this.props;
+    const { previewImage } = this.state
     return (
       <AppBar className={classes.appBar}>
         <Grid alignItems="center" container>
@@ -77,7 +91,7 @@ export default class Header extends Component {
         <Grid alignItems="center" justify="flex-end" container>
           <Avatar
             className={classes.avatar}
-            src="/static/png/defaultAvatar.png"
+            src={previewImage || DefaultAvatar}
           />
           <div className="icon-dropdown">
             <LongMenu />

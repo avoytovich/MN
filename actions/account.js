@@ -1,6 +1,7 @@
-import { ACCOUNT_URL } from '../constants/api';
-import { getAxiosInstance } from '../shared/request';
-const request = getAxiosInstance(ACCOUNT_URL, false);
+import { ACCOUNT_URL} from '../constants/api'
+import { getAxiosInstance } from '../shared/request'
+const request = getAxiosInstance(ACCOUNT_URL, false)
+const authedRequest = getAxiosInstance(ACCOUNT_URL)
 
 export async function signIn(payload) {
   try {
@@ -37,47 +38,37 @@ export async function signUp(payload) {
   }
 }
 
-export async function signOut() {
-  const request = getAxiosInstance(AUTH_URL);
-
+export async function signOut () {
   try {
-    const user = JSON.parse(localStorage.getItem('hiveUser'));
-    await request.post('/signOut', { deviceId: user.deviceId });
-    localStorage.removeItem('hiveUser');
-
-    return Promise.resolve();
+    await authedRequest.delete('/Logout')
+    localStorage.removeItem('user')
+    return Promise.resolve()
   } catch (e) {
-    return Promise.reject(e.response.data.message);
+    return Promise.reject(e)
   }
 }
 
-export async function forgotPassword({ email }) {
+export async function resetPassword () {
   try {
-    const { data } = await request.post('/password/forgot', { email });
-
-    return Promise.resolve(data);
+    const { email } = JSON.parse(localStorage.getItem('user'))
+    await authedRequest.post('ResetPassword', {email})
+    return Promise.resolve()
   } catch (e) {
-    return Promise.reject(e.data.message);
+    return Promise.reject(e)
   }
 }
 
-export async function restorePassword({
-  email,
-  restorePasswordCode,
-  newPassword,
-  confirmPassword
-}) {
-  try {
-    const hashedPayload = {
-      email,
-      restorePasswordCode,
-      newPassword: md5(newPassword),
-      confirmPassword: md5(confirmPassword)
-    };
-    const { data } = await request.post('password/restore', hashedPayload);
 
-    return Promise.resolve(data);
+
+
+export async function changePassword (payload) {
+  try {
+    const { data } = await authedRequest.post('/ChangePassword', payload)
+    return Promise.resolve(data)
   } catch (e) {
-    return Promise.reject(e.response.data.message);
+    return Promise.reject(e)
   }
 }
+
+
+

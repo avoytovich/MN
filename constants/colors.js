@@ -1,3 +1,4 @@
 export default {
-    error: 'red'
+    error: 'red',
+    success: '#559833'
 }
