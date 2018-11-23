@@ -1,6 +1,12 @@
 import React from 'react';
-import { IconButton, Menu, MenuItem } from '@material-ui/core';
+import { IconButton, Menu, MenuItem, Badge } from '@material-ui/core';
 import ExpandMore from '@material-ui/icons/ExpandMore';
+import { signOut } from 'actions/account';
+import { getNewQuestions } from 'actions/questions';
+import Router from 'next/router';
+import ChangePasswordModal from 'components/landing/changePasswordModal';
+import withModal from 'services/decorators/withModal';
+
 
 // import i18n from '../../../services/decorators/i18n';
 
@@ -15,23 +21,42 @@ import Link from 'next/link';
 const ITEM_HEIGHT = 48;
 
 // @i18n('menu')
+@withModal(ChangePasswordModal)
 class LongMenu extends React.Component {
   state = {
-    anchorEl: null
+    anchorEl: null,
+    newQuestions: 0
   };
 
-  handleClick = event => {
-    this.setState({ anchorEl: event.currentTarget });
+  handleClick = async event => {
+    try {
+      this.setState({ anchorEl: event.currentTarget });
+      const newQuestions = await getNewQuestions()
+      this.setState({ newQuestions });
+    } catch(e){
+      console.log(e)
+    }
   };
 
   handleClose = () => {
     this.setState({ anchorEl: null });
   };
 
-  render() {
-    const { anchorEl } = this.state;
-    const open = Boolean(anchorEl);
+  handleChangePassword = () => {
+    const { open } = this.props
+    open(true)
+    this.handleClose()
+  };
 
+  handleLogout = async () => {
+    this.handleClose()
+    await signOut()
+    Router.push({ pathname: '/' })
+  }
+
+  render() {
+    const { anchorEl, newQuestions } = this.state;
+    const open = Boolean(anchorEl);
     return (
       <>
         <IconButton
@@ -48,20 +73,41 @@ class LongMenu extends React.Component {
           onClose={this.handleClose}
           PaperProps={{
             style: {
-              maxHeight: ITEM_HEIGHT * 4.5,
-              width: 200
+              maxHeight: ITEM_HEIGHT * 6.5,
+              width: 200,
+            },
+          }}
+        >
+          <Link href={{ pathname: '/edit-profile'}}>
+            <MenuItem
+              onClick={this.handleClose}
+            >
+              Edit Profile
+            </MenuItem>
+          </Link>
+
+          <MenuItem onClick={this.handleClose}>
+            {newQuestions
+              ? (
+                <Badge
+                  badgeContent={newQuestions}
+                  color="error"
+                  invisible={true}
+                >
+                  Questions
+                </Badge>
+              )
+              : ('Questions')
+
             }
-          }}>
-          {menuProps.map(option => (
-            <Link href={{ pathname: '/edit-profile' }}>
-              <MenuItem
-                key={option.translateVariable}
-                selected={option.translateVariable === 'Login'}
-                onClick={this.handleClose}>
-                {option.translateVariable}
-              </MenuItem>
-            </Link>
-          ))}
+
+          </MenuItem>
+          <MenuItem onClick={this.handleChangePassword}>
+            Change password
+          </MenuItem>
+          <MenuItem onClick={this.handleLogout}>
+            Log out
+          </MenuItem>
         </Menu>
       </>
     );

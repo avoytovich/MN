@@ -13,14 +13,15 @@ import Features from 'components/features';
 import { group } from '../../../../services/cruds';
 import loading from '../../../../services/decorators/loading';
 import { setData } from '../../../../actions/updateData';
+import { getSingle } from 'actions/groups';
 
 import './group.sass';
 
 const mapDispatchToProps = dispatch =>
-  bindActionCreators({ setData }, dispatch);
+  bindActionCreators({ setData, getSingle }, dispatch);
 
 const mapStateToProps = ({ runtime }) => ({
-  groupDetails: runtime.groupDetails
+  groupDetails: runtime.groupDetails,
 });
 
 @connect(
@@ -32,6 +33,13 @@ const mapStateToProps = ({ runtime }) => ({
 export class Group extends Component {
   componentDidMount() {
     this.GetGroupDetails_loadAndSaveToProps();
+  }
+
+  componentWillUnmount = async() => {
+    const {
+      query: { id }
+    } = this.props.router;
+    await this.props.getSingle({groupId: id});
   }
 
   GetGroupDetails_loadAndSaveToProps = async () => {

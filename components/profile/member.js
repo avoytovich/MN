@@ -61,6 +61,7 @@ const acceptedFileTypesArray = acceptedFileTypes.split(",").map((item) => {retur
         "title",
         "company",
         "public",
+        "imageContent",
         "imageContentId"
       ]);
 
@@ -69,19 +70,15 @@ const acceptedFileTypesArray = acceptedFileTypes.split(",").map((item) => {retur
     try {
       const { groupId, memberId } = props
       let data
-      debugger
-      if(groupId){debugger
+      if(groupId){
         data = await createMember({groupId, values})
-        Router.push({
-          pathname: '/edit-member',
-          query: { memberId: data.id }
-        })
       } else{
         const user = {...values, id:memberId}
         data = await editMember(user)
-        props.handleEdit(data)
+        // props.handleEdit(data)
       }
-
+      props.toggleSnackbar('Success', 'success')
+      Router.back()
     } catch (e) {
       const { message } = e.response.data.errors[0]
       props.toggleSnackbar(message, 'error')
@@ -237,8 +234,6 @@ export default class Profile extends Component{
     const leftBottomInputs = inputs.slice(1,3)
     const rightInputs = inputs.slice(3,7)
     const bottomInput = inputs.slice(7)
-
-    const memberId = get(this.props, 'router.query.memberId')
     return (
       <Fragment>
         <Modal
@@ -344,7 +339,7 @@ export default class Profile extends Component{
                       Cancel
                     </Button>
                     <Button type="submit" className="profile-btn profile-btn-add">
-                      {memberId ? 'Save' : "Edit"}
+                      Save
                     </Button>
                   </div>
                 </Grid>

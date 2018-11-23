@@ -35,3 +35,12 @@ dispatchSend('delete_question', request.delete('/DeleteQuestion', {params: {
     return resp;
   }
 });
+
+export async function getNewQuestions() {
+  try {
+    const { data } = await request.get('/NewQuestionsCount')
+    return Promise.resolve(data)
+  } catch (e) {
+    return Promise.reject(e)
+  }
+}

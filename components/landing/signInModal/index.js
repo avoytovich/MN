@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import { withStyles, Avatar, Typography, Button, TextField } from '@material-ui/core';
 import { Formik, Form, Field, withFormik } from 'formik';
 import { signIn } from 'actions/account'
+import { getProfile } from 'actions/profile'
 import { toggleSnackbar } from 'actions/snackbar'
 import CloseIcon from '@material-ui/icons/Close';
 import * as Yup from 'yup';
@@ -30,10 +31,10 @@ const styles = theme => (style);
   handleSubmit: async (values, { props }) => {
     try {
       await signIn(values)
+      await getProfile()
       Router.push({
         pathname: '/home/manage-groups'
       })
-
     } catch (e) {
       let message = 'Error';
       if(e.response)

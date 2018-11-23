@@ -19,19 +19,19 @@ export default class BreadCrumbs extends Component {
     const childPath = text.slice(text.lastIndexOf('/'));
     return (
       <Fragment>
-        <Link href={{ pathname: `${this.parrentRoute()}` }}>
-          <Typography
-            variant="caption"
-            className="breadcrumbs-wrapper"
-          >
+        <Typography
+          variant="caption"
+          className="breadcrumbs-wrapper"
+        >
+          <Link href={{ pathname: `${this.parrentRoute()}` }}>
             <Typography className="title-chunk-parrent">
-              {parrentPath}
+              { (parrentPath !== 'Manage groups ') ? '' : parrentPath }
             </Typography>
-            <Typography className="title-chunk-child">
-              {childPath}
-            </Typography>
+          </Link>
+          <Typography className="title-chunk-child">
+            {childPath}
           </Typography>
-        </Link>
+        </Typography>
       </Fragment>
     );
   }

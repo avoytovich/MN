@@ -35,7 +35,7 @@ const styles = theme => ({
   }
 });
 
-function NextArrow(props) {
+const NextArrow = (props) => {
   const { className, style, onClick } = props;
   return (
     <div
@@ -55,6 +55,28 @@ function NextArrow(props) {
   );
 }
 
+const PrevArrow = (props) => {
+  const { className, style, onClick } = props;
+  return (
+    <div
+      // className={className}
+      style={{
+        position: 'absolute',
+        top: '44%',
+        left: -25,
+        cursor: 'pointer',
+        transform: 'rotate(180deg)',
+        width: 22,
+        height: 31,
+        backgroundSize: 'cover',
+        backgroundImage: "url('/static/svg/right-arrow.svg')"
+      }}
+      onClick={onClick}
+     />
+  );
+}
+
+
 const settings = {
   dots: false,
   infinite: false,
@@ -64,7 +86,7 @@ const settings = {
   slidesToScroll: 3,
   initialSlide: 0,
   nextArrow: <NextArrow />,
-  prevArrow: <div />,
+  prevArrow: <PrevArrow />,
   responsive: [
     {
       breakpoint: 700,
@@ -110,8 +132,8 @@ export default class Gallery extends PureComponent {
     const { classes, images, open } = this.props;
 
     return (
-      <div style={{ width: 'calc(100% - 440px)' }}>
-        <Slider {...settings}>
+      <div style={{ width: 'calc(100% - 440px)', marginLeft: 25 }}>
+        <Slider arrows={images.length > 3}  {...settings}>
           {images.map((image, key) => (
             <Card 
             // TODO:  s
