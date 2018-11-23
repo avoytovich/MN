@@ -19,6 +19,7 @@ import { editProfile } from 'actions/profile'
 import { createMember, editMember } from 'actions/member'
 import { uploadProfileImage } from 'actions/upload'
 import DefaultAvatar from 'static/png/defaultAvatar.png'
+import { getSingle } from 'actions/groups';
 
 import ReactCrop from 'react-image-crop'
 import 'react-image-crop/lib/ReactCrop.scss'
@@ -40,7 +41,7 @@ const acceptedFileTypes = 'image/png, image/jpg, image/jpeg'
 const acceptedFileTypesArray = acceptedFileTypes.split(",").map((item) => {return item.trim()})
 @connect(
   null,
-  { toggleSnackbar }
+  { toggleSnackbar, getSingle }
 )
 @withFormik({
   validationSchema: Yup.object().shape({
@@ -64,7 +65,6 @@ const acceptedFileTypesArray = acceptedFileTypes.split(",").map((item) => {retur
         "imageContent",
         "imageContentId"
       ]);
-
   },
   handleSubmit : async (values, { props }) => {
     try {
@@ -77,8 +77,8 @@ const acceptedFileTypesArray = acceptedFileTypes.split(",").map((item) => {retur
         data = await editMember(user)
         // props.handleEdit(data)
       }
-      props.toggleSnackbar('Success', 'success')
-      Router.back()
+      props.toggleSnackbar('Success', 'success');
+      Router.back();
     } catch (e) {
       const { message } = e.response.data.errors[0]
       props.toggleSnackbar(message, 'error')

@@ -26,7 +26,7 @@ export default (state = initialState, action: any) => {
         deleteModal: action.data
       }
     case SEARCH_GROUPS:
-    const filteredSearch = uniqBy([...state.searchGroups, ...action.data], 'id');
+    const filteredSearch = uniqBy([...action.data, ...state.searchGroups ], 'id');
       
       return {
         ...state,
@@ -93,7 +93,7 @@ export default (state = initialState, action: any) => {
           })
         };
       else{
-        const filtered = reverse(sortBy([...state.groups, action.data], group => moment(group.dateOfLastUpdate).unix()));
+        const filtered = reverse(sortBy(uniqBy([action.data, ...state.groups, ],'id'), group => moment(group.dateOfLastUpdate).unix()));
         console.log(filtered);
         return {
           ...state,
@@ -102,7 +102,7 @@ export default (state = initialState, action: any) => {
       }
         return state;
     case GET_GROUPS:
-      const filtered = reverse(sortBy(uniqBy([...state.groups, ...action.data], 'id'), group => moment(group.dateOfLastUpdate).unix()));
+      const filtered = reverse(sortBy(uniqBy([...action.data, ...state.groups], 'id'), group => moment(group.dateOfLastUpdate).unix()));
       return Object.assign({}, state, {
         ...state,
         groups: filtered

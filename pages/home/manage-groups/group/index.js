@@ -34,14 +34,7 @@ export class Group extends Component {
   componentDidMount() {
     this.GetGroupDetails_loadAndSaveToProps();
   }
-
-  componentWillUnmount = async() => {
-    const {
-      query: { id }
-    } = this.props.router;
-    await this.props.getSingle({groupId: id});
-  }
-
+  
   GetGroupDetails_loadAndSaveToProps = async () => {
     const {
       query: { id }
@@ -59,6 +52,7 @@ export class Group extends Component {
         saveTo: 'groupDetails'
       }
     );
+    this.props.getSingle({groupId: id});
     this.props.setData(resp.data, 'groupDetails');
   };
 
