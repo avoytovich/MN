@@ -34,7 +34,13 @@ export default class Profile extends Component {
   }
 
   async componentDidMount(){
-    const data =  await getProfile()
+    let data
+    const user = JSON.parse(localStorage.getItem('user'))
+    if(user && user.profile){
+      data = user.profile
+    } else{
+      data =  await getProfile()
+    }
     this.setState({...data})
   }
 

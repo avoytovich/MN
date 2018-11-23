@@ -58,30 +58,11 @@ const acceptedFileTypesArray = acceptedFileTypes.split(",").map((item) => {retur
   },
   handleSubmit : async (values, { props }) => {
     try {
-      const { isMember, groupId, memberId } = props
-      let data
-      if(isMember){
-        if(groupId){
-          const user = {}
-          for( let key in values){
-            user[key[0].toUpperCase() + key.substring(1)] = values[key]
-          }
-          data = await createMember({groupId, user})
-        } else{
-          const user = {}
-          for( let key in values){
-            user[key[0].toUpperCase() + key.substring(1)] = values[key]
-          }
-          delete user.ImageContent
-          delete user.Organization
-          user.Id = memberId
-          data = await editMember(user)
-        }
 
-      } else {
-        data = await editProfile(values)
-      }
-      props.handleEdit(data)
+      const data = await editProfile(values)
+      props.toggleSnackbar('Success', 'success')
+      Router.back()
+      //props.handleEdit(data)
     } catch (e) {
       const { message} = e.response.data.errors[0]
       props.toggleSnackbar(message, 'error')

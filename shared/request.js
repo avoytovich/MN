@@ -6,7 +6,7 @@ import { bindActionCreators } from 'redux';
 import { setData } from 'actions/updateData';
 
 async function requestCheckAuthInterceptor (config) {
-  const user = JSON.parse(window.localStorage.getItem('user'))
+  const user = JSON.parse(localStorage.getItem('user'))
   if (user) {
     const expireDate = new Date(user.token.expireDate ).getTime()
     const timeNow = new Date().getTime();
