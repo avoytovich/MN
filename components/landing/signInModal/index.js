@@ -35,8 +35,12 @@ const styles = theme => (style);
       })
 
     } catch (e) {
-      const { message } = e.response.data.errors[0]
-      props.toggleSnackbar(message, 'error')
+      let message = 'Error';
+      if(e.response)
+        props.toggleSnackbar(e.response.data.errors[0].message, 'error');
+      else
+      console.log(e);
+      
     }
   },
   mapPropsToValues: () => {

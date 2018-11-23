@@ -7,6 +7,11 @@ import {
   Slide
 } from '@material-ui/core';
 import Slider from 'react-slick';
+import withModal from 'services/decorators/withModal';
+import { getMember } from 'actions/members';
+import MemberModal from './memberModal';
+import { connect } from 'react-redux'
+
 
 import './gallery.sass';
 
@@ -88,19 +93,30 @@ const settings = {
   ]
 };
 
+@withModal(MemberModal)
+@connect(null, {getMember})
 @withStyles(styles)
 export default class Gallery extends PureComponent {
   state = {
     cardsAmount: 0
   };
+
+  handleOpen = data => async() => {
+    const member = await getMember(data.memberId);
+    this.props.open(member);
+  }
+
   render() {
-    const { classes, images } = this.props;
+    const { classes, images, open } = this.props;
 
     return (
       <div style={{ width: 'calc(100% - 440px)' }}>
         <Slider {...settings}>
           {images.map((image, key) => (
-            <Card key={key} className={classes.card}>
+            <Card 
+            // TODO:  s
+            onClick={this.handleOpen(image)}
+            key={key} className={classes.card}>
               <CardMedia className={classes.media} image={image.mediumImage}>
                 <Typography className={classes.mediaText}>
                   {image.firstName}

@@ -9,13 +9,14 @@ export default function withModal(ComponentModal, options = {}) {
   return function(Child) {
     class CustomModal extends Component {
       state = {
-        open: false
+        open: false,
+        data: null
       };
-      handleOpen = () => {
-        this.setState({ open: true });
+      handleOpen = (data) => {
+        this.setState({ open: true, data: data });
       };
       handleClose = () => {
-        this.setState({ open: false });
+        this.setState({ open: false, data: null });
       };
       render() {
         return (
@@ -27,13 +28,14 @@ export default function withModal(ComponentModal, options = {}) {
                     <Close onClick={this.handleClose} />
                   </div>
                 )}
-                <ComponentModal  close={this.handleClose} />
+                <ComponentModal 
+                  modalProps={this.state.data}                
+                  close={this.handleClose} />
               </div>
             </Modal>
             <Child
               {...this.props}
               translate={this.translate}
-              
               open={this.handleOpen}
               close={this.handleClose}
             />

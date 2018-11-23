@@ -4,7 +4,6 @@ import { Form, withFormik } from 'formik';
 import SecondPanel from '../secondpanel';
 import { Button, NoSsr } from '@material-ui/core';
 import { bindActionCreators } from 'redux';
-import { editGroup, getSingle } from '../../actions/groups';
 import { createQuestions } from 'actions/questions';
 import { connect } from 'react-redux';
 import * as Yup from 'yup';
@@ -13,7 +12,7 @@ import { withRouter } from 'next/router';
 import find from 'lodash/find';
 import get from 'lodash/get';
 import NoSSR from '@material-ui/core/NoSsr'
-import { loadIcons } from 'actions/groups';
+import { loadIcons, getSingle, editGroup } from 'actions/groups';
 import { resetData } from 'actions/updateData';
 
 const mapStateToProps = ({ groups, questions, runtime }, { router }) => ({
@@ -26,10 +25,12 @@ const mapStateToProps = ({ groups, questions, runtime }, { router }) => ({
   mapStateToProps,
   {
     editGroup, getSingle, createQuestions,
-    loadIcons, resetData
+    loadIcons, resetData,
+    getSingle
   }
 )
 @withFormik({
+  enableReinitialize: true,
   validationSchema: Yup.object().shape({
     name: Yup.string().required('Required'),
     description: Yup.string().required('Required')
@@ -41,7 +42,7 @@ const mapStateToProps = ({ groups, questions, runtime }, { router }) => ({
     return {
       subgroups: [],
       questions: [],
-      name,
+      name: name,
       description: desc,
       id
     };
@@ -64,6 +65,7 @@ const mapStateToProps = ({ groups, questions, runtime }, { router }) => ({
 export default class EditGroup extends Component {
   componentDidMount = () => {
     this.props.loadIcons();
+    this.props.getSingle({ groupId: this.props.router.query.id });
   };
   componentWillUnmount = () => {
     this.props.resetData('chosenIcon');
@@ -71,6 +73,7 @@ export default class EditGroup extends Component {
   render() {
     const { router, group } = this.props;
     const { handleChange, values, errors, setFieldValue, icon } = this.props;
+    console.log(values);
     const name = get(group, 'name');
     return (
       <Form>

@@ -94,6 +94,7 @@ export default (state = initialState, action: any) => {
         };
       else{
         const filtered = reverse(sortBy([...state.groups, action.data], group => moment(group.dateOfLastUpdate).unix()));
+        console.log(filtered);
         return {
           ...state,
           groups: filtered

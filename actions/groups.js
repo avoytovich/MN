@@ -8,6 +8,7 @@ import Axios from 'axios';
 const request = getAxiosInstance('/api/Group');
 const quizRequest = getAxiosInstance('/api/Quiz');
 
+
 export const getGroups = (params) =>
   dispatchSend('get_groups', request.get('/GetGroups', { params }), {
     start_action: START_LOAD,
@@ -20,14 +21,12 @@ export const getGroups = (params) =>
     }
   });
 export const getSingle = params =>
-  dispatchSend('get_group', Axios.all(
-    request.get('/GetGroupDetails', { params }),
-  ),
-    {
-      adaptData: (r, q) => {
-        console.log(r, q);
+  dispatchSend('get_group', request.get('/GetGroupDetails', { params }),
+  {
+      adaptData: (r) => {
+        return r;
       },
-      receiveAction: GET_SINGLE
+      receiveAction: ADD_GROUP
     }
   );
 
@@ -121,3 +120,4 @@ export const sendResults = (results) =>
       else return "Error load quiz";
     }
   })
+

@@ -58,7 +58,6 @@ const Main = ({ classes, group, setFieldValue, open, values, chosenIcon }) => {
           }}
           className={classes.input}
           name="name"
-          value={values.name}
           component={wrapField}
           placeholder="Group name"
           margin="normal"
