@@ -53,6 +53,7 @@ export class Features extends Component {
         }
       },
       orderBy: 'firstname',
+      group: 'ROOT'
     }
   }
 
@@ -60,15 +61,39 @@ export class Features extends Component {
     this.loadAndSaveMembersList();
   }
 
+  componentDidUpdate() {
+    const { subgroups, id } = this.props.groupDetails;
+    if (!subgroups.some(item => (item.name == 'ROOT'))) {
+      subgroups.unshift({name: 'ROOT', id: id})
+    }
+  }
+
+  componentDidMount() {
+    const { subgroups, id } = this.props.groupDetails;
+    if (!subgroups.some(item => (item.name == 'ROOT'))) {
+      subgroups.unshift({name: 'ROOT', id: id})
+    }
+  }
+
   loadAndSaveMembersList = async condition => {
+    if (this.props.groupDetails.subgroups.some(item => {
+      return item.name == condition;
+    }) ) {
+      await this.setState({
+        offset: 0,
+        elements: [],
+        group: condition,
+      });
+    }
     if (condition == 'firstname' || condition ==  'lastname') {
       await this.setState({
         offset: 0,
         elements: [],
-        orderBy: condition
+        orderBy: condition,
       });
     }
-    if (condition && condition !== '' && condition != 'firstname' && condition != 'lastname') {
+    if (condition &&
+          ['', 'firstname', 'lastname', this.state.group].every(item => (condition != item))) {
       this.setState({
         offset: 0,
         elements: [],
@@ -83,11 +108,14 @@ export class Features extends Component {
       });
     }
     const { groupDetails, groupMembers } = this.props;
-    const { offset, search, orderBy } = this.state;
+    const { offset, search, orderBy, group } = this.state;
+    const currentSubGroup = groupDetails.subgroups.filter(item => {
+      return item.name == group;
+    });
     const resp = await this.props.loadData(
       members.get(
         {
-          groupId: groupDetails.id,
+          groupId: currentSubGroup[0] && currentSubGroup[0]['id'] || groupDetails.id,
           limit: 12,
           offset: offset,
           search: search,
@@ -153,11 +181,13 @@ export class Features extends Component {
                 <Grid item xs={6} sm={6}>
                   <div className='group'>
                     <p className='name'>{groupDetails.name}</p>
-                    <IconButton
-                      /*onClick={this.handleClick}*/
-                    >
-                      <CreateIcon />
-                    </IconButton><br/>
+                      <IconButton
+                        /*onClick={this.handleClick}*/
+                      >
+                        <Link href={{ pathname: `/home/editgroup/${groupDetails.id}` }}>
+                          <CreateIcon />
+                        </Link>
+                      </IconButton><br/>
                     <p className='description'>{groupDetails.description}</p>
                   </div>
                 </Grid>
@@ -208,21 +238,24 @@ export class Features extends Component {
               <Grid container spacing={0} justify="center" className='container'>
                 <Grid item xs={6} sm={6} className="user-activity-left">
                   <TextField
+                    id="outlined-select"
                     InputProps={{
-                      className: "field-search-input"
+                      className: "field-search-input",
+                      onChange: (e) => this.loadAndSaveMembersList(e.target.value),
                     }}
-                    id="outlined-number"
-                    className='field-sort'
-                    placeholder='Choose View:'
-                    value='STATE'
-                    /*onChange={this.handleChange()}*/
-                    type="number"
-                    InputLabelProps={{
-                      shrink: true,
-                    }}
+                    select
+                    className='field-select'
+                    value={this.state.group}
+                    onChange={this.handleChange('group')}
                     margin="normal"
                     variant="outlined"
-                  />
+                  >
+                    {groupDetails.subgroups.map((item, id) => (
+                      <ClassesNesting key={id} value={item.name}>
+                        {`Choose View: Group ${item.name}`}
+                      </ClassesNesting>
+                    ))}
+                  </TextField>
                 </Grid>
                 <Grid item xs={6} sm={6} className="user-activity-right">
                   
