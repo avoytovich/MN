@@ -163,7 +163,6 @@ export class Features extends Component {
     //console.log('this.props', this.props);
     const { groupDetails, groupMembers } = this.props;
     const { elements, membersInfo } = this.state;
-    if (!groupMembers) return null;
     return (
       <Fragment>
         <div className="features-wrapper">
