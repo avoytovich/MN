@@ -116,9 +116,7 @@ export class Group extends Component {
                   undefined
                 )
               ]}
-              breadCrumb={`${this.titlePath(pathname)} / ${this.titleCase(
-                data.name
-              )}`}
+              breadCrumb={`Manage Groups / ${data.name}`}
               title="Group Content"
             />
           </div>

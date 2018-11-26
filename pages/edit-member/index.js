@@ -53,8 +53,8 @@ export default class Member extends Component {
           <Layout>
             <SecondPanel
               title="Member"
-              breadCrumb={`${name} / Member`}
-            />
+              breadCrumb={`Manage Groups / Group / Member`}
+              />
             <EditMember
               user={this.state}
               handleEdit={this.handleEdit}

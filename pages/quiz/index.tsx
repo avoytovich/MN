@@ -26,7 +26,7 @@ class Quiz extends React.Component<Props> {
           <Layout>
             <SecondPanel
               title="Quiz"
-              breadCrumb="Manage-Groups / Group / Quiz"
+              breadCrumb="Manage Groups / Group / Quiz"
               centerButtons={[
                 <QuizProgress
                 key={'quiz-progress'}/>

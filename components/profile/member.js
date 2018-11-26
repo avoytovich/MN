@@ -6,6 +6,7 @@ import RemoveIcon from 'static/svg/garbage.svg'
 import { Formik, Form, Field , withFormik } from 'formik';
 import { withStyles, Grid, TextField, Divider, Button, Modal, Paper } from '@material-ui/core';
 import './style.sass'
+import { Link } from '../../routes';
 import { toggleSnackbar } from '../../actions/snackbar';
 import * as Yup from 'yup';
 import { signIn } from '../../actions/account';
@@ -95,7 +96,7 @@ export default class Profile extends Component{
       open:false,
       imgSrc: null,
       crop: {
-        aspect: 1/1
+        aspect: 1/1.25
       },
       pixelCrop: {}
     }
@@ -131,6 +132,8 @@ export default class Profile extends Component{
     const image = this.imageRef
     const fileName = this.fileInputRef.current.files.item(0).name
     const canvas = document.createElement("canvas");
+    // console.log(pixelCrop);
+    // return;
     canvas.width = pixelCrop.width;
     canvas.height = pixelCrop.height;
     const ctx = canvas.getContext("2d");
@@ -148,7 +151,8 @@ export default class Profile extends Component{
     );
 
     let croppedImage = canvas.toDataURL();
-    this.avatarRef.current.src =  croppedImage
+    this.avatarRef.current.src =  croppedImage;
+    
     const res = await fetch(croppedImage)
     const blob = await res.blob()
     const form = new FormData()
@@ -187,7 +191,7 @@ export default class Profile extends Component{
       imgSrc: null,
       imgSrcExt: null,
       crop: {
-        aspect: 1/1
+        aspect: 1/1.25
       },
       pixelCrop:{}
 
@@ -335,9 +339,9 @@ export default class Profile extends Component{
                   </Grid>
                   {bottomInput}
                   <div className="profile-btns-container">
-                    <Button className="profile-btn profile-btn-cancel">
-                      Cancel
-                    </Button>
+                      <Button onClick={() => Router.back()} className="profile-btn profile-btn-cancel">
+                        Cancel
+                      </Button>
                     <Button type="submit" className="profile-btn profile-btn-add">
                       Save
                     </Button>

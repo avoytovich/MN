@@ -1,6 +1,6 @@
 import React, { Component, Fragment } from 'react';
 import Link from 'next/link';
-import { withRouter } from 'next/router';
+import Router, { withRouter } from 'next/router';
 import { Typography } from '@material-ui/core';
 
 import './breadcrumbs.sass';
@@ -12,13 +12,16 @@ export default class BreadCrumbs extends Component {
     const { pathname } = this.props.router;
     return pathname.slice(0, pathname.lastIndexOf('/'));
   };
-
+  clickParent = (e) => {
+    e.preventDefault();
+    //TODO history
+    Router.back();
+  } 
   render() {
     const { text } = this.props;
-    const parrentPath = text.slice(0, text.lastIndexOf('/'));
-    let parentPathes = parrentPath.split('/');
-
+    let parentPathes = text.split('/');
     const childPath = text.slice(text.lastIndexOf('/') - 1);
+    console.log(parentPathes);
     return (
       <Fragment>
         <Typography
@@ -26,12 +29,12 @@ export default class BreadCrumbs extends Component {
           className="breadcrumbs-wrapper"
         >
           {
-            parentPathes.map(el => (
-              <Link href="/manage-groups">
+            parentPathes.slice(0, parentPathes.length - 1).map((el, key) => (
+              <a style={{margin: 0, verticalAlign: 'baseline'}} onClick={this.clickParent}>
                 <Typography className="title-chunk-parrent">
-                  {el}
+                  {el}{key !== parentPathes.length - 2 ? '/': ''}
                 </Typography>
-              </Link>
+              </a>
             ))
           }
           <Typography className="title-chunk-child">
