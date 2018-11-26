@@ -4,7 +4,7 @@ import {
   WithRouterProps,
   SingletonRouter,
 } from 'next/router';
-import { Link } from '../../../routes';
+import { Link } from '../../routes';
 import { Grid, Button, NoSsr } from '@material-ui/core';
 import Layout from 'components/MyLayout';
 import SecondPanel from 'components/secondpanel';

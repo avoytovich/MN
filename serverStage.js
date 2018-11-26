@@ -13,8 +13,8 @@ const express = require('express');
 const port = isDev ? 3001 : 8081;
 app.prepare().then(() => {
   const server = express();
-  server.get('/home/manage-groups/group/:name', (req, res) => {
-    const actualPage = '/home/manage-groups/group';
+  server.get('/manage-groups/group/:name', (req, res) => {
+    const actualPage = '/manage-groups/group';
     const queryParams = { name: req.params.name };
     app.render(req, res, actualPage, queryParams);
   });

@@ -57,7 +57,7 @@ export default class Profile extends Component {
           <Layout>
             <SecondPanel
               title="Profile"
-              breadCrumb={`${name} / Profile`}
+              breadCrumb={`Manage Groups / ${name} Profile`}
             />
             <EditProfile
               user={this.state}

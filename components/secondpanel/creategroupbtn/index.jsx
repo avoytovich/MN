@@ -1,5 +1,5 @@
 import React, { PureComponent } from 'react';
-import Link from 'next/link';
+import {Link} from '../../../routes';
 import { Button } from '@material-ui/core';
 import './creategroupbtn.scss';
 import Router from 'next/router';
@@ -14,7 +14,7 @@ const style = {
 export default class CreateGroupBtn extends PureComponent {
   render() {
     return (
-      <Link href="/home/creategroup">
+      <Link route="create-group">
         <a>
           <Button  variant="contained" color="primary" style={style}>
             <div className="btn-icon" />

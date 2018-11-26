@@ -33,7 +33,7 @@ const styles = theme => (style);
       await signIn(values)
       await getProfile()
       Router.push({
-        pathname: '/home/manage-groups'
+        pathname: '/manage-groups'
       })
     } catch (e) {
       let message = 'Error';

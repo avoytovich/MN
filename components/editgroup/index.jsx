@@ -7,7 +7,7 @@ import { bindActionCreators } from 'redux';
 import { createQuestions } from 'actions/questions';
 import { connect } from 'react-redux';
 import * as Yup from 'yup';
-import Link from 'next/link';
+import {Link} from '../../routes';
 import { withRouter } from 'next/router';
 import find from 'lodash/find';
 import get from 'lodash/get';
@@ -59,7 +59,7 @@ const mapStateToProps = ({ groups, questions, runtime }, { router }) => ({
       groupId: values.id,
       text: values.questions
     })
-    props.router.push('/home/manage-groups');
+    props.router.push('/manage-groups');
   }
 })
 export default class EditGroup extends Component {
@@ -79,9 +79,9 @@ export default class EditGroup extends Component {
       <Form>
         <SecondPanel
           title="Edit Group"
-          breadCrumb={`Home / Edit ${name}`}
+          breadCrumb="Manage-groups / Edit group"
           actionButtons={[
-            <Link href="/home/manage-groups">
+            <Link route="manage-groups">
               <a>
                 <Button variant="outlined" color="secondary">
                   Cancel

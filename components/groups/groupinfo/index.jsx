@@ -32,6 +32,7 @@ const styles = theme => ({
     lineHeight: 'normal'
   },
   avatar: {
+    borderRadius: 0,
     marginTop: 15,
     width: 80,
     height: 80,
@@ -75,8 +76,8 @@ export default class GroupInfo extends Component {
         <div className="group-icon" />
         <div className="d-flex f-column margin-info">
           <Link
-            href={{ pathname: '/home/manage-groups/group', query: { id } }}
-            as={`/home/manage-groups/group/${id}`}
+            href={{ pathname: '/manage-groups/group', query: { id } }}
+            as={`/manage-groups/group/${id}`}
           >
             <a style={{ margin: 0 }}>
               <Typography

@@ -2,7 +2,7 @@ import { Component, Fragment } from 'react';
 import { Grid, IconButton, TextField, FormControl, MenuItem } from '@material-ui/core';
 import CreateIcon from '@material-ui/icons/Create';
 import { withRouter } from 'next/router';
-import Link from 'next/link';
+import { Link } from '../../routes';
 import InfiniteScroll from 'react-infinite-scroll-component';
 import qs from "qs";
 import { connect } from 'react-redux';
@@ -184,7 +184,7 @@ export class Features extends Component {
                       <IconButton
                         /*onClick={this.handleClick}*/
                       >
-                        <Link href={{ pathname: `/home/editgroup/${groupDetails.id}` }}>
+                        <Link route="editgroup" params={{id: groupDetails.id}}>
                           <CreateIcon />
                         </Link>
                       </IconButton><br/>

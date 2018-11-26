@@ -1,12 +1,12 @@
 import React, { Component } from 'react';
 import { withRouter } from 'next/router';
 import { Button, Grid } from '@material-ui/core';
-import Layout from '../../../components/MyLayout.js';
-import SecondPanel from '../../../components/secondpanel';
-import SearchPanel from '../../../components/searchpanel';
-import Groups from '../../../components/groups';
-import Footer from '../../../components/footer';
-import CreateGroupBtn from '../../../components/secondpanel/creategroupbtn';
+import Layout from 'components/MyLayout.js';
+import SecondPanel from 'components/secondpanel';
+import SearchPanel from 'components/searchpanel';
+import Groups from 'components/groups';
+import Footer from 'components/footer';
+import CreateGroupBtn from 'components/secondpanel/creategroupbtn';
 import ActivityChartButton from 'components/activitychart/button';
 
 @withRouter
@@ -18,7 +18,7 @@ export default class About extends Component {
           <Layout>
             <SecondPanel
               title="Manage Groups"
-              breadCrumb="Manage Groups"
+              breadCrumb=""
               actionButtons={[
                 <ActivityChartButton />,
                 <CreateGroupBtn />

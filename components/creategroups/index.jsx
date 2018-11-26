@@ -8,7 +8,7 @@ import { createGroup } from '../../actions/groups';
 import { setData } from 'actions/updateData';
 import { connect } from 'react-redux';
 import * as Yup from 'yup';
-import Link from 'next/link';
+import {Link} from '../../routes';
 import Router from 'next/router';
 import { loadIcons } from 'actions/groups';
 import { resetData } from 'actions/updateData';
@@ -41,7 +41,7 @@ import get from 'lodash/get';
     values.iconId = get(props, 'icon.id');
     props.createGroup(values)
       .then(r => {
-        Router.push('/home/manage-groups');
+        Router.push('/manage-groups');
       })
   }
 })
@@ -58,9 +58,9 @@ export default class CreateGroups extends Component {
       <Form>
         <SecondPanel
           title="Create a Group"
-          breadCrumb="Home / Create a Group"
+          breadCrumb="Manage Groups / Create a Group"
           actionButtons={[
-            <Link href="/home/manage-groups">
+            <Link route="manage-groups">
               <a>
                 <Button variant="outlined" color="secondary">
                   Cancel

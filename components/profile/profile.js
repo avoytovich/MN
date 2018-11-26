@@ -79,7 +79,7 @@ export default class Profile extends Component{
       open:false,
       imgSrc: null,
       crop: {
-        aspect: 1/1
+        aspect: 1/1.25
       },
       pixelCrop:{}
     }

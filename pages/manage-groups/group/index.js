@@ -1,6 +1,6 @@
 import { Component, Fragment } from 'react';
 import { withRouter } from 'next/router';
-import { Link } from '../../../../routes';
+import { Link } from '../../../routes';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { get as _get } from 'lodash';
@@ -10,9 +10,9 @@ import { Button } from '@material-ui/core';
 import Layout from 'components/MyLayout';
 import SecondPanel from 'components/secondpanel';
 import Features from 'components/features';
-import { group } from '../../../../services/cruds';
-import loading from '../../../../services/decorators/loading';
-import { setData } from '../../../../actions/updateData';
+import { group } from 'services/cruds';
+import loading from 'services/decorators/loading';
+import { setData } from 'actions/updateData';
 import { getSingle } from 'actions/groups';
 
 import './group.sass';

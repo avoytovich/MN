@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import Link from 'next/link';
+import { Link } from '../../routes';
 import {
   Grid,
   Typography,
@@ -35,23 +35,23 @@ export default class Header extends Component {
 
   getLink = () => [
     {
-      href: '/',
+      route: '/',
       title: 'MetKnow',
       className: 'brand-title',
       variant: 'display1'
     },
     {
-      href: '/',
+      route: '/',
       title: 'ADMIN',
       variant: 'display2',
       className: 'group-first-item'
     },
     {
-      href: '/home/manage-groups',
+      route: 'manage-groups',
       title: 'GROUPS',
       variant: 'display2'
     },
-    { href: '/#landing-contact-us', title: 'CONTACT US', variant: 'display2' }
+    { route: '/#landing-contact-us', title: 'CONTACT US', variant: 'display2' }
   ];
 
   componentDidMount(){
@@ -75,9 +75,9 @@ export default class Header extends Component {
           />
           <div className="links d-flex ai-center">
             {this.getLink().map((item, id) => {
-              const { href, title, className, variant } = item;
+              const { route, title, className, variant } = item;
               return (
-                <Link key={id} href={href}>
+                <Link key={id} route={route}>
                   <a>
                     <Typography className={className || ''} variant={variant}>
                       {title}

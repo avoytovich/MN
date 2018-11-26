@@ -70,7 +70,7 @@ export default class IconModal extends Component {
         <div className={classes.wrapIcons}>
           {
             icons.map(icon => (
-              <Avatar onClick={this.choose(icon)} key={`icon-${icon.id}`} className={
+              <Avatar style={{borderRadius: 0}} onClick={this.choose(icon)} key={`icon-${icon.id}`} className={
                 classNames(
                   classes.icon,
                   this.state.chosen.id === icon.id? classes.chosen:null )

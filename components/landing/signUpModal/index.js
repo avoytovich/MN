@@ -43,7 +43,7 @@ const styles = theme => style;
     try {
       await signUp(values);
       Router.push({
-        pathname: '/home/manage-groups'
+        pathname: '/manage-groups'
       });
     } catch (e) {
       // if(e.response)
