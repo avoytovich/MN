@@ -158,11 +158,24 @@ export class Features extends Component {
     document.addEventListener('keypress', this.handleSubmit);
   };
 
+  handleIdCreateMember = () => {
+    const { groupDetails, router } = this.props;
+    const { group } = this.state;
+    if (group != 'ROOT') {
+      const currentSubGroup = groupDetails.subgroups.filter(item => {
+        return item.name == group;
+      });
+      return currentSubGroup[0] && currentSubGroup[0]['id'];
+    } else {
+      return groupDetails.id;
+    }
+  };
+
   render() {
     //console.log('this.state', this.state);
     //console.log('this.props', this.props);
     const { groupDetails, groupMembers } = this.props;
-    const { elements, membersInfo } = this.state;
+    const { elements, membersInfo, group } = this.state;
     return (
       <Fragment>
         <div className="features-wrapper">
@@ -282,7 +295,7 @@ export class Features extends Component {
                   className="infinite-scroll-component-list">
                   <Grid item xs={6} sm={3}>
                     <div className="grid-info">
-                      <Link href={{ pathname: '/edit-member', query: { groupId: groupDetails.id } }}>
+                      <Link href={{ pathname: '/edit-member', query: { groupId: this.handleIdCreateMember() } }}>
                         <div
                           style={{
                             backgroundImage: `url(${'/static/svg/placeholder_add.svg'})`,
