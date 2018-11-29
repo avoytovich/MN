@@ -11,6 +11,7 @@ import { get as _get } from 'lodash';
 
 import { setData } from '../../actions/updateData';
 import { members } from '../../services/cruds';
+import { myRoleIs } from '../../services/accountService';
 import loading from '../../services/decorators/loading';
 import ClassesNesting from './withClassesNesting';
 
@@ -174,6 +175,7 @@ export class Features extends Component {
   render() {
     //console.log('this.state', this.state);
     //console.log('this.props', this.props);
+    console.log('myRoleIs', myRoleIs());
     const { groupDetails, groupMembers } = this.props;
     const { elements, membersInfo, group } = this.state;
     return (

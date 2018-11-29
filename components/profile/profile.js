@@ -18,6 +18,7 @@ import { editProfile } from 'actions/profile'
 import { createMember, editMember } from 'actions/member'
 import { uploadProfileImage } from 'actions/upload'
 import DefaultAvatar from 'static/png/defaultAvatar.png'
+import { profileInfoSchema } from '../../services/validateSchemas';
 
 import ReactCrop from 'react-image-crop'
 import 'react-image-crop/lib/ReactCrop.scss'
@@ -42,11 +43,7 @@ const acceptedFileTypesArray = acceptedFileTypes.split(",").map((item) => {retur
   { toggleSnackbar }
 )
 @withFormik({
-  validationSchema: Yup.object().shape({
-    email: Yup.string().required('Required'),
-    firstName: Yup.string().required('Required'),
-    lastName: Yup.string().required('Required')
-  }),
+  validationSchema: prop => profileInfoSchema,
   enableReinitialize: true,
   mapPropsToValues: props => {
     const user = get(props, 'user')
@@ -84,6 +81,27 @@ export default class Profile extends Component{
       pixelCrop:{}
     }
   }
+
+  componentDidUpdate(prevProps, prevState) {
+    const { errors, toggleSnackbar } = this.props;
+    if(prevProps.values.imageContentId == 0 &&
+        errors.imageContentId !=
+          prevProps.errors.imageContentId &&
+            errors.imageContentId) {
+              return toggleSnackbar(`${this.props.errors.imageContentId}`);
+            }
+  }
+
+  /*componentDidMount() {
+    const { errors, toggleSnackbar } = this.props;
+    if(prevProps.values.imageContentId == 0 &&
+      errors.imageContentId !=
+      prevProps.errors.imageContentId &&
+      errors.imageContentId) {
+      return toggleSnackbar(`${this.props.errors.imageContentId}`);
+    }
+  }*/
+
   handleOpen = () => {
     this.setState({ open: true });
   };
@@ -193,6 +211,11 @@ export default class Profile extends Component{
     this.setState({crop,pixelCrop });
   }
 
+  handleSpecialErrorValidation = () => {
+    const { values, errors, toggleSnackbar } = this.props;
+    values.imageContentId == 0 && errors.imageContentId &&
+      toggleSnackbar(`${this.props.errors.imageContentId}`);
+  }
 
 
   render() {
@@ -329,7 +352,11 @@ export default class Profile extends Component{
                       <Button className="profile-btn profile-btn-cancel">
                         Cancel
                       </Button>
-                      <Button type="submit" className="profile-btn profile-btn-add">
+                      <Button
+                        type="submit"
+                        className="profile-btn profile-btn-add"
+                        onClick={() => this.handleSpecialErrorValidation()}
+                      >
                         Save
                       </Button>
                     </div>
