@@ -15,15 +15,11 @@ export function isProduction() {
 
 export function getLocale(key) {
   if (!isServer()) {
-    switch(key) {
-      case 'accessToken':
+    if (key == 'accessToken') {
         const token =_get(JSON.parse(localStorage.getItem('user')), 'token');
         return token[key];
-      case 'organizationId':
-        return _get(JSON.parse(localStorage.getItem('user')), key);
-      default:
-        return null;
+    } else {
+      return _get(JSON.parse(localStorage.getItem('user')), key);
     }
   }
-  return undefined;
 }
