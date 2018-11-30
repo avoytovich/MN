@@ -26,7 +26,8 @@ async function requestCheckAuthInterceptor (config) {
 
 function unauthorizedResponseInterceptor (error) {
   /* handling 401 */
-  if (!error.response || error.response.status === 401) {
+  console.log('error');
+  if (!error.response || error.response.status === 401 || error.response.status === 404) {
     Router.push({
       pathname: '/'
     })
@@ -44,8 +45,8 @@ export function getAxiosInstance (url, isSecured = true) {
   }
   request.interceptors.response.use(
     response => response && response.data, // success handler
-    unauthorizedResponseInterceptor // error handler
-  )
+    unauthorizedResponseInterceptor
+    )
   
 
   return request;

@@ -61,7 +61,7 @@ export default class Questions extends Component<{
     const { classes } = this.props;
     const { subgroups } = this.state;
     return (
-      <Fragment>
+      <>
         <Grid container alignItems="center" spacing={0}>
           <Grid item xs={10}>
             <TextField
@@ -109,7 +109,7 @@ export default class Questions extends Component<{
             </List>
           </Grid>
         </Grid>
-      </Fragment>
+      </>
     );
   }
 }

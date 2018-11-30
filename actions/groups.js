@@ -9,7 +9,7 @@ const request = getAxiosInstance('/api/Group');
 const quizRequest = getAxiosInstance('/api/Quiz');
 
 
-export const getGroups = (params) =>
+export const getGroups = (params) => 
   dispatchSend('get_groups', request.get('/GetGroups', { params }), {
     start_action: START_LOAD,
     receiveAction: GET_GROUPS,
@@ -20,6 +20,7 @@ export const getGroups = (params) =>
       return "Error load"
     }
   });
+
 export const getSingle = params =>
   dispatchSend('get_group', request.get('/GetGroupDetails', { params }),
   {
@@ -91,7 +92,7 @@ export const loadIcons = () =>
     }
   });
 export const loadQuiz = (params) =>
-  dispatchSend('quiz', quizRequest.get('/GetQuiz', { params }), {
+  dispatchSend('quiz', quizRequest.get('/GetQuiz', {params}), {
     receiveAction: UPDATE_SPEC_DATA,
     adaptData: r => r,
     adaptError: err => {

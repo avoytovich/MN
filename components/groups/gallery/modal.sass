@@ -1,6 +1,34 @@
 .wrapper-modal
+    ::-webkit-scrollbar
+        display: none
+    .hline
+        border: 1px solid rgba(0,0,0,0.1)
+    padding-right: 5px;
+    *
+        font-family: 'Muli', sans-serif
+    background-color: #fff
+    justify-self: center
+    width: 95vw
+    margin: 15px auto
+    min-height: 95vh
+    .caption
+        color: rgba(0,0,0,0.4)
+        font-weight: 200
     .grid
-        height: 100%
+        height: 95vh
+        width: 100%
+    .question-item
+        padding: 0
+        margin-bottom: 5px
+        .pri
+            color: rgba(0,0,0,0.4)
+            font-weight: 200
+            font-size: 12pt
+        .sec
+            font-size: 12pt
+    .info
+        overflow-y: auto
+        padding-left: 14px
     .avatar
         width: 100%
         height: 100%
@@ -10,5 +38,6 @@
         font-size: 12pt
         font-weight: 400
         &.fname
-            font-size: 15pt
-            font-weight: bold
+            font-size: 22pt
+            font-weight: 400
+            color: rgba(0,0,0,0.6)

@@ -100,7 +100,6 @@ export default (state = initialState, action: any) => {
           groups: filtered
         }
       }
-        return state;
     case GET_GROUPS:
       const filtered = reverse(sortBy(uniqBy([...action.data, ...state.groups], 'id'), group => moment(group.dateOfLastUpdate).unix()));
       return Object.assign({}, state, {
