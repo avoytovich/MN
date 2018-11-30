@@ -9,6 +9,7 @@ import GlobalSnackbar from '../components/GlobalSnackbar'
 import getPageContext from '../page-context';
 import withReduxStore from '../redux-config/with-redux-store';
 import Loader from './_loader';
+import MainErrorBoundary from 'services/errorboundary';
 // import Localization from '../containers/Localization';
 
 @withReduxStore
@@ -45,13 +46,15 @@ export default class MyApp extends App {
             <CssBaseline />
             {/* Pass pageContext to the _document though the renderPage enhancer
                 to render collected styles on server side. */}
-            <Provider store={reduxStore}>
-                <Fragment>
-                  <GlobalSnackbar />
-                  <Loader />
-                  <Component pageContext={this.pageContext} {...pageProps} />
-                </Fragment>
-            </Provider>
+            {/* <MainErrorBoundary> */}
+              <Provider store={reduxStore}>
+                  <Fragment>
+                    <GlobalSnackbar />
+                    <Loader />
+                      <Component pageContext={this.pageContext} {...pageProps} />
+                  </Fragment>
+              </Provider>
+            {/* </MainErrorBoundary> */}
           </MuiThemeProvider>
         </JssProvider>
       </Container>

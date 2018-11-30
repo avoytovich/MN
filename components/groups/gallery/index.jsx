@@ -14,6 +14,7 @@ import { connect } from 'react-redux'
 
 
 import './gallery.sass';
+import Member from 'pages/edit-member';
 
 const cardWidth = 160;
 
@@ -115,7 +116,7 @@ const settings = {
   ]
 };
 
-@withModal(MemberModal)
+@withModal(MemberModal, {disableStyles: true, withCloseOutside: true})
 @connect(null, {getMember})
 @withStyles(styles)
 export default class Gallery extends PureComponent {

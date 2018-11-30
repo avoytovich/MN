@@ -1,10 +1,12 @@
 import { Typography, List, ListItem, ListItemText, ListItemAvatar, Avatar } from "@material-ui/core";
 import CircularProgressBar from 'components/CircularProgressBar';
-import { Fragment } from 'react';
+import * as React from 'react';
 import { Router } from '../../routes';
 import './finished.sass';
-
-
+import MemberModal from 'components/groups/gallery/memberModal';
+import withModal from 'services/decorators/withModal';
+import { connect } from 'react-redux';
+import { getMember } from 'actions/member'
 export interface Recommendation {
     id: number
     name: string
@@ -19,37 +21,51 @@ interface Props {
     recommended: Recommendation[]
 }
 
-const moveToUser = (id:number) => () =>
+const moveToUser = (id: number) => () =>
     Router.push('editmember');
 
-const Recommended: React.SFC<{ recommended: Recommendation[] }> = ({ recommended }) => (
-    <Fragment>
-        {
-            recommended.length?
-            <Typography align="center" className="recommended">
-                Recommended for review
-            </Typography>:null
-        }
-        <List>
+
+@connect(null, {
+    getMember
+})
+@withModal(MemberModal, {disableStyles: true, withCloseOutside: true, getMember: Function})
+class Recommended extends React.Component<{ recommended: Recommendation[], open: Function }> {
+    
+    openModal = async(id) => () => {
+        const member = this.props.getMember(id);
+        this.props.open(member);
+    }
+    render() {
+        const { recommended } = this.props;
+        return (<>
             {
-                recommended.map((rd, key) => (
-                    <ListItem 
-                    className="item"
-                    // TODO: onclick
-                    // onClick={moveToUser(rd.id)}
-                    key={`rec-${key}`}>
-                        <ListItemAvatar>
-                            <Avatar src={rd.image}/>
-                        </ListItemAvatar>
-                        <ListItemText>
-                            {rd.name}
-                        </ListItemText>
-                    </ListItem>
-                ))
+                recommended.length ?
+                    <Typography align="center" className="recommended">
+                        Recommended for review
+            </Typography> : null
             }
-        </List>
-    </Fragment>
-)
+            <List>
+                {
+                    recommended.map((rd, key) => (
+                        <ListItem
+                            className="item"
+                            // TODO: onclick
+                            onClick={this.openModal(rd.id)}
+                            key={`rec-${key}`}>
+                            <ListItemAvatar>
+                                <Avatar src={rd.image} />
+                            </ListItemAvatar>
+                            <ListItemText>
+                                {rd.name}
+                            </ListItemText>
+                        </ListItem>
+                    ))
+                }
+            </List>
+        </>)
+    }
+}
+
 
 const Finished: React.SFC<Props> = ({ onTryAgain, correct, total, recommended }) => {
     const text = correct === total ? 'Congratulations' : 'Try again';

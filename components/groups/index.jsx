@@ -57,6 +57,7 @@ export default class Groups extends Component {
       this.setState({
         hasMore: false
       })
+    
     this.props.getGroups({
       limit: this.groups,
       offset: (param - 1) * this.groups
@@ -69,6 +70,7 @@ export default class Groups extends Component {
   }
   render() {
     const { classes, groups = [], isSearching } = this.props;
+    console.log(groups);
     // const page = groups.length / this.groups;
     return (
       <Fragment>

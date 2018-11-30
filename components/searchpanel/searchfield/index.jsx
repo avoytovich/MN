@@ -1,5 +1,6 @@
 import React, { PureComponent } from 'react';
 import { TextField, Input, withStyles } from '@material-ui/core';
+import classNames from 'classnames';
 
 const styles = theme => ({
   input: {
@@ -30,16 +31,17 @@ export default class SearchField extends PureComponent {
   change = (e) => {
     if(e.target.value.length === 0)
     {
-      this.props.onRemove();
+      this.props.onRemove?this.props.onRemove(): 1;
     }
     this.props.form.handleChange(e);
   }
   render() {
-    const { name, label, error, field, form, classes } = this.props;
+    const { name, label, error, field, form, classes, className } = this.props;
     return (
       <Input
-        className={classes.input}
+        className={classNames(classes.input, className)}
         name={field.name}
+        fullWidth
         label={label}
         onChange={this.change}
         error={error}

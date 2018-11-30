@@ -10,6 +10,7 @@ import Layout from 'components/MyLayout';
 import SecondPanel from 'components/secondpanel';
 import QuizShow from 'components/quiz';
 import QuizProgress from 'components/QuizProgress';
+import MainErrorBoundary from 'services/errorboundary';
 
 type ThreeStringProps = Record<'id', number>
 
@@ -21,32 +22,34 @@ class Quiz extends React.Component<Props> {
   render() {
     const query = this.props.router.query as ThreeStringProps;
     return (
-      <Grid container spacing={0} justify="center">
-        <Grid item xs={12} sm={12}>
-          <Layout>
-            <SecondPanel
-              title="Quiz"
-              breadCrumb="Manage Groups / Group / Quiz"
-              centerButtons={[
-                <QuizProgress
-                key={'quiz-progress'}/>
-              ]}
-              actionButtons={[
-                <Link route="group" params={{ id: query.id }} key={'buttonone'}>
-                  <a>
-                    <Button variant="outlined" color="primary">
-                      Back
+      <MainErrorBoundary>
+        <Grid container spacing={0} justify="center">
+          <Grid item xs={12} sm={12}>
+            <Layout>
+              <SecondPanel
+                title="Quiz"
+                breadCrumb="Manage Groups / Group / Quiz"
+                centerButtons={[
+                  <QuizProgress
+                    key={'quiz-progress'} />
+                ]}
+                actionButtons={[
+                  <Link route="group" params={{ id: query.id }} key={'buttonone'}>
+                    <a>
+                      <Button variant="outlined" color="primary">
+                        Back
                     </Button>
-                  </a>
-                </Link>
-              ]}
-            />
-            <QuizShow 
+                    </a>
+                  </Link>
+                ]}
+              />
+              <QuizShow
                 groupId={query.id}
-            />
-          </Layout>
+              />
+            </Layout>
+          </Grid>
         </Grid>
-      </Grid>
+      </MainErrorBoundary>
     );
   }
 }
