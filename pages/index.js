@@ -246,12 +246,16 @@ export default class App extends React.Component {
 
         <Grid className="landing-footer-container">
           <Grid container>
-            <a href="#" className="landing-footer-link">
-              Privacy Policy
-            </a>
-            <a href="#" className="landing-footer-link">
-              Terms of use
-            </a>
+            <Link href={{ pathname: '/privacy-policy'}}>
+              <a className="landing-footer-link">
+                Privacy Policy
+              </a>
+            </Link>
+            <Link href={{ pathname: '/terms-of-use'}}>
+              <a className="landing-footer-link">
+                Terms of use
+              </a>
+            </Link>
             <p className="landing-footer-copyright">© 2018 MetKnow</p>
           </Grid>
         </Grid>
