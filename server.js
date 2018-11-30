@@ -20,6 +20,7 @@ app.prepare().then(() => {
   });
   server
     .use('/api',  proxy({target: process.env.API_HOST,  changeOrigin: true}))
+    .use('/fonts',  proxy({target: process.env.API_HOST,  changeOrigin: true}))
     .use(handler)
     .use(cookieParser())
     .listen(port, err => {
