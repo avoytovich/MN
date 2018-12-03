@@ -1,4 +1,6 @@
 import React from 'react';
+import Router from 'next/router';
+import { withRouter } from 'next/router';
 import Link from 'next/link';
 import NoSSR from 'react-no-ssr';
 import { Button, Grid } from '@material-ui/core';
@@ -17,8 +19,8 @@ import './style.scss';
 import 'video-react/styles/scss/video-react.scss';
 
 import SignInModal from '../components/landing/signInModal';
-import SignUpModal from '../components/landing/signUpModal';
 import withModal from '../services/decorators/withModal';
+import {changeQuery} from "../services/serverService";
 
 @withModal(SignInModal)
 class SigInBtn extends React.Component {
@@ -32,12 +34,15 @@ class SigInBtn extends React.Component {
   }
 }
 
-@withModal(SignUpModal)
+@withRouter
 class SignUpBtn extends React.Component {
+
+  handleClick = () => (Router.pushRoute(changeQuery(this.props.router, 'modal', 'signUp')));
+
   render() {
     const { open } = this.props;
     return (
-      <p className="landing-auth-btn" onClick={() => open(true)}>
+      <p className="landing-auth-btn" onClick={this.handleClick}>
         Sign Up
       </p>
     );

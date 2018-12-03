@@ -28,3 +28,5 @@ app.prepare().then(() => {
       console.log(`> Ready on http://localhost:${port}`);
     });
 });
+
+//API_HOST=http://18.217.30.162
