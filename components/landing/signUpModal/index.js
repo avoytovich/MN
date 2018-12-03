@@ -9,15 +9,17 @@ import {
 import { Formik, Form, Field, withFormik } from 'formik';
 import { signUp } from 'actions/account';
 import { toggleSnackbar } from 'actions/snackbar';
-import CloseIcon from '@material-ui/icons/Close';
 import * as Yup from 'yup';
 import { connect } from 'react-redux';
 import Router from 'next/router';
+import { withRouter } from 'next/router';
+import { changeQuery } from '../../../services/serverService';
 
 import style from '../styles';
 
 const styles = theme => style;
 
+@withRouter
 @connect(
   null,
   { toggleSnackbar }
@@ -42,9 +44,10 @@ const styles = theme => style;
   handleSubmit: async (values, { props }) => {
     try {
       await signUp(values);
-      Router.push({
+      Router.pushRoute(changeQuery(props.router, 'modal', 'verify'));
+      /*Router.push({
         pathname: '/manage-groups'
-      });
+      });*/
     } catch (e) {
       // if(e.response)
         const  { message} = e.response.data.errors[0]
@@ -58,10 +61,9 @@ const styles = theme => style;
 @withStyles(styles)
 export default class IconModal extends Component {
   render() {
-    const { classes, close, errors } = this.props;
+    const { classes, errors } = this.props;
     return (
       <div className={classes.wrap}>
-        <CloseIcon onClick={() => close()} />
         <Typography align="center" className={classes.title}>
           Sign Up
         </Typography>

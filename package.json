@@ -43,6 +43,7 @@
     "qs": "^6.5.2",
     "react": "^16.6.3",
     "react-circular-progressbar": "^1.0.0",
+    "react-div-100vh": "^0.3.2",
     "react-dom": "^16.6.3",
     "react-dropzone": "^7.0.1",
     "react-image-crop": "^6.0.4",
