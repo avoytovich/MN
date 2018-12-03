@@ -38,11 +38,8 @@ const acceptedFileTypesArray = acceptedFileTypes.split(",").map((item) => {retur
     try {
       console.log(values)
       const data = await props.sumbmitRequest(values)
-      debugger
       props.toggleSnackbar('Success', 'success')
-      debugger
       props.handleSuccessRequest(data)
-      debugger
     } catch (e) {
       const { message} = e.response.data.errors[0]
       props.toggleSnackbar(message, 'error')
