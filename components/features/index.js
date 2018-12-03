@@ -297,7 +297,7 @@ export class Features extends Component {
                   className="infinite-scroll-component-list">
                   <Grid item xs={6} sm={3}>
                     <div className="grid-info">
-                      <Link href={{ pathname: '/edit-member', query: { groupId: this.handleIdCreateMember() } }}>
+                      <Link route="create-member" params={{ groupId: this.handleIdCreateMember() }}>
                         <div
                           style={{
                             backgroundImage: `url(${'/static/svg/placeholder_add.svg'})`,
@@ -323,7 +323,7 @@ export class Features extends Component {
                     return (
                       <Grid key={index} item xs={6} sm={3}>
                         <div className="grid-info">
-                          <Link href={{ pathname: '/edit-member', query: { memberId: id } }}>
+                          <Link route="edit-member" params={{  memberId: id }} >
                             <div
                               style={{
                                 backgroundImage: `url(${_get(imageContent, 'mediumImage') ||

@@ -26,16 +26,7 @@ import ReactCrop from 'react-image-crop'
 import 'react-image-crop/lib/ReactCrop.scss'
 
 
-const inputNames = [
-  { name:"firstName", label:"First Name"},
-  { name:"city", label:"City"},
-  { name:"title", label:"Position"},
-  { name:"lastName", label:"Last Name"},
-  { name:"email", label:"Email" },
-  { name:"phone", label:"Phone Number" },
-  { name:"company", label:"Department" },
-  { name:"public", label:"About Me" }
-]
+
 
 const imageMaxSize = 5500000000 // bytes
 const acceptedFileTypes = 'image/png, image/jpg, image/jpeg'
@@ -231,6 +222,7 @@ export default class Profile extends Component{
           InputLabelProps={{
             className: classes.label
           }}
+          key={input.name}
         />
       )
     })
