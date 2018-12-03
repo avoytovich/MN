@@ -8,6 +8,7 @@ import './groupinfo.scss';
 import withModal from 'services/decorators/withModal/index';
 import { connect } from 'react-redux'
 import { updateSpecData } from 'actions/updateData';
+import { myRoleIs } from "../../../services/accountService";
 
 import GroupDeleteModal from './groupModal';
 
@@ -58,6 +59,15 @@ const styles = theme => ({
   updateSpecData
 })
 export default class GroupInfo extends Component {
+  state = {
+    isAdmin: false,
+  }
+
+  componentDidMount() {
+    this.setState({
+      isAdmin: myRoleIs(),
+    })
+  }
 
   titleCase = str => str.toLowerCase().split(' ').join('-');
   handleDelete = group => () => {
@@ -70,6 +80,7 @@ export default class GroupInfo extends Component {
       info,
       info: { id },
     } = this.props;
+    const { isAdmin } = this.state;
     return (
       <div className="d-flex f-row group-info-wrapper">
         <Avatar className={classes.avatar} src={info.icon || '/static/png/icon-group.png'} />
@@ -106,31 +117,33 @@ export default class GroupInfo extends Component {
               ))
             }
           </List>
-          <div className="actions-block d-flex jcc ai-center">
-            <div className="d-flex edit ai-center">
-              <div className="icon" />
-              <TheLink
-                route="editgroup" params={{
-                  id: info.id
-                }}
-              >
-                <a >
-                  <Typography className="edit-text" variant="caption">
-                    edit
-                  </Typography>
-                </a>
-              </TheLink>
+          {isAdmin && (
+            <div className="actions-block d-flex jcc ai-center">
+              <div className="d-flex edit ai-center">
+                <div className="icon" />
+                <TheLink
+                  route="editgroup" params={{
+                    id: info.id
+                  }}
+                >
+                  <a >
+                    <Typography className="edit-text" variant="caption">
+                      edit
+                    </Typography>
+                  </a>
+                </TheLink>
+              </div>
+              <div className="divider" />
+              <div
+                onClick={this.handleDelete(info)}
+                className="move d-flex ai-center">
+                <div className="icon" />
+                <Typography className="move-text" variant="caption">
+                  remove
+                </Typography>
+              </div>
             </div>
-            <div className="divider" />
-            <div
-              onClick={this.handleDelete(info)}
-              className="move d-flex ai-center">
-              <div className="icon" />
-              <Typography className="move-text" variant="caption">
-                remove
-              </Typography>
-            </div>
-          </div>
+          )}
         </div>
       </div>
     );
