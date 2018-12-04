@@ -8,20 +8,17 @@ import './breadcrumbs.sass';
 @withRouter
 export default class BreadCrumbs extends Component {
 
-  parrentRoute = () => {
-    const { pathname } = this.props.router;
-    return pathname.slice(0, pathname.lastIndexOf('/'));
-  };
-  clickParent = (e) => {
-    e.preventDefault();
-    //TODO history
-    Router.back();
-  } 
+  handlePath = (el, key) => {
+    const { text } = this.props;
+    const path = text.split('/');
+    return (key && key != path.length -1) ?
+      Router.back() : key == path.length -1 ?
+        null : Router.push({pathname: `/${el.toLowerCase().replace(' ', '-')}`});
+  }
+
   render() {
     const { text } = this.props;
-    let parentPathes = text.split('/');
-    const childPath = text.slice(text.lastIndexOf('/') - 1);
-    console.log(parentPathes);
+    const path = text.split('/');
     return (
       <Fragment>
         <Typography
@@ -29,17 +26,14 @@ export default class BreadCrumbs extends Component {
           className="breadcrumbs-wrapper"
         >
           {
-            parentPathes.slice(0, parentPathes.length - 1).map((el, key) => (
-              <a style={{margin: 0, verticalAlign: 'baseline'}} onClick={this.clickParent}>
-                <Typography className="title-chunk-parrent">
-                  {el}{key !== parentPathes.length - 2 ? '/': ''}
+            path.slice(0, path.length).map((el, key) => (
+              <a style={{margin: 0, verticalAlign: 'baseline'}} onClick={() => this.handlePath(el, key)}>
+                <Typography className="title-chunk">
+                  {`${el}${key !== path.length - 1 ? `/` : ''}`}
                 </Typography>
               </a>
             ))
           }
-          <Typography className="title-chunk-child">
-            {childPath}
-          </Typography>
         </Typography>
       </Fragment>
     );

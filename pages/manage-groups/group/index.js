@@ -89,6 +89,7 @@ export class Group extends Component {
   };
 
   render() {
+    //console.log('this.props', this.props);
     const { pathname } = this.props.router;
     const { groupDetails } = this.props;
     const { isAdmin } = this.state;
