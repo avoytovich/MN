@@ -11,6 +11,9 @@ out
 gen
 node_modules/
 
+.env
+.vscode
+
 # Compiled output
 dist/
 .DS_Store

@@ -80,6 +80,14 @@ export class Features extends Component {
     });
   }
 
+  executeGetGroupId = (currentSubGroup) => {
+    const { groupDetails } = this.props;
+    const { id } = this.props.router.query;
+    return (currentSubGroup &&
+      (currentSubGroup['name'] == 'ROOT' && id || currentSubGroup['id'])) ||
+        groupDetails.id;
+  };
+
   loadAndSaveMembersList = async condition => {
     if (this.props.groupDetails.subgroups.some(item => {
       return item.name == condition;
@@ -120,7 +128,7 @@ export class Features extends Component {
     const resp = await this.props.loadData(
       members.get(
         {
-          groupId: currentSubGroup[0] && currentSubGroup[0]['id'] || groupDetails.id,
+          groupId: this.executeGetGroupId(currentSubGroup[0]),
           limit: 12,
           offset: offset,
           search: search,

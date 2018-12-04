@@ -29,4 +29,4 @@ app.prepare().then(() => {
     });
 });
 
-//API_HOST=http://192.168.4.158:1260
+//API_HOST=http://18.217.30.162
