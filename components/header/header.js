@@ -36,7 +36,7 @@ const adminLinks = [
     variant: 'display1'
   },
   {
-    route: '/',
+    route: '/admin',
     title: 'ADMIN',
     variant: 'display2',
     className: 'group-first-item'
