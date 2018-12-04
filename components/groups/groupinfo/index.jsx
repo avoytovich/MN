@@ -70,20 +70,13 @@ export default class GroupInfo extends Component {
       info,
       info: { id },
     } = this.props;
-    return (
-      <div className="d-flex f-row group-info-wrapper">
+    return <div className="d-flex f-row group-info-wrapper">
         <Avatar className={classes.avatar} src={info.icon || '/static/png/icon-group.png'} />
         <div className="group-icon" />
         <div className="d-flex f-column margin-info">
-          <Link
-            href={{ pathname: '/manage-groups/group', query: { id } }}
-            as={`/manage-groups/group/${id}`}
-          >
+          <Link href={{ pathname: '/manage-groups/group', query: { id } }} as={`/manage-groups/group/${id}`}>
             <a style={{ margin: 0 }}>
-              <Typography
-                className="group-name"
-                variant="subheading"
-              >
+              <Typography className="group-name" variant="subheading">
                 {info.name}
               </Typography>
             </a>
@@ -96,35 +89,29 @@ export default class GroupInfo extends Component {
             {moment(info.dateOfLastUpdate).format('DD/MM/YYYY h:mm a')}
           </Typography>
           <List className={classes.subgroupList}>
-            {
-              info.subgroups.map((subgroup, key) => (
-                <ListItem className={classes.listItem}  key={`subgroup-${key}`}> 
-                  <ListItemText className={classes.subgroupText}>
-                    {subgroup.name}
-                  </ListItemText>
-                </ListItem>
-              ))
-            }
+            {info.subgroups.map((subgroup, key) => (
+              <ListItem
+                className={classes.listItem}
+                key={`subgroup-${key}`}>
+                <ListItemText className={classes.subgroupText}>
+                  {subgroup.name}
+                </ListItemText>
+              </ListItem>
+            ))}
           </List>
-          <div className="actions-block d-flex jcc ai-center">
-            <div className="d-flex edit ai-center">
-              <div className="icon" />
-              <TheLink
-                route="editgroup" params={{
-                  id: info.id
-                }}
-              >
-                <a >
-                  <Typography className="edit-text" variant="caption">
-                    edit
+        <div className="actions-block d-flex jcc ai-center">
+          <TheLink route="editgroup" params={{ id: info.id }}>
+            <a>
+              <div className="d-flex edit ai-center">
+                <div className="icon" />
+                <Typography className="edit-text" variant="caption">
+                  edit
                   </Typography>
-                </a>
-              </TheLink>
-            </div>
+              </div>
+            </a>
+          </TheLink>
             <div className="divider" />
-            <div
-              onClick={this.handleDelete(info)}
-              className="move d-flex ai-center">
+            <div onClick={this.handleDelete(info)} className="move d-flex ai-center">
               <div className="icon" />
               <Typography className="move-text" variant="caption">
                 remove
@@ -132,7 +119,6 @@ export default class GroupInfo extends Component {
             </div>
           </div>
         </div>
-      </div>
-    );
+      </div>;
   }
 }

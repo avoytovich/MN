@@ -38,7 +38,7 @@ const styles = (theme: Theme) => createStyles({
     right: {
         color: '#ff6f00',
         '& div': {
-            backgroundColor: '#ff6f00',
+            backgroundColor: 'green',
         },
         '&:after': {
             width: 25,
@@ -46,11 +46,14 @@ const styles = (theme: Theme) => createStyles({
             position: 'relative',
             content: "\'\'",
             background: 'url(/static/svg/check.svg)',
-            backgroundSize: 'cover',
+            backgroundSize: 'contain',
         }
     },
     wrong: {
         border: '1px solid #e62a10',
+        '& div': {
+            backgroundColor: '#DB3737',
+        },
         '&:after': {
             width: 25,
             height: 25,
@@ -60,8 +63,13 @@ const styles = (theme: Theme) => createStyles({
             backgroundSize: 'cover',
         }
     },
+    isWrong: {
+        '&:after': {
+            background: 'none'
+        }
+    },
     neutral: {
-
+           
     }
 });
 
@@ -73,11 +81,12 @@ export interface ButtonProps extends WithStyles<typeof styles> {
     letter: string,
     callback: (key:number) => (any),
     status: Status,
-    disabled: boolean
+    disabled: boolean,
+    isWrong: boolean
 }
 
-const AnswerButton: React.SFC<ButtonProps> = ({ disabled, status, callback, classes, title, letter }) => (
-    <Button disabled={disabled} onClick={callback} className={classNames(classes.button, classes[status])} variant="contained" color="primary">
+const AnswerButton: React.SFC<ButtonProps> = ({ disabled, status, callback, classes, isWrong, title, letter }) => (
+    <Button disabled={disabled} onClick={callback} className={classNames(isWrong && classes.isWrong,classes.button, classes[status])} variant="contained" color="primary">
         <div className={classNames(classes.letter)}>{letter}</div>
             {title.slice(0, 15)}
     </Button>

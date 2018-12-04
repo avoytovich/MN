@@ -2,14 +2,10 @@ import * as React from 'react';
 import {
   withStyles,
   WithStyles,
-  createStyles,
   CircularProgress,
-  Typography,
-  Theme,
   Avatar,
   Grid
 } from '@material-ui/core';
-import * as StaticAvatar from 'static/png/image-member.png';
 import * as Line from 'static/png/line.png';
 import AnswerButton, { Status } from './button';
 import styles from './styles';
@@ -18,16 +14,12 @@ import { connect } from 'react-redux';
 import { updateSpecData, resetData } from 'actions/updateData';
 import get from 'lodash/get';
 import map from 'lodash/map';
-import { number } from 'prop-types';
-import { bindActionCreators, Dispatch } from 'redux';
-import { UPDATE_SPEC_DATA } from 'constants/actions';
 import Finished, { Recommendation } from './finished';
 
 interface WrongAnswer {
   answer: string,
   rightAnswer: string
 }
-
 
 class QuizShow extends React.Component<Props> {
   wrong: number = 0;
@@ -61,14 +53,16 @@ class QuizShow extends React.Component<Props> {
     setTimeout(() => {
       this.props.resetData('wrongCorrect');
       this.props.moveOnQuiz();
-    }, 1000)
+    }, 1500)
   };
+  
   componentWillUnmount = () => {
     this.props.resetData('currentQuiz');
   }
 
   componentDidUpdate = async (prevProps: Props) => {
     if (this.props.isFinished === true) {
+      // TODO: Send results when the back is working
       // await this.props.sendResults({
       //   questionsNumber: this.props.total,
       //   numberOfRightAnswers: this.props.total - this.wrong,
@@ -106,7 +100,6 @@ class QuizShow extends React.Component<Props> {
         onTryAgain={this.handleTryAgain}
         correct={this.props.total - this.wrong}
         total={this.props.total}
-
         recommended={this.recommendations}
       />;
     else
@@ -129,6 +122,7 @@ class QuizShow extends React.Component<Props> {
                 else if (this.props.wrong === key)
                   status = 'wrong';
                 const disabled = !!this.props.wrong || !!this.props.correct;
+                console.log(this.props.wrong,this.props.correct);
                 return (<Grid key={key + 'question'} item xs={6}>
                   <AnswerButton
                     disabled={disabled}
@@ -136,6 +130,7 @@ class QuizShow extends React.Component<Props> {
                     letter={String.fromCharCode(65 + key)}
                     callback={this.onClickAnswer(key)}
                     status={status}
+                    isWrong={this.props.wrong !== this.props.correct && this.props.wrong >= 0 && this.props.wrong !== key}
                   />
                 </Grid>)
               }
