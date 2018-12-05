@@ -70,7 +70,7 @@ export default class Groups extends Component {
   }
   render() {
     const { classes, groups = [], isSearching } = this.props;
-    console.log(groups);
+    //console.log(groups);
     // const page = groups.length / this.groups;
     return (
       <Fragment>

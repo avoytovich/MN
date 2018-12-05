@@ -8,10 +8,22 @@ import Groups from 'components/groups';
 import Footer from 'components/footer';
 import CreateGroupBtn from 'components/secondpanel/creategroupbtn';
 import ActivityChartButton from 'components/activitychart/button';
+import { myRoleIs } from "../../services/accountService";
 
 @withRouter
 export default class About extends Component {
+  state = {
+    isAdmin: false,
+  }
+
+  componentDidMount() {
+    this.setState({
+      isAdmin: myRoleIs(),
+    })
+  }
+
   render() {
+    const { isAdmin } = this.state;
     return (
       <Grid container spacing={0} justify="center">
         <Grid item xs={12} sm={12}>
@@ -21,7 +33,7 @@ export default class About extends Component {
               breadCrumb=""
               actionButtons={[
                 <ActivityChartButton />,
-                <CreateGroupBtn />
+                isAdmin && <CreateGroupBtn />
               ]}
             />
             <SearchPanel />

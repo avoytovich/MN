@@ -9,9 +9,9 @@ import './verify.sass';
 
 export default class VerifyModal extends Component {
 
-  handleClick = () => (Router.push({
+  /*handleClick = () => (Router.push({
       pathname: '/manage-groups'
-    }));
+    }));*/
 
   render() {
     return (
@@ -24,7 +24,7 @@ export default class VerifyModal extends Component {
         <Typography variant="title" fontSize="24px" className="verify-email">
           {constant.verifyEmail}
         </Typography>
-        <Button onClick={this.handleClick()/*this.props.onClose*/}>
+        <Button onClick={this.props.onClose}>
           {constant.ok}
         </Button>
       </Grid>

@@ -14,6 +14,7 @@ import { group } from 'services/cruds';
 import loading from 'services/decorators/loading';
 import { setData } from 'actions/updateData';
 import { getSingle } from 'actions/groups';
+import { myRoleIs } from "../../../services/accountService";
 
 import './group.sass';
 
@@ -31,8 +32,15 @@ const mapStateToProps = ({ runtime }) => ({
 @withRouter
 @loading()
 export class Group extends Component {
+  state = {
+    isAdmin: false,
+  }
+
   componentDidMount() {
     this.GetGroupDetails_loadAndSaveToProps();
+    this.setState({
+      isAdmin: myRoleIs(),
+    })
   }
   
   GetGroupDetails_loadAndSaveToProps = async () => {
@@ -81,8 +89,10 @@ export class Group extends Component {
   };
 
   render() {
+    //console.log('this.props', this.props);
     const { pathname } = this.props.router;
     const { groupDetails } = this.props;
+    const { isAdmin } = this.state;
     if (!groupDetails) return null;
     const data = _get(groupDetails, 'data');
     const quizAvailable = !!data.images.length;
@@ -96,7 +106,7 @@ export class Group extends Component {
                 </Button>
               ]}*/
               actionButtons={[
-                quizAvailable === true ? (
+                !isAdmin && quizAvailable === true ? (
                   <Link
                     key="link-quiz"
                     route="quiz"

@@ -10,7 +10,9 @@ import Slider from 'react-slick';
 import withModal from 'services/decorators/withModal';
 import { getMember } from 'actions/members';
 import MemberModal from './memberModal';
-import { connect } from 'react-redux'
+import { connect } from 'react-redux';
+import Router from 'next/router';
+import { myRoleIs } from "../../../services/accountService";
 
 
 import './gallery.sass';
@@ -121,15 +123,29 @@ const settings = {
 @withStyles(styles)
 export default class Gallery extends PureComponent {
   state = {
-    cardsAmount: 0
+    cardsAmount: 0,
+    isAdmin: false,
   };
 
+  componentDidMount() {
+    this.setState({
+      isAdmin: myRoleIs(),
+    })
+  }
+
   handleOpen = data => async() => {
+    const { isAdmin } = this.state;
+    const { images } = this.props;
     const member = await getMember(data.memberId);
-    this.props.open(member);
+    return isAdmin && Router.push({
+      pathname: '/edit-member',
+      query: { memberId: data.memberId }
+    }) || this.props.open(member);
   }
 
   render() {
+    //console.log('this.state', this.state);
+    //console.log('this.props', this.props);
     const { classes, images, open } = this.props;
 
     return (
