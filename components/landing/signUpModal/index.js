@@ -14,8 +14,22 @@ import { connect } from 'react-redux';
 import Router from 'next/router';
 import { withRouter } from 'next/router';
 import { changeQuery } from '../../../services/serverService';
+import { signUpSchema } from 'services/validateSchemas';
+import omit from 'lodash/omit'
+import { wrapField } from 'services/materialformik'
 
 import style from '../styles';
+
+const inputNames = [
+  { name: "OrganizationId", label: "OrganizationId", type:"text" },
+  { name: "Email", label: "Email", type:"email" },
+  { name: "Password", label: "Password", type:"password" },
+  { name: "ConfirmPassword", label: "Confirm Password", type:"password" },
+  { name: "Title", label: "Position", type:"text" },
+  { name: "Firstname", label: "First Name", type:"text" },
+  { name: "LastName", label: "Last Name", type:"text" },
+  { name: "Department", label: "Department", type:"text" }
+]
 
 const styles = theme => style;
 
@@ -25,25 +39,10 @@ const styles = theme => style;
   { toggleSnackbar }
 )
 @withFormik({
-  validationSchema: Yup.object().shape({
-    OrganizationId: Yup.string().required('Required'),
-    Email: Yup.string()
-      .max(129, 'Invalid email')
-      .email('Invalid email')
-      .required('Required'),
-    Password: Yup.string()
-      .min(6, 'Password should be at least 6 symbols')
-      .required('Required'),
-    ConfirmPassword: Yup.string()
-      .oneOf(
-        [Yup.ref('Password'), null],
-        'Confirm password field doesn’t match password'
-      )
-      .required('Required')
-  }),
+  validationSchema: prop => signUpSchema,
   handleSubmit: async (values, { props }) => {
     try {
-      await signUp(values);
+      await signUp(omit(values, ['router']));
       Router.pushRoute(changeQuery(props.router, 'modal', 'verify'));
       /*Router.push({
         pathname: '/manage-groups'
@@ -61,57 +60,30 @@ const styles = theme => style;
 @withStyles(styles)
 export default class IconModal extends Component {
   render() {
-    const { classes, errors } = this.props;
+    const { classes, errors, values } = this.props;
     return (
       <div className={classes.wrap}>
         <Typography align="center" className={classes.title}>
           Sign Up
         </Typography>
         <Form>
-          <TextField
-            className={classes.input}
-            onChange={this.props.handleChange}
-            helperText={this.props.errors.OrganizationId}
-            error={this.props.errors.OrganizationId !== undefined}
-            type="text"
-            name="OrganizationId"
-            placeholder="OrganizationId"
-            fullWidth
-            margin="normal"
-          />
-          <TextField
-            className={classes.input}
-            onChange={this.props.handleChange}
-            helperText={this.props.errors.Email}
-            error={this.props.errors.Email !== undefined}
-            type="email"
-            name="Email"
-            placeholder="Email"
-            fullWidth
-            margin="normal"
-          />
-          <TextField
-            className={classes.input}
-            onChange={this.props.handleChange}
-            helperText={this.props.errors.Password}
-            error={this.props.errors.Password !== undefined}
-            type="password"
-            name="Password"
-            placeholder="Password"
-            fullWidth
-            margin="normal"
-          />
-          <TextField
-            className={classes.input}
-            onChange={this.props.handleChange}
-            helperText={this.props.errors.ConfirmPassword}
-            error={this.props.errors.ConfirmPassword !== undefined}
-            type="password"
-            name="ConfirmPassword"
-            placeholder="Confirm Password"
-            fullWidth
-            margin="normal"
-          />
+          {inputNames.map(inputInfo => {
+            const { name, label, type } = inputInfo
+            return (
+              <Field
+                className={classes.input}
+                value={values[name]}
+                onChange={this.props.handleChange}
+                type={type}
+                name={name}
+                label={label}
+                fullWidth
+                component={wrapField}
+                margin="normal"
+                key={name}
+              />
+            )
+          })}
           <Button type="submit" className={classes.submit}>
             Sign Up
           </Button>

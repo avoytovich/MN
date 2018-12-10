@@ -32,7 +32,29 @@ const memberInfoSchema = Yup.object().shape({
   title: Yup.string().nullable(),
 });
 
+const signUpSchema = Yup.object().shape({
+  OrganizationId: Yup.string().required(required),
+  Email: Yup.string()
+    .max(129, 'Invalid email')
+    .email('Invalid email')
+    .required(required),
+  Password: Yup.string()
+    .min(6, 'Password should be at least 6 symbols')
+    .required(required),
+  ConfirmPassword: Yup.string()
+    .oneOf(
+      [Yup.ref('Password'), null],
+      'Confirm password field doesn’t match password'
+    )
+    .required(required),
+  Title: Yup.string().required(required),
+  Firstname: Yup.string().required(required),
+  LastName: Yup.string().required(required),
+  Department: Yup.string().required(required)
+})
+
 export {
   profileInfoSchema,
-  memberInfoSchema
+  memberInfoSchema,
+  signUpSchema
 };
