@@ -233,6 +233,7 @@ export class Features extends Component {
                     />
                   </FormControl>
                   <TextField
+                    label="Sort By:"
                     id="outlined-select"
                     InputProps={{
                       className: "field-search-input",
@@ -247,7 +248,7 @@ export class Features extends Component {
                   >
                     {orderBy.map(option => (
                       <ClassesNesting key={option.value} value={option.value}>
-                        {`Sort By: ${option.label}`}
+                        {option.label}
                       </ClassesNesting>
                     ))}
                   </TextField>
@@ -262,6 +263,7 @@ export class Features extends Component {
               <Grid container spacing={0} justify="center" className='container'>
                 <Grid item xs={6} sm={6} className="user-activity-left">
                   <TextField
+                    label="Choose View"
                     id="outlined-select"
                     InputProps={{
                       className: "field-search-input",
@@ -279,7 +281,7 @@ export class Features extends Component {
                   >
                     {this.props.mainGroup?[this.props.mainGroup, ...subgroups].map((item, id) => (
                       <ClassesNesting key={id} value={item.name}>
-                        {`Choose View: Group ${item.name}`}
+                        {item.name == 'ROOT' ? `Group: ${item.name}` : `SubGroup: ${item.name}`}
                       </ClassesNesting>
                     )): null}
                   </TextField>
@@ -310,7 +312,7 @@ export class Features extends Component {
                   {isAdmin && (
                     <Grid item xs={6} sm={3}>
                       <div className="grid-info">
- 			                  <Link route="create-member" params={{ groupId: this.handleIdCreateMember() }} >
+                        <Link href={{ pathname: '/create-member', query: { groupId: this.handleIdCreateMember() } }}>
                           <div
                             style={{
                               backgroundImage: `url(${'/static/svg/placeholder_add.svg'})`,
