@@ -20,7 +20,6 @@ export default class About extends Component {
       isAdmin: myRoleIs(),
     })
   }
-
   render() {
     const { isAdmin } = this.state;
     return (
