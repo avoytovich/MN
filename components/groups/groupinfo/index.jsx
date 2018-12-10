@@ -86,13 +86,7 @@ export default class GroupInfo extends Component {
       info,
       info: { id },
     } = this.props;
-<<<<<<< HEAD
     return <div className="d-flex f-row group-info-wrapper">
-=======
-    const { isAdmin } = this.state;
-    return (
-      <div className="d-flex f-row group-info-wrapper">
->>>>>>> dev
         <Avatar className={classes.avatar} src={info.icon || '/static/png/icon-group.png'} />
         <div className="group-icon" />
         <div className="d-flex f-column margin-info">
@@ -143,8 +137,7 @@ export default class GroupInfo extends Component {
                 remove
               </Typography>
             </div>
-          )}
         </div>
-      </div>;
+      </div></div>
   }
 }
