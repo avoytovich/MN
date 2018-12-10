@@ -180,11 +180,9 @@ export class Features extends Component {
   };
 
   render() {
-    //console.log('this.state', this.state);
-    //console.log('this.props', this.props);
-    console.log('update');
     const { groupDetails, groupMembers, subgroups } = this.props;
-    console.log(groupDetails);
+    const isAdmin = myRoleIs();
+    console.log(isAdmin);
     const { elements, membersInfo } = this.state;
     if (!groupMembers) return null;
     return (

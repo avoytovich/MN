@@ -15,7 +15,6 @@ export default class About extends Component {
   state = {
     isAdmin: false,
   }
-
   componentDidMount() {
     this.setState({
       isAdmin: myRoleIs(),

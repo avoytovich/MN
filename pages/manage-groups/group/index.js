@@ -41,17 +41,18 @@ export class Group extends Component {
 
   componentDidMount() {
     this.GetGroupDetails_loadAndSaveToProps();
+    
     this.setState({
       isAdmin: myRoleIs(),
     })
   }
   componentDidUpdate = (prevProps) => {
     console.log(this.props.router);
-    if(this.props.router.query.id !== prevProps.router.query.id || this.props.router.query.sub !== prevProps.router.query.sub)
-      {
-        console.log('updateTTTTT');
-        this.GetGroupDetails_loadAndSaveToProps();
-      }
+    // if(this.props.router.query.id !== prevProps.router.query.id || this.props.router.query.sub !== prevProps.router.query.sub)
+    //   {
+    //     console.log('updateTTTTT');
+    //     this.GetGroupDetails_loadAndSaveToProps();
+    //   }
   }
   GetGroupDetails_loadAndSaveToProps = async () => {
     const {
