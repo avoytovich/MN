@@ -95,6 +95,7 @@ class LongMenu extends React.Component {
                   Edit Profile
                 </MenuItem>
               </Link>
+          <Link href={{ pathname: '/questions'}}>
               <MenuItem onClick={this.handleClose}>
                 {newQuestions
                   ? (
@@ -109,6 +110,7 @@ class LongMenu extends React.Component {
                   : ('Questions')
                 }
               </MenuItem>
+          </Link>
               <MenuItem onClick={this.handleChangePassword}>
                 Change password
               </MenuItem>

@@ -44,3 +44,53 @@ export async function getNewQuestions() {
     return Promise.reject(e)
   }
 }
+
+export async function getAllQuestions() {
+  try {
+    const { data } = await request.get('/AllQuestions')
+    return Promise.resolve(data)
+  } catch (e) {
+    return Promise.reject(e)
+  }
+}
+
+export async function getGroupQuestions(params) {
+  try {
+    const { data } = await request.get('/GetQuestions', {params})
+    return Promise.resolve(data)
+  } catch (e) {
+    return Promise.reject(e)
+  }
+}
+
+export async function answerQuestion(payload) {
+  try {
+    const { data } = await request.post('/AnswerQuestion', payload);
+    return Promise.resolve(data);
+  } catch (e) {
+    return Promise.reject(e);
+  }
+}
+
+export async function editAnswer(payload) {
+  try {
+    const { data } = await request.post('/EditAnswer', payload);
+    return Promise.resolve(data);
+  } catch (e) {
+    return Promise.reject(e);
+  }
+}
+
+export async function deleteAnswer(params) {
+  try {
+    const { data } = await request.delete('/DeleteAnswer', {params});
+    return Promise.resolve(data);
+  } catch (e) {
+    return Promise.reject(e);
+  }
+}
+
+
+
+
+
