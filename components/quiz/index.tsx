@@ -62,14 +62,13 @@ class QuizShow extends React.Component<Props> {
 
   componentDidUpdate = async (prevProps: Props) => {
     if (this.props.isFinished === true) {
-      // TODO: Send results when the back is working
-      // await this.props.sendResults({
-      //   questionsNumber: this.props.total,
-      //   numberOfRightAnswers: this.props.total - this.wrong,
-      //   createdAt: new Date(),
-      //   groupId: this.props.groupId,
-      //   userId: localStorage.user.id,
-      // });
+      await this.props.sendResults({
+        questionsNumber: this.props.total,
+        numberOfRightAnswers: this.props.total - this.wrong,
+        createdAt: new Date(),
+        groupId: this.props.groupId,
+        userId: localStorage.user.id,
+      });
     }
   }
 
