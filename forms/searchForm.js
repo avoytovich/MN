@@ -9,8 +9,8 @@ import Button from '@material-ui/core/Button';
 import { searchGroups } from 'actions/groups'
 import { setData } from '../actions/updateData';
 import SearchField from '../components/searchpanel/searchfield';
-import '../sass/common.scss';
-import '../components/searchpanel/searchpanel.scss';
+import '../sass/common.sass';
+import '../components/searchpanel/searchpanel.sass';
 import { resetData, updateSpecData } from 'actions/updateData';
 @withRouter
 @connect(

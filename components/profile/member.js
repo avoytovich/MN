@@ -23,7 +23,7 @@ import DefaultAvatar from 'static/png/defaultAvatar.png'
 import { getSingle } from 'actions/groups';
 
 import ReactCrop from 'react-image-crop'
-import 'react-image-crop/lib/ReactCrop.scss'
+import './cropper.sass'
 
 
 const inputNames = [

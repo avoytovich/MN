@@ -14,7 +14,7 @@ import Slider from "react-slick";
 
 // import i18n from '../../services/decorators/i18n';
 
-import './style.scss';
+import './style.sass';
 import { Typography } from '@material-ui/core';
 
 const mapStateToProps = ({ localization: { lang } }) => ({ lang });

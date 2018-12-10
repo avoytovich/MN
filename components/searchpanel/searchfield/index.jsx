@@ -40,7 +40,7 @@ export default class SearchField extends PureComponent {
     return (
       <Input
         className={classNames(classes.input, className)}
-        name={field.name}
+        name={'adwdwad'}
         fullWidth
         label={label}
         onChange={this.change}

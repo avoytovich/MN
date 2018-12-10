@@ -8,7 +8,7 @@ import qs from "qs";
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { get as _get } from 'lodash';
-
+import { Router } from '../../routes';
 import { setData } from '../../actions/updateData';
 import { members } from '../../services/cruds';
 import loading from '../../services/decorators/loading';
@@ -53,7 +53,6 @@ export class Features extends Component {
         }
       },
       orderBy: 'firstname',
-      group: 'ROOT'
     }
   }
 
@@ -61,18 +60,19 @@ export class Features extends Component {
     this.loadAndSaveMembersList();
   }
 
-  componentDidUpdate() {
-    const { subgroups, id } = this.props.groupDetails;
-    if (!subgroups.some(item => (item.name == 'ROOT'))) {
-      subgroups.unshift({name: 'ROOT', id: id})
-    }
+  componentDidUpdate(prevProps) {
+    const { id } = this.props.groupDetails;
+    const { subgroups } = this.props;
+
+    // if (!subgroups.some(item => (item.name == 'ROOT'))) {
+    //   subgroups.unshift({name: 'ROOT', id: id})
+    // }
   }
 
   componentDidMount() {
-    const { subgroups, id } = this.props.groupDetails;
-    if (!subgroups.some(item => (item.name == 'ROOT'))) {
-      subgroups.unshift({name: 'ROOT', id: id})
-    }
+    const { id } = this.props.groupDetails;
+    const { subgroups } = this.props;
+
   }
 
   loadAndSaveMembersList = async condition => {
@@ -82,7 +82,6 @@ export class Features extends Component {
       await this.setState({
         offset: 0,
         elements: [],
-        group: condition,
       });
     }
     if (condition == 'firstname' || condition ==  'lastname') {
@@ -161,7 +160,9 @@ export class Features extends Component {
   render() {
     //console.log('this.state', this.state);
     //console.log('this.props', this.props);
-    const { groupDetails, groupMembers } = this.props;
+    console.log('update');
+    const { groupDetails, groupMembers, subgroups } = this.props;
+    console.log(groupDetails);
     const { elements, membersInfo } = this.state;
     if (!groupMembers) return null;
     return (
@@ -241,20 +242,23 @@ export class Features extends Component {
                     id="outlined-select"
                     InputProps={{
                       className: "field-search-input",
-                      onChange: (e) => this.loadAndSaveMembersList(e.target.value),
+                      onChange: (val) => {
+                        console.log(val);
+                        // Router.pushRoute('group', {id: this.props.mainGroup.id, sub: })
+                      },
                     }}
                     select
                     className='field-select'
-                    value={this.state.group}
+                    value={this.props.groupDetails.name}
                     onChange={this.handleChange('group')}
                     margin="normal"
                     variant="outlined"
                   >
-                    {groupDetails.subgroups.map((item, id) => (
+                    {this.props.mainGroup?[this.props.mainGroup, ...subgroups].map((item, id) => (
                       <ClassesNesting key={id} value={item.name}>
                         {`Choose View: Group ${item.name}`}
                       </ClassesNesting>
-                    ))}
+                    )): null}
                   </TextField>
                 </Grid>
                 <Grid item xs={6} sm={6} className="user-activity-right">

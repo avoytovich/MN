@@ -56,7 +56,6 @@ const styles = theme => (style);
 export default class IconModal extends Component {
   render() {
     const { classes, handleBlur, handleChange, close, errors, values } = this.props;
-    console.log(errors);
     return (
       <div className={classes.wrap}>
         <CloseIcon onClick={() => close()} />

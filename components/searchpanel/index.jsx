@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { Typography } from '@material-ui/core';
 
 import SearchForm from '../../forms/searchForm';
-import './searchpanel.scss';
+import './searchpanel.sass';
 
 export default class SearchPanel extends Component {
   render() {

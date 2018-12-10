@@ -14,3 +14,4 @@ node_modules/
 # Compiled output
 dist/
 .DS_Store
+.vscode

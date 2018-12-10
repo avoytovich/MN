@@ -1,7 +1,7 @@
 import React, { PureComponent } from 'react';
 import {Link} from '../../../routes';
 import { Button } from '@material-ui/core';
-import './creategroupbtn.scss';
+import './creategroupbtn.sass';
 import Router from 'next/router';
 
 const style = {

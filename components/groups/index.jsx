@@ -11,8 +11,7 @@ import InfiniteScroll from 'react-infinite-scroller';
 import { searchGroups } from 'actions/groups'
 import { resetData, updateSpecData } from 'actions/updateData';
 
-import './groups.scss';
-import '../../sass/common.scss';
+import '../../sass/common.sass';
 
 const styles = theme => ({
   item: {
@@ -20,7 +19,8 @@ const styles = theme => ({
     flexDirection: 'row',
     minHeight: 225,
     paddingTop: 0,
-    paddingBottom: 0
+    paddingBottom: 0,
+    borderBottom: '1px solid rgba(0,0,0,0.2)'
   },
   list: {
     minHeight: 700
@@ -70,30 +70,24 @@ export default class Groups extends Component {
   }
   render() {
     const { classes, groups = [], isSearching } = this.props;
-    console.log(groups);
     // const page = groups.length / this.groups;
     return (
-      <Fragment>
         <List className={classes.list}>
           <InfiniteScroll
             pageStart={0}
             loadMore={this.loadMore}
             hasMore={this.state.hasMore}
-            loader={<CircularProgress className={classes.loader}/>}
+            loader={<CircularProgress key={'cp'} className={classes.loader}/>}
           >
             {groups.map(group => (
-              <Fragment key={`group-${group.id}`}>
-                <ListItem className={classes.item}>
-                  <GroupInfo info={group} />
-                  {/* TODO setup images */}
-                  <Gallery images={group.images === undefined ? [] : group.images} />
-                </ListItem>
-                <Divider />
-              </Fragment>
+              <ListItem key={`group-infinite-${group.id}`} className={classes.item}>
+                <GroupInfo info={group} />
+                {/* TODO setup images */}
+                <Gallery images={group.images === undefined ? [] : group.images} />
+              </ListItem>
             ))}
           </InfiniteScroll>
         </List>
-      </Fragment>
     );
   }
 }

@@ -20,7 +20,7 @@ import { uploadProfileImage } from 'actions/upload'
 import DefaultAvatar from 'static/png/defaultAvatar.png'
 
 import ReactCrop from 'react-image-crop'
-import 'react-image-crop/lib/ReactCrop.scss'
+import './cropper.sass'
 
 const imageMaxSize = 1000000000 // bytes
 const acceptedFileTypes = 'image/png, image/jpg, image/jpeg'

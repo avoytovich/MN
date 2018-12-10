@@ -15,13 +15,23 @@ export async function signIn(payload) {
   }
 }
 
+const state = {
+  prom: null
+}
+
 export async function reLogin(payload) {
   try {
-    const { data } = await request.post('/RefreshToken', payload);
-    const user = localStorage.getItem('user');
-    user.token = data;
-    localStorage.setItem('user', user);
-    return Promise.resolve(data);
+    if(!state.prom)
+    {
+      state.prom = request.post('/RefreshToken', payload);
+      const { data } = await state.prom;
+      const user = localStorage.getItem('user');
+      user.token = data;
+      localStorage.setItem('user', user);
+      state.prom = null;
+      return Promise.resolve(data);
+    }
+      return state.prom;
   } catch (e) {
     return Promise.reject(e);
   }

@@ -3,8 +3,8 @@ import { Typography, Divider, withStyles, List, ListItem, ListItemText, Avatar }
 import moment from 'moment';
 import Link from 'next/link';
 import { Link as TheLink } from '../../../routes';
-import '../../../sass/common.scss';
-import './groupinfo.scss';
+import '../../../sass/common.sass';
+import './groupinfo.sass';
 import withModal from 'services/decorators/withModal/index';
 import { connect } from 'react-redux'
 import { updateSpecData } from 'actions/updateData';
@@ -39,7 +39,13 @@ const styles = theme => ({
   },
   subgroupText: {
     fontSize: 17,
-    fontWeight: 'bold'
+    fontWeight: 'bold',
+    cursor: 'pointer',
+    opacity: '0.5',
+    '&:hover': {
+      opacity: '1',
+      color: 'gray'
+    }
   },
   subgroupList: {
     position: 'relative',
@@ -93,9 +99,13 @@ export default class GroupInfo extends Component {
               <ListItem
                 className={classes.listItem}
                 key={`subgroup-${key}`}>
+                <TheLink route="group" params={{id: info.id, sub: subgroup.id}}>
+                  <a style={{margin: 0, padding: 0}}>
                 <ListItemText className={classes.subgroupText}>
                   {subgroup.name}
                 </ListItemText>
+                </a>
+                </TheLink>
               </ListItem>
             ))}
           </List>

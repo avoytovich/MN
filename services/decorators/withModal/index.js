@@ -3,7 +3,7 @@ import React, { Component, Fragment } from 'react';
 import Modal from '@material-ui/core/Modal';
 import Close from '@material-ui/icons/Close';
 
-import './withModal.scss';
+import './withModal.sass';
 
 export default function withModal(ComponentModal, options = {}) {
   return function (Child) {

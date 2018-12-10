@@ -11,7 +11,7 @@ import LongMenu from './icon-dropdown/icon-dropdown';
 import get from 'lodash/get'
 import DefaultAvatar from 'static/png/defaultAvatar.png'
 
-import '../../sass/common.scss';
+import '../../sass/common.sass';
 import './header.sass';
 
 const styles = theme => ({
