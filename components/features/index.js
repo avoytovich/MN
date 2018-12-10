@@ -169,20 +169,20 @@ export class Features extends Component {
   handleIdCreateMember = () => {
     const { groupDetails, router } = this.props;
     const { group } = this.state;
-    if (group != 'ROOT') {
-      const currentSubGroup = groupDetails.subgroups.filter(item => {
-        return item.name == group;
-      });
-      return currentSubGroup[0] && currentSubGroup[0]['id'];
-    } else {
-      return groupDetails.id;
-    }
+    console.log(group);
+    return groupDetails.id;
+    // if (group != 'ROOT') {
+    //   const currentSubGroup = groupDetails.subgroups.filter(item => {
+    //     return item.name == group;
+    //   });
+    //   return currentSubGroup[0] && currentSubGroup[0]['id'];
+    // } else
+    //   return groupDetails.id;
   };
 
   render() {
     const { groupDetails, groupMembers, subgroups } = this.props;
     const isAdmin = myRoleIs();
-    console.log(isAdmin);
     const { elements, membersInfo } = this.state;
     if (!groupMembers) return null;
     return (
@@ -298,8 +298,7 @@ export class Features extends Component {
                 next={() => this.loadAndSaveMembersList()}
                 dataLength={this.state.elements.length}
                 hasMore={
-                  elements.length <
-                  membersInfo.pagination.total_count
+                  elements.length < membersInfo.pagination.total_count
                 }
                 className="infinite-scroll-component">
                 <Grid
@@ -311,7 +310,7 @@ export class Features extends Component {
                   {isAdmin && (
                     <Grid item xs={6} sm={3}>
                       <div className="grid-info">
- 			<Link route="create-member" params={{ groupId: this.handleIdCreateMember() }} >
+ 			                  <Link route="create-member" params={{ groupId: this.handleIdCreateMember() }} >
                           <div
                             style={{
                               backgroundImage: `url(${'/static/svg/placeholder_add.svg'})`,
