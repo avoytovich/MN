@@ -8,11 +8,12 @@ import {
   Avatar
 } from '@material-ui/core';
 import LongMenu from './icon-dropdown/icon-dropdown';
-import get from 'lodash/get'
-import DefaultAvatar from 'static/png/defaultAvatar.png'
+import get from 'lodash/get';
+import DefaultAvatar from 'static/png/defaultAvatar.png';
 
 import '../../sass/common.sass';
 import './header.sass';
+import { myRoleIs } from "../../services/accountService";
 
 const styles = theme => ({
   appBar: {
@@ -27,37 +28,61 @@ const styles = theme => ({
   }
 });
 
+const adminLinks = [
+  {
+    route: '/',
+    title: 'MetKnow',
+    className: 'brand-title',
+    variant: 'display1'
+  },
+  {
+    route: '/admin',
+    title: 'ADMIN',
+    variant: 'display2',
+    className: 'group-first-item'
+  },
+  {
+    route: 'manage-groups',
+    title: 'GROUPS',
+    variant: 'display2'
+  },
+  { route: '/#landing-contact-us', title: 'CONTACT US', variant: 'display2' }
+];
+
+const userLinks = [
+  {
+    route: '/',
+    title: 'MetKnow',
+    className: 'brand-title',
+    variant: 'display1'
+  },
+  {
+    route: 'manage-groups',
+    title: 'GROUPS',
+    variant: 'display2'
+  },
+  { route: '/#landing-contact-us', title: 'CONTACT US', variant: 'display2' }
+];
+
 @withStyles(styles)
 export default class Header extends Component {
   state = {
-    previewImage: DefaultAvatar
+    previewImage: DefaultAvatar,
+    isAdmin: false,
   }
 
-  getLink = () => [
-    {
-      route: '/',
-      title: 'MetKnow',
-      className: 'brand-title',
-      variant: 'display1'
-    },
-    {
-      route: '/',
-      title: 'ADMIN',
-      variant: 'display2',
-      className: 'group-first-item'
-    },
-    {
-      route: 'manage-groups',
-      title: 'GROUPS',
-      variant: 'display2'
-    },
-    { route: '/#landing-contact-us', title: 'CONTACT US', variant: 'display2' }
-  ];
+  getLink = () => {
+    const { isAdmin } = this.state;
+    return isAdmin && adminLinks || userLinks;
+  };
 
   componentDidMount(){
     const user = JSON.parse(window.localStorage.getItem('user'))
     const previewImage = get(user, 'profile.imageContent.previewImage')
-    this.setState({ previewImage })
+    this.setState({
+      isAdmin: myRoleIs(),
+      previewImage
+    })
 
   }
 

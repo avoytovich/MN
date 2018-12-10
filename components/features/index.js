@@ -11,6 +11,7 @@ import { get as _get } from 'lodash';
 import { Router } from '../../routes';
 import { setData } from '../../actions/updateData';
 import { members } from '../../services/cruds';
+import { myRoleIs } from '../../services/accountService';
 import loading from '../../services/decorators/loading';
 import ClassesNesting from './withClassesNesting';
 
@@ -75,6 +76,14 @@ export class Features extends Component {
 
   }
 
+  executeGetGroupId = (currentSubGroup) => {
+    const { groupDetails } = this.props;
+    const { id } = this.props.router.query;
+    return (currentSubGroup &&
+      (currentSubGroup['name'] == 'ROOT' && id || currentSubGroup['id'])) ||
+        groupDetails.id;
+  };
+
   loadAndSaveMembersList = async condition => {
     if (this.props.groupDetails.subgroups.some(item => {
       return item.name == condition;
@@ -114,7 +123,7 @@ export class Features extends Component {
     const resp = await this.props.loadData(
       members.get(
         {
-          groupId: currentSubGroup[0] && currentSubGroup[0]['id'] || groupDetails.id,
+          groupId: this.executeGetGroupId(currentSubGroup[0]),
           limit: 12,
           offset: offset,
           search: search,
@@ -157,6 +166,19 @@ export class Features extends Component {
     document.addEventListener('keypress', this.handleSubmit);
   };
 
+  handleIdCreateMember = () => {
+    const { groupDetails, router } = this.props;
+    const { group } = this.state;
+    if (group != 'ROOT') {
+      const currentSubGroup = groupDetails.subgroups.filter(item => {
+        return item.name == group;
+      });
+      return currentSubGroup[0] && currentSubGroup[0]['id'];
+    } else {
+      return groupDetails.id;
+    }
+  };
+
   render() {
     //console.log('this.state', this.state);
     //console.log('this.props', this.props);
@@ -182,13 +204,16 @@ export class Features extends Component {
                 <Grid item xs={6} sm={6}>
                   <div className='group'>
                     <p className='name'>{groupDetails.name}</p>
+                    {isAdmin && (
                       <IconButton
                         /*onClick={this.handleClick}*/
                       >
                         <Link route="editgroup" params={{id: groupDetails.id}}>
                           <CreateIcon />
                         </Link>
-                      </IconButton><br/>
+                      </IconButton>
+                    )}
+                    <br/>
                     <p className='description'>{groupDetails.description}</p>
                   </div>
                 </Grid>
@@ -285,23 +310,25 @@ export class Features extends Component {
                   direction="row"
                   justify="flex-start"
                   className="infinite-scroll-component-list">
-                  <Grid item xs={6} sm={3}>
-                    <div className="grid-info">
-                      <Link href={{ pathname: '/edit-member', query: { groupId: groupDetails.id } }}>
-                        <div
-                          style={{
-                            backgroundImage: `url(${'/static/svg/placeholder_add.svg'})`,
-                          }}
-                          className="grid-info-list"
-                        >
-                          <div className="grid-info-list-info">
-                            <p className="info-member-name">+ Add Profile</p>
-                            <p className="info-member-title">Press here</p>
+                  {isAdmin && (
+                    <Grid item xs={6} sm={3}>
+                      <div className="grid-info">
+ 			<Link route="create-member" params={{ groupId: this.handleIdCreateMember() }} >
+                          <div
+                            style={{
+                              backgroundImage: `url(${'/static/svg/placeholder_add.svg'})`,
+                            }}
+                            className="grid-info-list"
+                          >
+                            <div className="grid-info-list-info">
+                              <p className="info-member-name">+ Add Profile</p>
+                              <p className="info-member-title">Press here</p>
+                            </div>
                           </div>
-                        </div>
-                      </Link>
-                    </div>
-                  </Grid>
+                        </Link>
+                      </div>
+                    </Grid>
+                  )}
                   {elements.map((item, index) => {
                     const {
                       firstName,
@@ -313,7 +340,7 @@ export class Features extends Component {
                     return (
                       <Grid key={index} item xs={6} sm={3}>
                         <div className="grid-info">
-                          <Link href={{ pathname: '/edit-member', query: { memberId: id } }}>
+                          <Link route="edit-member" params={{  memberId: id }} >
                             <div
                               style={{
                                 backgroundImage: `url(${_get(imageContent, 'mediumImage') ||

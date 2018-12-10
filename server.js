@@ -20,6 +20,7 @@ app.prepare().then(() => {
   });
   server
     .use('/api',  proxy({target: process.env.API_HOST,  changeOrigin: true}))
+    .use('/fonts',  proxy({target: process.env.API_HOST,  changeOrigin: true}))
     .use(handler)
     .use(cookieParser())
     .listen(port, err => {
@@ -27,3 +28,5 @@ app.prepare().then(() => {
       console.log(`> Ready on http://localhost:${port}`);
     });
 });
+
+//API_HOST=http://18.217.30.162

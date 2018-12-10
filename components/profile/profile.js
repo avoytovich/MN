@@ -3,38 +3,22 @@ import MaleIcon from 'static/svg/male.svg'
 import FemaleIcon from 'static/svg/female.svg'
 import EditIcon from 'static/svg/edit.svg'
 import RemoveIcon from 'static/svg/garbage.svg'
-import { Formik, Form, Field , withFormik } from 'formik';
+import { Form, Field , withFormik } from 'formik';
 import { withStyles, Grid, TextField, Divider, Button, Modal, Paper } from '@material-ui/core';
 import './style.sass'
 import { toggleSnackbar } from '../../actions/snackbar';
-import * as Yup from 'yup';
-import { signIn } from '../../actions/account';
 import { connect } from 'react-redux';
-import Router from 'next/router';
 import styles from './styles'
 import get from 'lodash/get'
+import pick from 'lodash/pick'
 import { wrapField } from 'services/materialformik'
-import { editProfile } from 'actions/profile'
-import { createMember, editMember } from 'actions/member'
 import { uploadProfileImage } from 'actions/upload'
 import DefaultAvatar from 'static/png/defaultAvatar.png'
-
+import * as Yup from 'yup';
 import ReactCrop from 'react-image-crop'
 import './cropper.sass'
 
-
-const inputNames = [
-  { name:"firstName", label:"First Name"},
-  { name:"city", label:"City"},
-  { name:"title", label:"Position"},
-  { name:"lastName", label:"Last Name"},
-  { name:"email", label:"Email" },
-  { name:"phoneNumber", label:"Phone Number" },
-  { name:"organization", label:"Department" },
-  { name:"aboutMe", label:"About Me" }
-]
-
-const imageMaxSize = 5500000000 // bytes
+const imageMaxSize = 5550000 // bytes
 const acceptedFileTypes = 'image/png, image/jpg, image/jpeg'
 const acceptedFileTypesArray = acceptedFileTypes.split(",").map((item) => {return item.trim()})
 @connect(
@@ -42,27 +26,19 @@ const acceptedFileTypesArray = acceptedFileTypes.split(",").map((item) => {retur
   { toggleSnackbar }
 )
 @withFormik({
-  validationSchema: Yup.object().shape({
-    email: Yup.string().required('Required'),
-    firstName: Yup.string().required('Required'),
-    lastName: Yup.string().required('Required')
-  }),
+  validationSchema: props => Yup.lazy(prop => props.schema),
   enableReinitialize: true,
   mapPropsToValues: props => {
     const user = get(props, 'user')
-    // for (let key in user){
-    //   if(user[key] === null)
-    //     user[key] = ''
-    // }
-    return user;
+    const names = props.inputNames.map(input => input.name)
+    return pick(user, [ ...names, "gender", "imageContent", "imageContentId"]);
   },
   handleSubmit : async (values, { props }) => {
     try {
-
-      const data = await editProfile(values)
+      console.log(values)
+      const data = await props.sumbmitRequest(values)
       props.toggleSnackbar('Success', 'success')
-      Router.back()
-      //props.handleEdit(data)
+      props.handleSuccessRequest(data)
     } catch (e) {
       const { message} = e.response.data.errors[0]
       props.toggleSnackbar(message, 'error')
@@ -84,6 +60,27 @@ export default class Profile extends Component{
       pixelCrop:{}
     }
   }
+
+  componentDidUpdate(prevProps, prevState) {
+    const { errors, toggleSnackbar } = this.props;
+    if(prevProps.values.imageContentId == 0 &&
+        errors.imageContentId !=
+          prevProps.errors.imageContentId &&
+            errors.imageContentId) {
+              return toggleSnackbar(`${this.props.errors.imageContentId}`);
+            }
+  }
+
+  /*componentDidMount() {
+    const { errors, toggleSnackbar } = this.props;
+    if(prevProps.values.imageContentId == 0 &&
+      errors.imageContentId !=
+      prevProps.errors.imageContentId &&
+      errors.imageContentId) {
+      return toggleSnackbar(`${this.props.errors.imageContentId}`);
+    }
+  }*/
+
   handleOpen = () => {
     this.setState({ open: true });
   };
@@ -99,13 +96,13 @@ export default class Profile extends Component{
       const currentFileType = currentFile.type
       const currentFileSize = currentFile.size
       if(currentFileSize > imageMaxSize) {
-        const message = "This file is not allowed. " + currentFileSize + " bytes is too large"
-        props.toggleSnackbar(message, 'error')
+        const message = "Size of photo must be less than 5 mb."
+        this.props.toggleSnackbar(message, 'error')
         return false
       }
       if (!acceptedFileTypesArray.includes(currentFileType)){
         const message = "This file is not allowed. Only images are allowed."
-        props.toggleSnackbar(message, 'error')
+        this.props.toggleSnackbar(message, 'error')
 
         return false
       }
@@ -141,8 +138,14 @@ export default class Profile extends Component{
     const form = new FormData()
 
     form.append('file', blob, fileName)
-    const data = await uploadProfileImage(form)
-    setFieldValue('imageContentId', data.id)
+    try {
+      const data = await uploadProfileImage(form)
+      setFieldValue('imageContentId', data.id)
+    }
+    catch (e) {
+      const { message} = e.response.data.errors[0]
+      this.props.toggleSnackbar(message, 'error')
+    }
     this.handleClose()
 }
 
@@ -193,12 +196,21 @@ export default class Profile extends Component{
     this.setState({crop,pixelCrop });
   }
 
+  handleSpecialErrorValidation = () => {
+    const { values, errors, toggleSnackbar } = this.props;
+    values.imageContentId == 0 && errors.imageContentId &&
+      toggleSnackbar(`${this.props.errors.imageContentId}`);
+  }
+
+  handleCancel = () => {
+    Router.back()
+  }
 
 
   render() {
-    const { classes, setFieldValue, handleBlur, handleChange, close, errors, values, isMember } = this.props;
+    const { classes, setFieldValue, handleBlur, handleChange, close, errors, values, isMember, inputNames } = this.props;
     const { imageContent } = values
-    const {imgSrc} = this.state
+    const { imgSrc } = this.state
     const inputs = inputNames.map(input => {
       return(
         <Field
@@ -256,12 +268,10 @@ export default class Profile extends Component{
          </Paper>
        </Modal>
         <Divider />
-
         <Grid container justify="center">
           <Grid className={classes.wrap}>
             <Form >
               <Grid container>
-
                   <Grid container justify="center">
                     <img
                       src={imageContent ? imageContent.mediumImage : DefaultAvatar}
@@ -276,7 +286,11 @@ export default class Profile extends Component{
                           { imageContent ? 'Change' : 'Add' }
                         </h4>
                         {imageContent && (
-                          <h4 className="profile-action" onClick={()=>{setFieldValue('imageContentId', 0)}}>
+                          <h4 className="profile-action"
+                              onClick={()=>{
+                                setFieldValue('imageContentId', 0)
+                                this.avatarRef.current.src =  DefaultAvatar
+                              }}>
                             <img src={RemoveIcon} className="profile-action-img profile-action-remove-img"/>
                             Remove
                           </h4>
@@ -289,7 +303,6 @@ export default class Profile extends Component{
                           style={{display:'none'}}
                           onChange={this.handleFileSelect}
                         />
-
                       </Grid>
                     </Grid>
                   </Grid>
@@ -301,7 +314,7 @@ export default class Profile extends Component{
                         <div className="profile-genders-container">
                           <p
                             className="profile-gender"
-                            onClick={()=>{setFieldValue('gender', 'male')}}
+                            onClick={()=>{setFieldValue('gender', 'Male')}}
                             style={ { opacity: values.gender === 'Male' ? '1' : '0.5' } }
                           >
                             <img src={MaleIcon} />
@@ -309,7 +322,7 @@ export default class Profile extends Component{
                           </p>
                           <p
                             className="profile-gender"
-                            onClick={()=>{setFieldValue('gender', 'female')}}
+                            onClick={()=>{setFieldValue('gender', 'Female')}}
                             style={ { opacity: values.gender === 'Female' ? '1' : '0.5' } }
                           >
                             <img src={FemaleIcon} />
@@ -326,10 +339,17 @@ export default class Profile extends Component{
                     </Grid>
                     {bottomInput}
                     <div className="profile-btns-container">
-                      <Button className="profile-btn profile-btn-cancel">
+                      <Button
+                        className="profile-btn profile-btn-cancel"
+                        onClick={this.handleCancel}
+                      >
                         Cancel
                       </Button>
-                      <Button type="submit" className="profile-btn profile-btn-add">
+                      <Button
+                        type="submit"
+                        className="profile-btn profile-btn-add"
+                        onClick={() => this.handleSpecialErrorValidation()}
+                      >
                         Save
                       </Button>
                     </div>

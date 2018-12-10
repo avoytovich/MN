@@ -6,6 +6,7 @@ import { getNewQuestions } from 'actions/questions';
 import Router from 'next/router';
 import ChangePasswordModal from 'components/landing/changePasswordModal';
 import withModal from 'services/decorators/withModal';
+import { myRoleIs } from "../../../services/accountService";
 
 
 // import i18n from '../../../services/decorators/i18n';
@@ -25,8 +26,15 @@ const ITEM_HEIGHT = 48;
 class LongMenu extends React.Component {
   state = {
     anchorEl: null,
-    newQuestions: 0
+    newQuestions: 0,
+    isAdmin: false,
   };
+
+  componentDidMount() {
+    this.setState({
+      isAdmin: myRoleIs(),
+    })
+  }
 
   handleClick = async event => {
     try {
@@ -55,7 +63,7 @@ class LongMenu extends React.Component {
   }
 
   render() {
-    const { anchorEl, newQuestions } = this.state;
+    const { anchorEl, newQuestions, isAdmin } = this.state;
     const open = Boolean(anchorEl);
     return (
       <>
@@ -78,33 +86,36 @@ class LongMenu extends React.Component {
             },
           }}
         >
-          <Link href={{ pathname: '/edit-profile'}}>
-            <MenuItem
-              onClick={this.handleClose}
-            >
-              Edit Profile
-            </MenuItem>
-          </Link>
-
-          <MenuItem onClick={this.handleClose}>
-            {newQuestions
-              ? (
-                <Badge
-                  badgeContent={newQuestions}
-                  color="error"
-                  invisible={true}
+          {!isAdmin && (
+            <>
+              <Link href={{ pathname: '/edit-profile'}}>
+                <MenuItem
+                  onClick={this.handleClose}
                 >
-                  Questions
-                </Badge>
-              )
-              : ('Questions')
-
-            }
-
-          </MenuItem>
-          <MenuItem onClick={this.handleChangePassword}>
-            Change password
-          </MenuItem>
+                  Edit Profile
+                </MenuItem>
+              </Link>
+          <Link href={{ pathname: '/questions'}}>
+              <MenuItem onClick={this.handleClose}>
+                {newQuestions
+                  ? (
+                    <Badge
+                      badgeContent={newQuestions}
+                      color="error"
+                      invisible={true}
+                    >
+                      Questions
+                    </Badge>
+                  )
+                  : ('Questions')
+                }
+              </MenuItem>
+          </Link>
+              <MenuItem onClick={this.handleChangePassword}>
+                Change password
+              </MenuItem>
+            </>
+          )}
           <MenuItem onClick={this.handleLogout}>
             Log out
           </MenuItem>
