@@ -9,14 +9,13 @@ import {
 import Slider from 'react-slick';
 import withModal from 'services/decorators/withModal';
 import { getMember } from 'actions/members';
-import MemberModal from './memberModal';
 import { connect } from 'react-redux';
 import Router from 'next/router';
-import { myRoleIs } from "../../../services/accountService";
-
+import { myRoleIs } from '../../../services/accountService';
 
 import './gallery.sass';
 import Member from 'pages/edit-member';
+import MemberModal from './memberModal';
 
 const cardWidth = 160;
 
@@ -38,7 +37,7 @@ const styles = theme => ({
   }
 });
 
-const NextArrow = (props) => {
+const NextArrow = props => {
   const { className, style, onClick } = props;
   return (
     <div
@@ -54,11 +53,11 @@ const NextArrow = (props) => {
         backgroundImage: "url('/static/svg/right-arrow.svg')"
       }}
       onClick={onClick}
-     />
+    />
   );
-}
+};
 
-const PrevArrow = (props) => {
+const PrevArrow = props => {
   const { className, style, onClick } = props;
   return (
     <div
@@ -75,10 +74,9 @@ const PrevArrow = (props) => {
         backgroundImage: "url('/static/svg/right-arrow.svg')"
       }}
       onClick={onClick}
-     />
+    />
   );
-}
-
+};
 
 const settings = {
   dots: false,
@@ -118,44 +116,52 @@ const settings = {
   ]
 };
 
-@withModal(MemberModal, {disableStyles: true, withCloseOutside: true})
-@connect(null, {getMember})
+@withModal(MemberModal, { disableStyles: true, withCloseOutside: true })
+@connect(
+  null,
+  { getMember }
+)
 @withStyles(styles)
 export default class Gallery extends PureComponent {
   state = {
     cardsAmount: 0,
-    isAdmin: false,
+    isAdmin: false
   };
 
   componentDidMount() {
     this.setState({
-      isAdmin: myRoleIs(),
-    })
+      isAdmin: myRoleIs()
+    });
   }
 
-  handleOpen = data => async() => {
+  handleOpen = data => async () => {
     const { isAdmin } = this.state;
     const { images } = this.props;
     const member = await getMember(data.memberId);
-    return isAdmin && Router.push({
-      pathname: '/edit-member',
-      query: { memberId: data.memberId }
-    }) || this.props.open(member);
-  }
+    return (
+      (isAdmin &&
+        Router.push({
+          pathname: '/edit-member',
+          query: { memberId: data.memberId }
+        })) ||
+      this.props.open(member)
+    );
+  };
 
   render() {
-    //console.log('this.state', this.state);
-    //console.log('this.props', this.props);
+    // console.log('this.state', this.state);
+    // console.log('this.props', this.props);
     const { classes, images, open } = this.props;
 
     return (
       <div style={{ width: 'calc(100% - 440px)', marginLeft: 25 }}>
-        <Slider arrows={images.length > 3}  {...settings}>
+        <Slider arrows={images.length > 3} {...settings}>
           {images.map((image, key) => (
-            <Card 
-            // TODO:  s
-            onClick={this.handleOpen(image)}
-            key={key} className={classes.card}>
+            <Card
+              // TODO:  s
+              onClick={this.handleOpen(image)}
+              key={key}
+              className={classes.card}>
               <CardMedia className={classes.media} image={image.mediumImage}>
                 <Typography className={classes.mediaText}>
                   {image.firstName}

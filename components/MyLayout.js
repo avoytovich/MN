@@ -1,5 +1,5 @@
-import Header from './header/header';
 import Footer from 'components/footer';
+import Header from './header/header';
 
 const Layout = props => (
   <div>

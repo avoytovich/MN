@@ -1,5 +1,5 @@
 import { ERROR_LOAD, TOGGLE_SNACKBAR } from '../../constants/actions';
-import colors from '../../constants/colors'
+import colors from '../../constants/colors';
 
 const initialState = {
   snackbar: {
@@ -7,18 +7,15 @@ const initialState = {
     message: '',
     color: ''
   }
-}
+};
 
-
-export default function (state = initialState, action) {
+export default function(state = initialState, action) {
   switch (action.type) {
     case ERROR_LOAD:
-      const color = colors['error'];
-      let message = "";
-      if(typeof action.error === 'string')
-        message = action.error;
-      else
-        message  = action.error.response.data.errors[0];
+      const color = colors.error;
+      let message = '';
+      if (typeof action.error === 'string') message = action.error;
+      else message = action.error.response.data.errors[0];
       return {
         ...state,
         snackbar: {
@@ -26,9 +23,9 @@ export default function (state = initialState, action) {
           message,
           color
         }
-      }
-    case TOGGLE_SNACKBAR:{
-      const color = colors[action.payload.color]
+      };
+    case TOGGLE_SNACKBAR: {
+      const color = colors[action.payload.color];
 
       return {
         ...state,
@@ -37,11 +34,10 @@ export default function (state = initialState, action) {
           ...action.payload,
           color
         }
-      }
+      };
     }
 
     default:
-      return state
+      return state;
   }
 }
-

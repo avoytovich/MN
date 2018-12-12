@@ -1,14 +1,14 @@
 import { Component } from 'react';
 import { Grid, Button } from '@material-ui/core';
 import { withRouter } from 'next/router';
-import Layout from '../../components/MyLayout';
-import Footer from '../../components/footer';
 import EditGroup from 'components/editgroup';
-import { connect } from 'react-redux'
+import { connect } from 'react-redux';
 import find from 'lodash/find';
+import Footer from '../../components/footer';
+import Layout from '../../components/MyLayout';
 
 @withRouter
-export default class EditGroupPage extends Component{
+export default class EditGroupPage extends Component {
   render() {
     return (
       <Grid container spacing={0} justify="center">

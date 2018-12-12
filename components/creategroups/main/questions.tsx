@@ -20,7 +20,6 @@ export default class Questions extends Component<{
   setFieldValue: Function;
   classes: any;
 }> {
-
   state = {
     subgroups: [],
     val: ''
@@ -35,9 +34,11 @@ export default class Questions extends Component<{
       val: ''
     });
   };
+
   handleChange = (e: FormEvent<HTMLInputElement>) => {
     this.setState({ val: e.currentTarget.value });
   };
+
   editGroup = (k: any) => (e: any) => {
     this.setState({
       val: this.state.subgroups[k],
@@ -47,6 +48,7 @@ export default class Questions extends Component<{
       )
     });
   };
+
   deleteGroup = (k: number) => (e: SyntheticEvent) => {
     const newGroups = _.filter(
       this.state.subgroups,
@@ -57,6 +59,7 @@ export default class Questions extends Component<{
       subgroups: newGroups
     });
   };
+
   render() {
     const { classes } = this.props;
     const { subgroups } = this.state;

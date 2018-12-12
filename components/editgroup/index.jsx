@@ -1,19 +1,19 @@
 import { Component } from 'react';
-import Main from './main';
 import { Form, withFormik } from 'formik';
-import SecondPanel from '../secondpanel';
 import { Button, NoSsr } from '@material-ui/core';
 import { bindActionCreators } from 'redux';
 import { createQuestions } from 'actions/questions';
 import { connect } from 'react-redux';
 import * as Yup from 'yup';
-import {Link} from '../../routes';
 import { withRouter } from 'next/router';
 import find from 'lodash/find';
 import get from 'lodash/get';
-import NoSSR from '@material-ui/core/NoSsr'
+import NoSSR from '@material-ui/core/NoSsr';
 import { loadIcons, getSingle, editGroup } from 'actions/groups';
 import { resetData } from 'actions/updateData';
+import { Link } from '../../routes';
+import SecondPanel from '../secondpanel';
+import Main from './main';
 
 const mapStateToProps = ({ groups, questions, runtime }, { router }) => ({
   group: find(groups.groups, g => g.id === parseInt(router.query.id, 10)),
@@ -24,8 +24,11 @@ const mapStateToProps = ({ groups, questions, runtime }, { router }) => ({
 @connect(
   mapStateToProps,
   {
-    editGroup, getSingle, createQuestions,
-    loadIcons, resetData,
+    editGroup,
+    getSingle,
+    createQuestions,
+    loadIcons,
+    resetData,
     getSingle
   }
 )
@@ -54,11 +57,11 @@ const mapStateToProps = ({ groups, questions, runtime }, { router }) => ({
       description: values.description,
       id: values.id,
       iconId: iconId
-    })
+    });
     await props.createQuestions({
       groupId: values.id,
       text: values.questions
-    })
+    });
     props.router.push('/manage-groups');
   }
 })
@@ -67,9 +70,11 @@ export default class EditGroup extends Component {
     this.props.loadIcons();
     this.props.getSingle({ groupId: this.props.router.query.id });
   };
+
   componentWillUnmount = () => {
     this.props.resetData('chosenIcon');
-  }
+  };
+
   render() {
     const { router, group } = this.props;
     const { handleChange, values, errors, setFieldValue, icon } = this.props;

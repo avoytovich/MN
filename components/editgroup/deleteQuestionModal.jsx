@@ -11,7 +11,7 @@ const styles = theme => ({
   },
   wrapper: {
     padding: 30,
-    height: '100%',
+    height: '100%'
   },
   boldText: {
     marginTop: 15,
@@ -20,13 +20,13 @@ const styles = theme => ({
     color: '#5f6368'
   },
   actions: {
-      position: 'relative',
-      marginTop: 20
+    position: 'relative',
+    marginTop: 20
   }
 });
 
 @connect(
-  ({questions}) => ({deleteGroupItem: questions.deleteModal}),
+  ({ questions }) => ({ deleteGroupItem: questions.deleteModal }),
   {
     deleteQuestion
   }
@@ -37,7 +37,8 @@ export default class DeleteModal extends Component {
     console.log(this.props);
     this.props.deleteGroup(this.props.deleteGroupItem);
     this.props.close();
-  }
+  };
+
   render() {
     const { classes, close } = this.props;
 
@@ -52,10 +53,17 @@ export default class DeleteModal extends Component {
           decline this action to continue
         </Typography>
         <Grid className={classes.actions} container>
-          <Button onClick={close} style={{marginRight: 5}} variant="outlined" color="secondary">
+          <Button
+            onClick={close}
+            style={{ marginRight: 5 }}
+            variant="outlined"
+            color="secondary">
             Cancel
           </Button>
-          <Button onClick={this.handleAccept} variant="contained" color="primary">
+          <Button
+            onClick={this.handleAccept}
+            variant="contained"
+            color="primary">
             Delete
           </Button>
         </Grid>

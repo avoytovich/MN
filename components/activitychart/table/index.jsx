@@ -112,7 +112,7 @@ export default class ActivityTable extends Component {
   sort = ind => e => {
     const { keys } = this.props;
     const { rows, directionSort } = this.state;
-    let sorted = _.orderBy(
+    const sorted = _.orderBy(
       this.state.rows,
       [keys[ind].id],
       [directionSort ? 'asc' : 'desc']

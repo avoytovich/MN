@@ -8,18 +8,20 @@ import Groups from 'components/groups';
 import Footer from 'components/footer';
 import CreateGroupBtn from 'components/secondpanel/creategroupbtn';
 import ActivityChartButton from 'components/activitychart/button';
-import { myRoleIs } from "../../services/accountService";
+import { myRoleIs } from '../../services/accountService';
 
 @withRouter
 export default class About extends Component {
   state = {
-    isAdmin: false,
-  }
+    isAdmin: false
+  };
+
   componentDidMount() {
     this.setState({
-      isAdmin: myRoleIs(),
-    })
+      isAdmin: myRoleIs()
+    });
   }
+
   render() {
     const { isAdmin } = this.state;
     return (

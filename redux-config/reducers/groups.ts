@@ -1,3 +1,8 @@
+import find from 'lodash/find';
+import uniqBy from 'lodash/uniqBy';
+import sortBy from 'lodash/sortBy';
+import moment from 'moment';
+import reverse from 'lodash/reverse';
 import {
   GET_GROUPS,
   ADD_GROUP,
@@ -6,11 +11,6 @@ import {
   SET_MODAL_DELETE,
   SEARCH_GROUPS
 } from '../../constants/actions';
-import find from 'lodash/find';
-import uniqBy from 'lodash/uniqBy';
-import sortBy from 'lodash/sortBy';
-import moment from 'moment';
-import reverse from 'lodash/reverse';
 
 const initialState = {
   groups: [],
@@ -20,18 +20,21 @@ const initialState = {
 
 export default (state = initialState, action: any) => {
   switch (action.type) {
-    case SET_MODAL_DELETE: 
+    case SET_MODAL_DELETE:
       return {
         ...state,
         deleteModal: action.data
-      }
+      };
     case SEARCH_GROUPS:
-    const filteredSearch = uniqBy([...action.data, ...state.searchGroups ], 'id');
-      
+      const filteredSearch = uniqBy(
+        [...action.data, ...state.searchGroups],
+        'id'
+      );
+
       return {
         ...state,
         searchGroups: filteredSearch
-      }
+      };
     case DELETE_GROUP:
       if (action.data.isSubgroup) {
         const group = find(
@@ -42,41 +45,41 @@ export default (state = initialState, action: any) => {
           (sg: any) => sg.id !== action.data.id
         );
         return {
-          groups: state.groups.map(
-            (el: any) =>
-              el.id !== group.id
-                ? el
-                : {
-                    ...group,
-                    subgroups
-                  }
+          groups: state.groups.map((el: any) =>
+            el.id !== group.id
+              ? el
+              : {
+                  ...group,
+                  subgroups
+                }
           )
         };
-      } else
-        return {
-          groups: state.groups.filter((g: any) => g.id !== action.data.id)
-        };
+      }
+      return {
+        groups: state.groups.filter((g: any) => g.id !== action.data.id)
+      };
     case EDIT_GROUP: {
       if (!action.data.isSubgroup)
         return Object.assign({}, state, {
           ...state,
-          groups: state.groups.map(
-            el => el.id === action.data.id ? action.data : el
+          groups: state.groups.map(el =>
+            el.id === action.data.id ? action.data : el
           )
         });
-      else {
-        return Object.assign({}, state, {
-          ...state,
-          groups: state.groups.map((g:any) => 
-            g.id !== action.data.masterGroupId? g:
-            {
-              ...g,
-              subgroups: g.subgroups.map(sg => 
-                sg.id !== action.data.id? sg: action.data)
-            }
-          )
-        });
-      }
+
+      return Object.assign({}, state, {
+        ...state,
+        groups: state.groups.map((g: any) =>
+          g.id !== action.data.masterGroupId
+            ? g
+            : {
+                ...g,
+                subgroups: g.subgroups.map(sg =>
+                  sg.id !== action.data.id ? sg : action.data
+                )
+              }
+        )
+      });
     }
 
     case ADD_GROUP:
@@ -92,16 +95,24 @@ export default (state = initialState, action: any) => {
             return group;
           })
         };
-      else{
-        const filtered = reverse(sortBy(uniqBy([action.data, ...state.groups, ],'id'), group => moment(group.dateOfLastUpdate).unix()));
-        console.log(filtered);
-        return {
-          ...state,
-          groups: filtered
-        }
-      }
+
+      const filtered = reverse(
+        sortBy(uniqBy([action.data, ...state.groups], 'id'), group =>
+          moment(group.dateOfLastUpdate).unix()
+        )
+      );
+      console.log(filtered);
+      return {
+        ...state,
+        groups: filtered
+      };
+
     case GET_GROUPS:
-      const filtered = reverse(sortBy(uniqBy([...action.data, ...state.groups], 'id'), group => moment(group.dateOfLastUpdate).unix()));
+      const filtered = reverse(
+        sortBy(uniqBy([...action.data, ...state.groups], 'id'), group =>
+          moment(group.dateOfLastUpdate).unix()
+        )
+      );
       return Object.assign({}, state, {
         ...state,
         groups: filtered

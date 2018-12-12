@@ -1,16 +1,16 @@
 module.exports = {
-  verifyEmail: 'Thank you for registration! You will receive confirmation email once Admin approves your application',
+  verifyEmail:
+    'Thank you for registration! You will receive confirmation email once Admin approves your application',
   ok: 'OK',
   menuProps: [
     { name: 'Edit Profile' },
     {
       translateVariable: 'LogIn',
-      href: '#',
+      href: '#'
     },
     {
       translateVariable: 'Profile',
-      href: '#',
-    },
-  ],
+      href: '#'
+    }
+  ]
 };
-

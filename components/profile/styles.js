@@ -1,6 +1,6 @@
 export default {
-  aboutMe:{
-    //marginTop:'32px'
+  aboutMe: {
+    // marginTop:'32px'
   },
   divider: {
     height: '4px',
@@ -14,11 +14,11 @@ export default {
     marginBottom: '50px'
   },
   leftInputs: {
-    paddingRight:'20px'
+    paddingRight: '20px'
   },
 
   rightInputs: {
-    paddingLeft:'20px'
+    paddingLeft: '20px'
   },
   wrapIcons: {
     marginTop: 10,
@@ -45,62 +45,60 @@ export default {
     marginRight: 20
   },
   input: {
-    width:'100%',
+    width: '100%',
     height: 60,
     fontSize: 18,
     marginTop: 30
   },
-  innerInput:{
+  innerInput: {
     fontSize: '19px',
     fontWeight: '600',
     color: '#5f6368',
     padding: '11px 0 9px'
   },
-  label:{
+  label: {
     fontSize: '15px',
     fontWeight: '600',
     color: '#a3abb5'
   },
-  forgorPassword:{
-    fontWeight:'300',
+  forgorPassword: {
+    fontWeight: '300',
     lineHeight: '10px',
-    fontSize:17,
+    fontSize: 17,
     color: '#224483',
     cursor: 'pointer',
     '&:hover': {
       color: 'rgba(42, 184, 184, 1)'
     }
   },
-  submit:{
+  submit: {
     marginTop: 40,
-    width:'100%',
+    width: '100%',
     backgroundColor: 'rgba(42, 184, 184, 1)',
-    height:60,
-    color:'white',
+    height: 60,
+    color: 'white',
     fontSize: 17,
     textTransform: 'none',
-    fontWeight:'bold',
+    fontWeight: 'bold',
     '&:hover': {
       backgroundColor: 'rgba(32, 67, 133, 1)'
     }
   },
-  haveNotAccount:{
+  haveNotAccount: {
     fontSize: 20,
     color: 'rgba(32, 67, 133, 1)',
 
-    marginTop:30,
+    marginTop: 30,
     lineHeight: '30px'
   },
-  signUp:{
+  signUp: {
     fontSize: '20px',
     color: 'rgba(42, 184, 184, 1)',
     lineHeight: '31.5px',
-    fontWeight:'500',
-    display:'inline-block',
-    marginLeft:'10px',
+    fontWeight: '500',
+    display: 'inline-block',
+    marginLeft: '10px',
     cursor: 'pointer',
     marginTop: '-3px'
-
   }
-
-}
+};

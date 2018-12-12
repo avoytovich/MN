@@ -1,7 +1,7 @@
 import { get as _get, isArray, isEmpty } from 'lodash';
 import qs from 'qs';
 import { FRONT_PROD } from '../constants/global';
-import {SET_RUNTIME_VARIABLE, START_LOAD} from "../constants/actions";
+import { SET_RUNTIME_VARIABLE, START_LOAD } from '../constants/actions';
 
 export default function isServer() {
   if (!process.browser) return true;
@@ -17,11 +17,10 @@ export function isProduction() {
 export function getLocale(key) {
   if (!isServer()) {
     if (key == 'accessToken') {
-        const token =_get(JSON.parse(localStorage.getItem('user')), 'token');
-        return token[key];
-    } else {
-      return _get(JSON.parse(localStorage.getItem('user')), key);
+      const token = _get(JSON.parse(localStorage.getItem('user')), 'token');
+      return token[key];
     }
+    return _get(JSON.parse(localStorage.getItem('user')), key);
   }
 }
 
@@ -40,7 +39,7 @@ export function changeQuery(router, name = 'modal', newValue) {
   const newUrl =
     index !== -1
       ? `${router.asPath.substring(0, index)}${
-        !isEmpty(query) ? `?${qs.stringify(query)}` : ''
+          !isEmpty(query) ? `?${qs.stringify(query)}` : ''
         }`
       : `${router.asPath}${!isEmpty(query) ? `?${qs.stringify(query)}` : ''}`;
   return newUrl;

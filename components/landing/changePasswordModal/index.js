@@ -38,19 +38,18 @@ const styles = theme => style;
   handleSubmit: async (values, { props }) => {
     try {
       const { message } = await changePassword(values);
-      props.toggleSnackbar(message, 'success')
-      props.close()
+      props.toggleSnackbar(message, 'success');
+      props.close();
     } catch (e) {
       // if(e.response)
-      console.log(e)
-      console.log(e.response)
-      console.log(e.response.data)
-      console.log(e.response.data.errors[0])
-      const  { message } = e.response.data.errors[0]
-      props.toggleSnackbar(message, 'error')
+      console.log(e);
+      console.log(e.response);
+      console.log(e.response.data);
+      console.log(e.response.data.errors[0]);
+      const { message } = e.response.data.errors[0];
+      props.toggleSnackbar(message, 'error');
       // else
       //   props.toggleSnackbar('Server error');
-
     }
   }
 })
@@ -98,7 +97,9 @@ export default class IconModal extends Component {
             fullWidth
             margin="normal"
           />
-          <Button type="submit" className={`${classes.submit} ${classes.changePassword}`}>
+          <Button
+            type="submit"
+            className={`${classes.submit} ${classes.changePassword}`}>
             Change Password
           </Button>
         </Form>

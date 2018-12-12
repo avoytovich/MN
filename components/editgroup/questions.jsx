@@ -38,6 +38,7 @@ export default class Questions extends Component {
   componentDidMount = () => {
     this.props.getQuestions({ groupId: this.props.router.query.id });
   };
+
   state = {
     questions: [],
     val: ''
@@ -52,19 +53,23 @@ export default class Questions extends Component {
       val: ''
     });
   };
+
   handleChange = e => {
     this.setState({ val: e.currentTarget.value });
   };
+
   deleteQuestionState = k => e => {
     const st = this.state.questions.filter((el, key) => key !== k);
     this.props.setFieldValue('questions', st);
     this.setState({
       questions: st
-    })
-  }
+    });
+  };
+
   deleteQuestion = k => e => {
     this.props.deleteQuestion(k);
   };
+
   render() {
     const { classes, questions = [] } = this.props;
     const newQuestions = this.state.questions;

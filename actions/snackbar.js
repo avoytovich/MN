@@ -1,7 +1,6 @@
-import { TOGGLE_SNACKBAR } from '../constants/actions'
+import { TOGGLE_SNACKBAR } from '../constants/actions';
 
-
-export function toggleSnackbar (message, color = 'error', open = true) {
+export function toggleSnackbar(message, color = 'error', open = true) {
   return {
     type: TOGGLE_SNACKBAR,
     payload: {
@@ -9,5 +8,5 @@ export function toggleSnackbar (message, color = 'error', open = true) {
       color,
       open
     }
-  }
+  };
 }
