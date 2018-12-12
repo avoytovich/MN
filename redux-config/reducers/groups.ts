@@ -82,7 +82,7 @@ export default (state = initialState, action: any) => {
       });
     }
 
-    case ADD_GROUP:
+    case ADD_GROUP: {
       if (action.data.isSubgroup)
         return {
           ...state,
@@ -106,8 +106,8 @@ export default (state = initialState, action: any) => {
         ...state,
         groups: filtered
       };
-
-    case GET_GROUPS:
+    }
+    case GET_GROUPS: {
       const filtered = reverse(
         sortBy(uniqBy([...action.data, ...state.groups], 'id'), group =>
           moment(group.dateOfLastUpdate).unix()
@@ -117,6 +117,7 @@ export default (state = initialState, action: any) => {
         ...state,
         groups: filtered
       });
+    }
     default:
       return state;
   }
