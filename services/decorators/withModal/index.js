@@ -6,46 +6,52 @@ import Close from '@material-ui/icons/Close';
 import './withModal.sass';
 
 export default function withModal(ComponentModal, options = {}) {
-  return function (Child) {
+  return function(Child) {
     class CustomModal extends Component {
       state = {
         open: false,
         data: null
       };
-      handleOpen = (data) => {
+
+      handleOpen = data => {
         this.setState({ open: true, data: data });
       };
+
       handleClose = () => {
         this.setState({ open: false, data: null });
       };
+
       render() {
         return (
           <Fragment>
-            <Modal open={this.state.open} onClose={options.withCloseOutside?this.handleClose: null}>
-              {
-                options.disableStyles ?
-                  <>
-                    {options.withClose && (
-                      <div className="close-wrapper">
-                        <Close onClick={this.handleClose} />
-                      </div>
-                    )}
-                    <ComponentModal
-                      modalProps={this.state.data}
-                      close={this.handleClose} />
-                  </> :
-                  <div className="modal-window">
-                {options.withClose && (
-                      <div className="close-wrapper">
-                        <Close onClick={this.handleClose} />
-                      </div>
-                    )}
-                    <ComponentModal
-                      modalProps={this.state.data}
-                      close={this.handleClose} />
-                  </div>
-              }
-
+            <Modal
+              open={this.state.open}
+              onClose={options.withCloseOutside ? this.handleClose : null}>
+              {options.disableStyles ? (
+                <>
+                  {options.withClose && (
+                    <div className="close-wrapper">
+                      <Close onClick={this.handleClose} />
+                    </div>
+                  )}
+                  <ComponentModal
+                    modalProps={this.state.data}
+                    close={this.handleClose}
+                  />
+                </>
+              ) : (
+                <div className="modal-window">
+                  {options.withClose && (
+                    <div className="close-wrapper">
+                      <Close onClick={this.handleClose} />
+                    </div>
+                  )}
+                  <ComponentModal
+                    modalProps={this.state.data}
+                    close={this.handleClose}
+                  />
+                </div>
+              )}
             </Modal>
             <Child
               {...this.props}

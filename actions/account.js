@@ -1,7 +1,8 @@
-import { ACCOUNT_URL} from '../constants/api'
-import { getAxiosInstance } from '../shared/request'
-const request = getAxiosInstance(ACCOUNT_URL, false)
-const authedRequest = getAxiosInstance(ACCOUNT_URL)
+import { ACCOUNT_URL } from '../constants/api';
+import { getAxiosInstance } from '../shared/request';
+
+const request = getAxiosInstance(ACCOUNT_URL, false);
+const authedRequest = getAxiosInstance(ACCOUNT_URL);
 
 export async function signIn(payload) {
   try {
@@ -17,12 +18,11 @@ export async function signIn(payload) {
 
 const state = {
   prom: null
-}
+};
 
 export async function reLogin(payload) {
   try {
-    if(!state.prom)
-    {
+    if (!state.prom) {
       state.prom = request.post('/RefreshToken', payload);
       const { data } = await state.prom;
       const user = localStorage.getItem('user');
@@ -31,7 +31,7 @@ export async function reLogin(payload) {
       state.prom = null;
       return Promise.resolve(data);
     }
-      return state.prom;
+    return state.prom;
   } catch (e) {
     return Promise.reject(e);
   }
@@ -48,37 +48,31 @@ export async function signUp(payload) {
   }
 }
 
-export async function signOut () {
+export async function signOut() {
   try {
-    await authedRequest.delete('/Logout')
-    localStorage.removeItem('user')
-    return Promise.resolve()
+    await authedRequest.delete('/Logout');
+    localStorage.removeItem('user');
+    return Promise.resolve();
   } catch (e) {
-    return Promise.reject(e)
+    return Promise.reject(e);
   }
 }
 
-export async function resetPassword () {
+export async function resetPassword() {
   try {
-    const { email } = JSON.parse(localStorage.getItem('user'))
-    await authedRequest.post('ResetPassword', {email})
-    return Promise.resolve()
+    const { email } = JSON.parse(localStorage.getItem('user'));
+    await authedRequest.post('ResetPassword', { email });
+    return Promise.resolve();
   } catch (e) {
-    return Promise.reject(e)
+    return Promise.reject(e);
   }
 }
 
-
-
-
-export async function changePassword (payload) {
+export async function changePassword(payload) {
   try {
-    const { data } = await authedRequest.post('/ChangePassword', payload)
-    return Promise.resolve(data)
+    const { data } = await authedRequest.post('/ChangePassword', payload);
+    return Promise.resolve(data);
   } catch (e) {
-    return Promise.reject(e)
+    return Promise.reject(e);
   }
 }
-
-
-

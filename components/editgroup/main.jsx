@@ -17,14 +17,14 @@ import {
   IconButton,
   NoSsr
 } from '@material-ui/core';
-import styles from './styles';
 import get from 'lodash/get';
-import Subgroups from './subgroups';
-import Questions from './questions';
 import withModal from 'services/decorators/withModal';
 import IconModal from 'components/iconmodal';
 import { wrapField } from 'services/materialformik';
 import { Field } from 'formik';
+import Questions from './questions';
+import Subgroups from './subgroups';
+import styles from './styles';
 
 const Main = ({ classes, group, setFieldValue, open, values, chosenIcon }) => {
   const subgroups = get(group, 'subgroups', []);

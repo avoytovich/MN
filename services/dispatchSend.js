@@ -1,6 +1,11 @@
 import axios from 'axios';
 import { msgError } from './errorHandler';
-import { START_LOAD, END_LOAD, ERROR_LOAD, TOGGLE_SNACKBAR } from '../constants/actions';
+import {
+  START_LOAD,
+  END_LOAD,
+  ERROR_LOAD,
+  TOGGLE_SNACKBAR
+} from '../constants/actions';
 
 const demyFunc = data => data;
 
@@ -14,12 +19,12 @@ const dispatchSend = (
     adaptData = demyFunc,
     adaptError = demyFunc,
     receiveAction = END_LOAD,
-    startAction = START_LOAD,
-  } = {},
+    startAction = START_LOAD
+  } = {}
 ) => async dispatch => {
   const timeoutFunc = setTimeout(
     () => !isBackground && dispatch({ type: startAction, name }),
-    timeout,
+    timeout
   );
   let resp;
   try {
@@ -27,7 +32,7 @@ const dispatchSend = (
     dispatch({
       type: receiveAction,
       name,
-      data: adaptData(resp.data),
+      data: adaptData(resp.data)
     });
     clearTimeout(timeoutFunc);
   } catch (e) {
@@ -43,7 +48,7 @@ const dispatchSend = (
     dispatch({
       name,
       type: ERROR_LOAD,
-      error: adaptError(e),
+      error: adaptError(e)
     });
     throw e;
   }

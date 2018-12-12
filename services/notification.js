@@ -1,12 +1,11 @@
 import { NotificationManager } from 'react-notifications';
 // type = info || success || warning || error
 
-
 export const createNotification = (
   type = 'error',
   title = '',
   msg = ' ',
-  callback = () => null,
+  callback = () => null
 ) => {
   if (typeof type === 'object') {
     console.log('[error]', type);
@@ -14,7 +13,7 @@ export const createNotification = (
       type.msg,
       type.title,
       type.time || 5000,
-      type.callback,
+      type.callback
     );
   }
   return NotificationManager[type](msg, title, 5000, callback);

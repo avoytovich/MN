@@ -8,83 +8,94 @@ import Table from 'components/Table';
 import { getInvites } from '../../actions/invites';
 
 const data = [
-{
+  {
     email: 'sss@gmail.com',
-    status: 'active',
-},
-{
+    status: 'active'
+  },
+  {
     email: 'sss@gmail.com',
-    status: 'active',
-},
-{
+    status: 'active'
+  },
+  {
     email: 'sss@gmail.com',
-    status: 'active',
-},
-{
+    status: 'active'
+  },
+  {
     email: 'sss@gmail.com',
-    status: 'active',
-}]
+    status: 'active'
+  }
+];
 
-class AdminPanel extends React.Component{
-    componentDidMount = async() => {
-        this.props.getInvites();
-    }
+class AdminPanel extends React.Component {
+  componentDidMount = async () => {
+    this.props.getInvites();
+  };
 
-    accept = (id) => () => {
-        console.log('accept')
-    }
+  accept = id => () => {
+    console.log('accept');
+  };
 
-    reject = (id) => () => {
-        console.log('reject')
-    }
+  reject = id => () => {
+    console.log('reject');
+  };
 
-    remove = (id) => () => {
-        console.log('remove');
-    }
+  remove = id => () => {
+    console.log('remove');
+  };
 
-    render(){
-        const keys = [
-            {
-              id: 'email',
-              sort: true,
-              numeric: false,
-              label: 'Email'
-            },
-            {
-              id: 'status',
-              sort: true,
-              numeric: false,
-              label: 'Status'
-            },
-            {
-                param: 'id',
-                action: true,
-                label: 'Accept',
-                actionButton: <Button variant="outlined" color="secondary">Accept</Button>,
-                callback: this.accept
-            },
-            {
-                param: 'id',
-                action: true,
-                label: 'Delete',
-                actionButton: <Button variant="contained" color="warning">Remove</Button>,
-                callback: this.remove
-            }
-        ];
+  render() {
+    const keys = [
+      {
+        id: 'email',
+        sort: true,
+        numeric: false,
+        label: 'Email'
+      },
+      {
+        id: 'status',
+        sort: true,
+        numeric: false,
+        label: 'Status'
+      },
+      {
+        param: 'id',
+        action: true,
+        label: 'Accept',
+        actionButton: (
+          <Button variant="outlined" color="secondary">
+            Accept
+          </Button>
+        ),
+        callback: this.accept
+      },
+      {
+        param: 'id',
+        action: true,
+        label: 'Delete',
+        actionButton: (
+          <Button variant="contained" color="warning">
+            Remove
+          </Button>
+        ),
+        callback: this.remove
+      }
+    ];
 
-        return (<Grid container spacing={0} justify="center">
-            <Grid item xs={12} sm={12}>
-                <Layout>
-                    <Secondpanel
-                        title="Admin Panel"
-                        breadCrumb=""
-                    />
-                    <SearchMemberForm search='' />
-                    <Table data={data} paging={false} keys={keys}/>
-                </Layout>
-            </Grid>
-        </Grid>)
-    }
+    return (
+      <Grid container spacing={0} justify="center">
+        <Grid item xs={12} sm={12}>
+          <Layout>
+            <Secondpanel title="Admin Panel" breadCrumb="" />
+            <SearchMemberForm search="" />
+            <Table data={data} paging={false} keys={keys} />
+          </Layout>
+        </Grid>
+      </Grid>
+    );
+  }
 }
 
-export default connect(null, { getInvites })(AdminPanel);
+export default connect(
+  null,
+  { getInvites }
+)(AdminPanel);

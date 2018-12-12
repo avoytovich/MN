@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import { Link } from '../../routes';
 import {
   Grid,
   Typography,
@@ -7,13 +6,14 @@ import {
   withStyles,
   Avatar
 } from '@material-ui/core';
-import LongMenu from './icon-dropdown/icon-dropdown';
 import get from 'lodash/get';
 import DefaultAvatar from 'static/png/defaultAvatar.png';
+import LongMenu from './icon-dropdown/icon-dropdown';
+import { Link } from '../../routes';
 
 import '../../sass/common.sass';
 import './header.sass';
-import { myRoleIs } from "../../services/accountService";
+import { myRoleIs } from '../../services/accountService';
 
 const styles = theme => ({
   appBar: {
@@ -68,27 +68,26 @@ const userLinks = [
 export default class Header extends Component {
   state = {
     previewImage: DefaultAvatar,
-    isAdmin: false,
-  }
+    isAdmin: false
+  };
 
   getLink = () => {
     const { isAdmin } = this.state;
-    return isAdmin && adminLinks || userLinks;
+    return (isAdmin && adminLinks) || userLinks;
   };
 
-  componentDidMount(){
-    const user = JSON.parse(window.localStorage.getItem('user'))
-    const previewImage = get(user, 'profile.imageContent.previewImage')
+  componentDidMount() {
+    const user = JSON.parse(window.localStorage.getItem('user'));
+    const previewImage = get(user, 'profile.imageContent.previewImage');
     this.setState({
       isAdmin: myRoleIs(),
       previewImage
-    })
-
+    });
   }
 
   render() {
     const { classes } = this.props;
-    const { previewImage } = this.state
+    const { previewImage } = this.state;
     return (
       <AppBar className={classes.appBar}>
         <Grid alignItems="center" container>

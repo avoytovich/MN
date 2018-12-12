@@ -17,8 +17,7 @@ export const LAZY_START = 'LAZY_START';
 export const MERGE_RUNTIME = 'MERGE_RUNTIME';
 
 // snackbar
-export const TOGGLE_SNACKBAR = 'TOGGLE_SNACKBAR'
-
+export const TOGGLE_SNACKBAR = 'TOGGLE_SNACKBAR';
 
 // localization
 export const CHANGE_LANGUAGE = 'CHANGE_LANGUAGE';

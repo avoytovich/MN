@@ -8,9 +8,9 @@ import Select from '@material-ui/core/Select';
 import Button from '@material-ui/core/Button';
 import MenuItem from '@material-ui/core/MenuItem';
 
+import Slider from 'react-slick';
 import Layout from '../../components/MyLayout.js';
 import TestForm from '../../forms/testForm';
-import Slider from "react-slick";
 
 // import i18n from '../../services/decorators/i18n';
 
@@ -32,7 +32,7 @@ export default class About extends Component {
   };
 
   render() {
-    var settings = {
+    const settings = {
       dots: true,
       infinite: true,
       speed: 500,

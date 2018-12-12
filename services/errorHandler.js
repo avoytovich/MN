@@ -34,7 +34,7 @@ export const localizeError = ({ error, translate }) => {
           }
           const reason = str.substring(
             str.indexOf("entry '") + 7,
-            str.indexOf("' for key"),
+            str.indexOf("' for key")
           );
           if (!reason) {
             return `${translate('1062+', 'error')} : ${reason}`;

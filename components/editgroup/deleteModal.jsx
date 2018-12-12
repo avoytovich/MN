@@ -21,23 +21,24 @@ const styles = theme => ({
     color: '#5f6368'
   },
   actions: {
-      position: 'relative',
-      marginTop: 'auto',
+    position: 'relative',
+    marginTop: 'auto'
   }
 });
 
 @connect(
-  ({runtime}) => ({group: runtime.deleteGroupData}),
+  ({ runtime }) => ({ group: runtime.deleteGroupData }),
   {
     deleteGroup
   }
 )
 @withStyles(styles)
 export default class DeleteModal extends Component {
-  handleAccept = async() => {
+  handleAccept = async () => {
     await this.props.deleteGroup(this.props.group);
     this.props.close();
-  }
+  };
+
   render() {
     const { classes, close } = this.props;
 
@@ -52,10 +53,17 @@ export default class DeleteModal extends Component {
           decline this action to continue
         </Typography>
         <Grid className={classes.actions} container>
-          <Button onClick={close} style={{marginRight: 5}} variant="outlined" color="secondary">
+          <Button
+            onClick={close}
+            style={{ marginRight: 5 }}
+            variant="outlined"
+            color="secondary">
             Cancel
           </Button>
-          <Button onClick={this.handleAccept} variant="contained" color="primary">
+          <Button
+            onClick={this.handleAccept}
+            variant="contained"
+            color="primary">
             Delete
           </Button>
         </Grid>

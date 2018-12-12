@@ -1,13 +1,19 @@
 import { Component, Fragment } from 'react';
-import { Grid, IconButton, TextField, FormControl, MenuItem } from '@material-ui/core';
+import {
+  Grid,
+  IconButton,
+  TextField,
+  FormControl,
+  MenuItem
+} from '@material-ui/core';
 import CreateIcon from '@material-ui/icons/Create';
 import { withRouter } from 'next/router';
-import { Link } from '../../routes';
 import InfiniteScroll from 'react-infinite-scroll-component';
-import qs from "qs";
+import qs from 'qs';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { get as _get } from 'lodash';
+import { Link } from '../../routes';
 import { Router } from '../../routes';
 import { setData } from '../../actions/updateData';
 import { members } from '../../services/cruds';
@@ -15,17 +21,17 @@ import { myRoleIs } from '../../services/accountService';
 import loading from '../../services/decorators/loading';
 import ClassesNesting from './withClassesNesting';
 
-import "./features.sass";
+import './features.sass';
 
 const orderBy = [
   {
     value: 'firstname',
-    label: 'First Name',
+    label: 'First Name'
   },
   {
     value: 'lastname',
-    label: 'Last Name',
-  },
+    label: 'Last Name'
+  }
 ];
 
 const mapDispatchToProps = dispatch =>
@@ -37,7 +43,7 @@ const mapStateToProps = ({ runtime }) => ({
 
 @connect(
   mapStateToProps,
-  mapDispatchToProps,
+  mapDispatchToProps
 )
 @withRouter
 @loading()
@@ -53,8 +59,8 @@ export class Features extends Component {
           total_count: 0
         }
       },
-      orderBy: 'firstname',
-    }
+      orderBy: 'firstname'
+    };
   }
 
   componentWillMount() {
@@ -73,35 +79,40 @@ export class Features extends Component {
   componentDidMount() {
     const { id } = this.props.groupDetails;
     const { subgroups } = this.props;
-
   }
 
-  executeGetGroupId = (currentSubGroup) => {
+  executeGetGroupId = currentSubGroup => {
     const { groupDetails } = this.props;
     const { id } = this.props.router.query;
-    return (currentSubGroup &&
-      (currentSubGroup['name'] == 'ROOT' && id || currentSubGroup['id'])) ||
-        groupDetails.id;
+    return (
+      (currentSubGroup &&
+        ((currentSubGroup.name == 'ROOT' && id) || currentSubGroup.id)) ||
+      groupDetails.id
+    );
   };
 
   loadAndSaveMembersList = async condition => {
-    if (this.props.groupDetails.subgroups.some(item => {
-      return item.name == condition;
-    }) ) {
+    if (
+      this.props.groupDetails.subgroups.some(item => item.name == condition)
+    ) {
+      await this.setState({
+        offset: 0,
+        elements: []
+      });
+    }
+    if (condition == 'firstname' || condition == 'lastname') {
       await this.setState({
         offset: 0,
         elements: [],
+        orderBy: condition
       });
     }
-    if (condition == 'firstname' || condition ==  'lastname') {
-      await this.setState({
-        offset: 0,
-        elements: [],
-        orderBy: condition,
-      });
-    }
-    if (condition &&
-          ['', 'firstname', 'lastname', this.state.group].every(item => (condition != item))) {
+    if (
+      condition &&
+      ['', 'firstname', 'lastname', this.state.group].every(
+        item => condition != item
+      )
+    ) {
       this.setState({
         offset: 0,
         elements: [],
@@ -117,9 +128,9 @@ export class Features extends Component {
     }
     const { groupDetails, groupMembers } = this.props;
     const { offset, search, orderBy, group } = this.state;
-    const currentSubGroup = groupDetails.subgroups.filter(item => {
-      return item.name == group;
-    });
+    const currentSubGroup = groupDetails.subgroups.filter(
+      item => item.name == group
+    );
     const resp = await this.props.loadData(
       members.get(
         {
@@ -127,32 +138,32 @@ export class Features extends Component {
           limit: 12,
           offset: offset,
           search: search,
-          orderBy: orderBy,
+          orderBy: orderBy
         },
         '/GetGroupMembers',
         false,
-        par => qs.stringify(par, { indices: false }),
+        par => qs.stringify(par, { indices: false })
       ),
       {
-        saveTo: 'groupMembers',
-      },
+        saveTo: 'groupMembers'
+      }
     );
     this.setState({
       offset: this.state.offset + 12,
       elements: this.state.elements.concat(resp.data.data),
-      membersInfo: {...resp.data},
+      membersInfo: { ...resp.data }
     });
     this.props.setData(resp.data, 'groupMembers');
   };
 
   handleChange = name => event => {
     this.setState({
-      [name]: event.target.value,
+      [name]: event.target.value
     });
   };
 
-  handleSubmit = (e) => {
-    if(e.charCode === 13) {
+  handleSubmit = e => {
+    if (e.charCode === 13) {
       const condition = e.target.value;
       this.loadAndSaveMembersList(condition);
     }
@@ -190,44 +201,50 @@ export class Features extends Component {
         <div className="features-wrapper">
           <Grid container spacing={0} justify="center">
             <Grid item xs={8} sm={8}>
-              <Grid container spacing={0} justify="center" className='container'>
+              <Grid
+                container
+                spacing={0}
+                justify="center"
+                className="container">
                 <Grid item xs={2} sm={2}>
                   <div
                     style={{
-                      backgroundImage: `url('/static/svg/group-features.svg')`,
+                      backgroundImage: `url('/static/svg/group-features.svg')`
                     }}
                     className="icon"
                   />
                 </Grid>
                 <Grid item xs={6} sm={6}>
-                  <div className='group'>
-                    <p className='name'>{groupDetails.name}</p>
+                  <div className="group">
+                    <p className="name">{groupDetails.name}</p>
                     {isAdmin && (
                       <IconButton
-                        /*onClick={this.handleClick}*/
+                      /* onClick={this.handleClick} */
                       >
-                        <Link route="editgroup" params={{id: groupDetails.id}}>
+                        <Link
+                          route="editgroup"
+                          params={{ id: groupDetails.id }}>
                           <CreateIcon />
                         </Link>
                       </IconButton>
                     )}
-                    <br/>
-                    <p className='description'>{groupDetails.description}</p>
+                    <br />
+                    <p className="description">{groupDetails.description}</p>
                   </div>
                 </Grid>
                 <Grid item xs={4} sm={4}>
                   <FormControl>
                     <TextField
                       InputProps={{
-                        className: "field-search-input",
+                        className: 'field-search-input',
                         onBlur: this.handleBlur,
-                        onFocus: this.handleFocus,
+                        onFocus: this.handleFocus
                       }}
                       id="outlined-search"
-                      className='field-search'
-                      placeholder='Search in Group'
+                      className="field-search"
+                      placeholder="Search in Group"
                       type="search"
-                      /*onChange={(e) => this.handleChange(e)}*/
+                      /* onChange={(e) => this.handleChange(e)} */
                       margin="normal"
                       variant="filled"
                     />
@@ -235,16 +252,15 @@ export class Features extends Component {
                   <TextField
                     id="outlined-select"
                     InputProps={{
-                      className: "field-search-input",
-                      onChange: (e) => this.loadAndSaveMembersList(e.target.value)
+                      className: 'field-search-input',
+                      onChange: e => this.loadAndSaveMembersList(e.target.value)
                     }}
                     select
-                    className='field-select'
+                    className="field-select"
                     value={this.state.orderBy}
                     onChange={this.handleChange('orderBy')}
                     margin="normal"
-                    variant="outlined"
-                  >
+                    variant="outlined">
                     {orderBy.map(option => (
                       <ClassesNesting key={option.value} value={option.value}>
                         {`Sort By: ${option.label}`}
@@ -259,34 +275,37 @@ export class Features extends Component {
         <div className="features-wrapper-addition">
           <Grid container spacing={0} justify="center">
             <Grid item xs={8} sm={8}>
-              <Grid container spacing={0} justify="center" className='container'>
+              <Grid
+                container
+                spacing={0}
+                justify="center"
+                className="container">
                 <Grid item xs={6} sm={6} className="user-activity-left">
                   <TextField
                     id="outlined-select"
                     InputProps={{
-                      className: "field-search-input",
-                      onChange: (val) => {
+                      className: 'field-search-input',
+                      onChange: val => {
                         console.log(val);
                         // Router.pushRoute('group', {id: this.props.mainGroup.id, sub: })
-                      },
+                      }
                     }}
                     select
-                    className='field-select'
+                    className="field-select"
                     value={this.props.groupDetails.name}
                     onChange={this.handleChange('group')}
                     margin="normal"
-                    variant="outlined"
-                  >
-                    {this.props.mainGroup?[this.props.mainGroup, ...subgroups].map((item, id) => (
-                      <ClassesNesting key={id} value={item.name}>
-                        {`Choose View: Group ${item.name}`}
-                      </ClassesNesting>
-                    )): null}
+                    variant="outlined">
+                    {this.props.mainGroup
+                      ? [this.props.mainGroup, ...subgroups].map((item, id) => (
+                        <ClassesNesting key={id} value={item.name}>
+                            {`Choose View: Group ${item.name}`}
+                          </ClassesNesting>
+                        ))
+                      : null}
                   </TextField>
                 </Grid>
-                <Grid item xs={6} sm={6} className="user-activity-right">
-                  
-                </Grid>
+                <Grid item xs={6} sm={6} className="user-activity-right" />
               </Grid>
             </Grid>
           </Grid>
@@ -297,9 +316,7 @@ export class Features extends Component {
               <InfiniteScroll
                 next={() => this.loadAndSaveMembersList()}
                 dataLength={this.state.elements.length}
-                hasMore={
-                  elements.length < membersInfo.pagination.total_count
-                }
+                hasMore={elements.length < membersInfo.pagination.total_count}
                 className="infinite-scroll-component">
                 <Grid
                   container
@@ -310,13 +327,14 @@ export class Features extends Component {
                   {isAdmin && (
                     <Grid item xs={6} sm={3}>
                       <div className="grid-info">
- 			                  <Link route="create-member" params={{ groupId: this.handleIdCreateMember() }} >
+                        <Link
+                          route="create-member"
+                          params={{ groupId: this.handleIdCreateMember() }}>
                           <div
                             style={{
-                              backgroundImage: `url(${'/static/svg/placeholder_add.svg'})`,
+                              backgroundImage: `url(${'/static/svg/placeholder_add.svg'})`
                             }}
-                            className="grid-info-list"
-                          >
+                            className="grid-info-list">
                             <div className="grid-info-list-info">
                               <p className="info-member-name">+ Add Profile</p>
                               <p className="info-member-title">Press here</p>
@@ -337,14 +355,15 @@ export class Features extends Component {
                     return (
                       <Grid key={index} item xs={6} sm={3}>
                         <div className="grid-info">
-                          <Link route="edit-member" params={{  memberId: id }} >
+                          <Link route="edit-member" params={{ memberId: id }}>
                             <div
                               style={{
-                                backgroundImage: `url(${_get(imageContent, 'mediumImage') ||
-                                '/static/svg/placeholder.svg'})`,
+                                backgroundImage: `url(${_get(
+                                  imageContent,
+                                  'mediumImage'
+                                ) || '/static/svg/placeholder.svg'})`
                               }}
-                              className="grid-info-list"
-                            >
+                              className="grid-info-list">
                               <div className="grid-info-list-info">
                                 <p className="info-member-name">{`${firstName} ${lastName}`}</p>
                                 <p className="info-member-title">{title}</p>

@@ -15,7 +15,7 @@ export default class CreateGroupPage extends Component {
       <Grid container spacing={0} justify="center">
         <Grid item xs={12} sm={12}>
           <Layout>
-            <CreateGroups />              
+            <CreateGroups />
           </Layout>
         </Grid>
         <Grid container spacing={0} justify="center" />
