@@ -27,6 +27,8 @@ import { resetData, updateSpecData } from 'actions/updateData';
     memberName: ''
   }),
   async handleSubmit(values, props) {
+    console.log('submit', values);
+
     if (values.name.length > 0 || values.memberName.length > 0){
       const { name, memberName } = values;
       // TODO: fix
@@ -53,18 +55,16 @@ export default class SearchForm extends React.Component {
             value={values.name}
             render={
               props => <SearchField
-                
-                label="Search in Groups"
+              label="Search in Groups:"
                 onRemove={this.remove}
                 {...props} />
             } />
           <Field
             name="memberName"
             value={values.memberName}
-            label="Search by Names"
             render={
               props => <SearchField
-                label="Search by Names"
+                label="Search by Names:"
                 onRemove={this.remove}
                 {...props} />
             }
