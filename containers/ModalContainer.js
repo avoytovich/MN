@@ -14,7 +14,10 @@ export default class ModalContainer extends React.Component {
     signUp: false,
     verify: false,
     title: null,
-    modalNames: ['signUp', 'verify']
+    modalNames: [
+      'signUp',
+      'verify',
+    ],
   };
 
   async componentWillReceiveProps(nextProps, nextState) {
@@ -25,7 +28,7 @@ export default class ModalContainer extends React.Component {
   setOpenModal = async modalName => {
     this.setState(() => {
       const needToCloseArray = this.state.modalNames.filter(
-        name => name !== modalName
+        name => name !== modalName,
       );
 
       const newState = { [modalName]: true };

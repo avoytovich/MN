@@ -1,5 +1,7 @@
 import { getLocale } from './serverService';
 
-const myRoleIs = () => getLocale('isOrganizationAdmin') || false;
+const myRoleIs = () => (getLocale('isOrganizationAdmin') || false);
 
-export { myRoleIs };
+export {
+  myRoleIs,
+};

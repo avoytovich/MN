@@ -26,8 +26,8 @@ import {
 import find from 'lodash/find';
 import { bindActionCreators } from 'redux';
 import withModal from 'services/decorators/withModal';
-import { updateSpecData } from 'actions/updateData';
 import DeleteModal from './deleteModal';
+import { updateSpecData } from 'actions/updateData';
 
 @connect(
   null,
@@ -67,11 +67,9 @@ export default class Subgroups extends Component {
       val: ''
     });
   };
-
   handleChange = e => {
     this.setState({ val: e.target.value });
   };
-
   editGroup = k => e => {
     if (this.state.isEditing) {
       this.props
@@ -94,17 +92,14 @@ export default class Subgroups extends Component {
         editVal: find(this.props.subgroups, el => el.id === k).name
       });
   };
-
   deleteGroup = group => e => {
     // this.props.deleteGroup(group);
   };
-
   handleOpen = group => e => {
     // this.props.setModalDeleteGroup(group);
     this.props.updateSpecData('deleteGroup', group);
     this.props.open();
   };
-
   render() {
     const { classes, id, subgroups, open } = this.props;
     return (

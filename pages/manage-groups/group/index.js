@@ -1,5 +1,6 @@
 import { Component, Fragment } from 'react';
 import { withRouter } from 'next/router';
+import { Link } from '../../../routes';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { get as _get } from 'lodash';
@@ -14,21 +15,16 @@ import { group } from 'services/cruds';
 import loading from 'services/decorators/loading';
 import { setData } from 'actions/updateData';
 import { getSingle } from 'actions/groups';
-import { Link } from '../../../routes';
-import { myRoleIs } from '../../../services/accountService';
+import { myRoleIs } from "../../../services/accountService";
 
 import './group.sass';
 
 const mapDispatchToProps = dispatch =>
   bindActionCreators({ setData, getSingle }, dispatch);
 
-const mapStateToProps = ({ runtime, groups }, { router }) => ({
+const mapStateToProps = ({ runtime, groups }, {router}) => ({
   groupDetails: runtime.groupDetails,
-  subgroups:
-    get(
-      find(groups.groups, el => el.id === parseInt(router.query.id)),
-      'subgroups'
-    ) || [],
+  subgroups: get(find(groups.groups, el => el.id === parseInt(router.query.id)), 'subgroups') || [],
   mainGroup: find(groups.groups, el => el.id === parseInt(router.query.id))
 });
 
@@ -40,31 +36,29 @@ const mapStateToProps = ({ runtime, groups }, { router }) => ({
 @loading()
 export class Group extends Component {
   state = {
-    isAdmin: false
-  };
+    isAdmin: false,
+  }
 
   componentDidMount() {
     this.GetGroupDetails_loadAndSaveToProps();
-
+    
     this.setState({
-      isAdmin: myRoleIs()
-    });
+      isAdmin: myRoleIs(),
+    })
   }
-
-  componentDidUpdate = prevProps => {
+  componentDidUpdate = (prevProps) => {
     console.log(this.props.router);
     // if(this.props.router.query.id !== prevProps.router.query.id || this.props.router.query.sub !== prevProps.router.query.sub)
     //   {
     //     console.log('updateTTTTT');
     //     this.GetGroupDetails_loadAndSaveToProps();
     //   }
-  };
-
+  }
   GetGroupDetails_loadAndSaveToProps = async () => {
     const {
       query: { id, sub }
     } = this.props.router;
-    const selected = sub || id;
+    const selected = sub? sub: id;
 
     const resp = await this.props.loadData(
       group.get(
@@ -79,7 +73,7 @@ export class Group extends Component {
         saveTo: 'groupDetails'
       }
     );
-    this.props.getSingle({ groupId: id });
+    this.props.getSingle({groupId: id});
     this.props.setData(resp.data, 'groupDetails');
   };
 
@@ -108,7 +102,7 @@ export class Group extends Component {
   };
 
   render() {
-    // console.log('this.props', this.props);
+    //console.log('this.props', this.props);
     const { pathname } = this.props.router;
     const { groupDetails } = this.props;
     const { isAdmin } = this.state;
@@ -120,10 +114,10 @@ export class Group extends Component {
         <Layout>
           <div className="underheader-wrapper">
             <SecondPanel
-              /* actionButtons={[
+              /*actionButtons={[
                 <Button variant="outlined" color="secondary"> INVITE
                 </Button>
-              ]} */
+              ]}*/
               actionButtons={[
                 !isAdmin && quizAvailable === true ? (
                   <Link
@@ -149,11 +143,7 @@ export class Group extends Component {
               title="Group Content"
             />
           </div>
-          <Features
-            mainGroup={this.props.mainGroup}
-            subgroups={this.props.subgroups}
-            groupDetails={data}
-          />
+          <Features mainGroup={this.props.mainGroup} subgroups={this.props.subgroups} groupDetails={data} />
         </Layout>
       </Fragment>
     );

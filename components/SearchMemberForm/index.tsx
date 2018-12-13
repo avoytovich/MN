@@ -4,19 +4,20 @@ import { InjectedFormikProps, Field } from 'formik';
 
 import './style.sass';
 
-const SearchMemberForm: FormType = ({ values }) => (
-  <Field
-    name="name"
-    value={values.search}
-    render={props => (
-      <SearchField
-        label="Search..."
-        className="search-user-field"
-        // onRemove={this.remove}
-        {...props}
-      />
-    )}
-  />
-);
+const SearchMemberForm:FormType = ({values})  => {
+    return (
+        <Field
+            name="name"
+            value={values.search}
+            render={
+              props => <SearchField
+                label="Search..."
+                className="search-user-field"
+                // onRemove={this.remove}
+                {...props}
+                />
+            } />
+    )
+}
 
 export default searchUser(SearchMemberForm);

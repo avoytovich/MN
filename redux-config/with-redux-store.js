@@ -5,16 +5,16 @@ import { initializeStore } from './store';
 const isServer = typeof window === 'undefined';
 const __NEXT_REDUX_STORE__ = '__NEXT_REDUX_STORE__';
 
-const GLOBAL_LANG = null;
+let GLOBAL_LANG = null;
 
 export function getOrCreateStore(initialState, lang) {
   // Always make a new store if server, otherwise state is shared between requests
   if (isServer) {
-    /* const state = cloneDeep(initialState);
+    /*const state = cloneDeep(initialState);
     if (lang) GLOBAL_LANG = lang;
     if (GLOBAL_LANG && initialState) {
       state.localization.lang = GLOBAL_LANG;
-    } */
+    }*/
     const store = initializeStore(initialState);
     return store;
   }
@@ -26,8 +26,8 @@ export function getOrCreateStore(initialState, lang) {
   return window[__NEXT_REDUX_STORE__];
 }
 
-export default App =>
-  class AppWithRedux extends React.Component {
+export default App => {
+  return class AppWithRedux extends React.Component {
     static async getInitialProps(appContext) {
       const cookie = get(appContext, 'ctx.req.headers.cookie');
       const findValue = 'lang=';
@@ -49,7 +49,7 @@ export default App =>
 
       return {
         ...appProps,
-        initialReduxState: reduxStore.getState()
+        initialReduxState: reduxStore.getState(),
       };
     }
 
@@ -62,3 +62,4 @@ export default App =>
       return <App {...this.props} reduxStore={this.reduxStore} />;
     }
   };
+};

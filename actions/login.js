@@ -8,5 +8,7 @@ export const login = data =>
   dispatchSend('login', getLoginPromise(data), {
     start_action: START_LOAD,
     receiveAction: LOGIN_SUCCESS,
-    adaptData: resp => resp.data
+    adaptData: resp => {
+      return resp.data;
+    }
   });

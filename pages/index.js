@@ -4,23 +4,23 @@ import { withRouter } from 'next/router';
 import Link from 'next/link';
 import NoSSR from 'react-no-ssr';
 import { Button, Grid } from '@material-ui/core';
-import PlaceIcon from '@material-ui/icons/Place';
-import MailIcon from '@material-ui/icons/MailOutline';
-import PhoneIcon from '@material-ui/icons/Phone';
-import { Player, BigPlayButton } from 'video-react';
 import CWAG_Logo from '../static/png/CWAG_Logo.png';
 import HUB_Logo from '../static/jpg/hub-logo.jpg';
 import PDZ_Logo from '../static/gif/phideltatheta.gif';
 import Left_Phone from '../static/png/landing-left-mobile.png';
 import Right_Phone from '../static/png/landing-right-mobile.png';
+import PlaceIcon from '@material-ui/icons/Place';
+import MailIcon from '@material-ui/icons/MailOutline';
+import PhoneIcon from '@material-ui/icons/Phone';
 
+import { Player, BigPlayButton } from 'video-react';
 import Video from '../static/mp4/long_video.mp4';
 import './style.sass';
 import 'video-react/styles/scss/video-react.scss';
 
 import SignInModal from '../components/landing/signInModal';
 import withModal from '../services/decorators/withModal';
-import { changeQuery } from '../services/serverService';
+import {changeQuery} from "../services/serverService";
 
 @withModal(SignInModal)
 class SigInBtn extends React.Component {
@@ -36,8 +36,8 @@ class SigInBtn extends React.Component {
 
 @withRouter
 class SignUpBtn extends React.Component {
-  handleClick = () =>
-    Router.pushRoute(changeQuery(this.props.router, 'modal', 'signUp'));
+
+  handleClick = () => (Router.pushRoute(changeQuery(this.props.router, 'modal', 'signUp')));
 
   render() {
     const { open } = this.props;
@@ -140,7 +140,7 @@ export default class App extends React.Component {
           <Grid className="landing-advantage">
             <h3 className="landing-advantage-title">87%</h3>
             <p className="landing-advantage-description">
-              of engaged employees are less likely to leave their jobs
+              of engaged employees are less likely to leave their jobs
             </p>
           </Grid>
           <Grid className="landing-advantage">
@@ -251,11 +251,15 @@ export default class App extends React.Component {
 
         <Grid className="landing-footer-container">
           <Grid container>
-            <Link href={{ pathname: '/privacy-policy' }}>
-              <a className="landing-footer-link">Privacy Policy</a>
+            <Link href={{ pathname: '/privacy-policy'}}>
+              <a className="landing-footer-link">
+                Privacy Policy
+              </a>
             </Link>
-            <Link href={{ pathname: '/terms-of-use' }}>
-              <a className="landing-footer-link">Terms of use</a>
+            <Link href={{ pathname: '/terms-of-use'}}>
+              <a className="landing-footer-link">
+                Terms of use
+              </a>
             </Link>
             <p className="landing-footer-copyright">© 2018 MetKnow</p>
           </Grid>

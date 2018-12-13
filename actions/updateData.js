@@ -5,7 +5,7 @@ import {
   UPDATE_SPEC_DATA,
   ADD_ARR_ELEM,
   SPLICE_ARR_ELEM,
-  LAZY_START
+  LAZY_START,
 } from '../constants/actions';
 import dispatchSend from '../services/dispatchSend';
 
@@ -13,34 +13,34 @@ export const updateData = (data, name) => dispatch =>
   dispatch({
     type: END_LOAD,
     name: name,
-    data
+    data,
   });
 
 export const setData = (value, name) => dispatch =>
   dispatch({
     type: SET_RUNTIME_VARIABLE,
     name: name,
-    value
+    value,
   });
 
 export const resetData = name => dispatch =>
   dispatch({
     type: RESET_RUNTIME,
-    name
+    name,
   });
 
 export const updateSpecData = (name, data) => dispatch =>
   dispatch({
     type: UPDATE_SPEC_DATA,
     name,
-    data
+    data,
   });
 
 export const addSpecArr = (path, data) => dispatch =>
   dispatch({
     type: ADD_ARR_ELEM,
     path,
-    data
+    data,
   });
 
 export const spliceSpecArr = (path, searcher, index) => dispatch =>
@@ -48,7 +48,7 @@ export const spliceSpecArr = (path, searcher, index) => dispatch =>
     type: SPLICE_ARR_ELEM,
     path,
     searcher,
-    index
+    index,
   });
 
 export const replaceSpecArr = (path, searcher, newElement) => dispatch =>
@@ -56,7 +56,7 @@ export const replaceSpecArr = (path, searcher, newElement) => dispatch =>
     type: SPLICE_ARR_ELEM,
     path,
     searcher,
-    newElement
+    newElement,
   });
 
 export const reloadTableData = (name, action) =>

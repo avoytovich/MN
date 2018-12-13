@@ -13,23 +13,23 @@ import * as Yup from 'yup';
 import { connect } from 'react-redux';
 import Router from 'next/router';
 import { withRouter } from 'next/router';
-import { signUpSchema } from 'services/validateSchemas';
-import omit from 'lodash/omit';
-import { wrapField } from 'services/materialformik';
 import { changeQuery } from '../../../services/serverService';
+import { signUpSchema } from 'services/validateSchemas';
+import omit from 'lodash/omit'
+import { wrapField } from 'services/materialformik'
 
 import style from '../styles';
 
 const inputNames = [
-  { name: 'OrganizationId', label: 'OrganizationId', type: 'text' },
-  { name: 'Email', label: 'Email', type: 'email' },
-  { name: 'Password', label: 'Password', type: 'password' },
-  { name: 'ConfirmPassword', label: 'Confirm Password', type: 'password' },
-  { name: 'Title', label: 'Position', type: 'text' },
-  { name: 'Firstname', label: 'First Name', type: 'text' },
-  { name: 'LastName', label: 'Last Name', type: 'text' },
-  { name: 'Department', label: 'Department', type: 'text' }
-];
+  { name: "OrganizationId", label: "OrganizationId", type:"text" },
+  { name: "Email", label: "Email", type:"email" },
+  { name: "Password", label: "Password", type:"password" },
+  { name: "ConfirmPassword", label: "Confirm Password", type:"password" },
+  { name: "Title", label: "Position", type:"text" },
+  { name: "Firstname", label: "First Name", type:"text" },
+  { name: "LastName", label: "Last Name", type:"text" },
+  { name: "Department", label: "Department", type:"text" }
+]
 
 const styles = theme => style;
 
@@ -44,15 +44,16 @@ const styles = theme => style;
     try {
       await signUp(omit(values, ['router']));
       Router.pushRoute(changeQuery(props.router, 'modal', 'verify'));
-      /* Router.push({
+      /*Router.push({
         pathname: '/manage-groups'
-      }); */
+      });*/
     } catch (e) {
       // if(e.response)
-      const { message } = e.response.data.errors[0];
-      props.toggleSnackbar(message, 'error');
+        const  { message} = e.response.data.errors[0]
+        props.toggleSnackbar(message, 'error')
       // else
       //   props.toggleSnackbar('Server error');
+
     }
   }
 })
@@ -67,7 +68,7 @@ export default class IconModal extends Component {
         </Typography>
         <Form>
           {inputNames.map(inputInfo => {
-            const { name, label, type } = inputInfo;
+            const { name, label, type } = inputInfo
             return (
               <Field
                 className={classes.input}
@@ -81,7 +82,7 @@ export default class IconModal extends Component {
                 margin="normal"
                 key={name}
               />
-            );
+            )
           })}
           <Button type="submit" className={classes.submit}>
             Sign Up

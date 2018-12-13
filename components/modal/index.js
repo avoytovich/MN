@@ -12,7 +12,7 @@ export default class CustomModal extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      confirmation: false
+      confirmation: false,
     };
   }
 
@@ -26,13 +26,13 @@ export default class CustomModal extends Component {
 
   handleParentCancel = () => {
     this.setState({
-      confirmation: false
+      confirmation: false,
     });
   };
 
   handleParentOk = () => {
     this.setState({
-      confirmation: false
+      confirmation: false,
     });
     this.props.onClose();
   };
@@ -43,11 +43,13 @@ export default class CustomModal extends Component {
       <Modal open={this.props.open} onClose={this.close}>
         <Div100vh>
           <div className="modal-window">
-            {this.props.withClose && !this.state.confirmation && (
-              <div className="close-wrapper">
-                <Close onClick={this.close} />
-              </div>
-            )}
+            {this.props.withClose &&
+              !this.state.confirmation && (
+                <div className="close-wrapper">
+                  <Close onClick={this.close} />
+                </div>
+              )
+            }
             {children}
           </div>
         </Div100vh>

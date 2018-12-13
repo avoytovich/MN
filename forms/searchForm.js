@@ -6,7 +6,7 @@ import { withRouter } from 'next/router';
 
 import Button from '@material-ui/core/Button';
 
-import { searchGroups } from 'actions/groups';
+import { searchGroups } from 'actions/groups'
 import { setData } from '../actions/updateData';
 import SearchField from '../components/searchpanel/searchfield';
 import '../sass/common.sass';
@@ -27,21 +27,21 @@ import { resetData, updateSpecData } from 'actions/updateData';
     memberName: ''
   }),
   async handleSubmit(values, props) {
-    if (values.name.length > 0 || values.memberName.length > 0) {
+    if (values.name.length > 0 || values.memberName.length > 0){
       const { name, memberName } = values;
       // TODO: fix
       const data = await props.props.searchGroups({
         name,
         membername: memberName
       });
-    }
+    }    
   }
 })
 export default class SearchForm extends React.Component {
+
   remove = () => {
     this.props.resetData('searchGroups');
-  };
-
+  }
   render() {
     const { values } = this.props;
 
@@ -51,25 +51,23 @@ export default class SearchForm extends React.Component {
           <Field
             name="name"
             value={values.name}
-            render={props => (
-              <SearchField
+            render={
+              props => <SearchField
+                
                 label="Search in Groups"
                 onRemove={this.remove}
-                {...props}
-              />
-            )}
-          />
+                {...props} />
+            } />
           <Field
             name="memberName"
             value={values.memberName}
             label="Search by Names"
-            render={props => (
-              <SearchField
+            render={
+              props => <SearchField
                 label="Search by Names"
                 onRemove={this.remove}
-                {...props}
-              />
-            )}
+                {...props} />
+            }
           />
           <Button variant="contained" color="primary" type="submit">
             search

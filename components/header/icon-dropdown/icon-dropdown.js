@@ -6,17 +6,18 @@ import { getNewQuestions } from 'actions/questions';
 import Router from 'next/router';
 import ChangePasswordModal from 'components/landing/changePasswordModal';
 import withModal from 'services/decorators/withModal';
-import Link from 'next/link';
-import { myRoleIs } from '../../../services/accountService';
+import { myRoleIs } from "../../../services/accountService";
+
 
 // import i18n from '../../../services/decorators/i18n';
 
 import { menuProps } from '../../../constants/texts';
-/* const options = [
+import Link from 'next/link';
+/*const options = [
   'Profile',
   'Edit',
   'Sign Up'
-]; */
+];*/
 
 const ITEM_HEIGHT = 48;
 
@@ -26,22 +27,22 @@ class LongMenu extends React.Component {
   state = {
     anchorEl: null,
     newQuestions: 0,
-    isAdmin: false
+    isAdmin: false,
   };
 
   componentDidMount() {
     this.setState({
-      isAdmin: myRoleIs()
-    });
+      isAdmin: myRoleIs(),
+    })
   }
 
   handleClick = async event => {
     try {
       this.setState({ anchorEl: event.currentTarget });
-      const newQuestions = await getNewQuestions();
+      const newQuestions = await getNewQuestions()
       this.setState({ newQuestions });
-    } catch (e) {
-      console.log(e);
+    } catch(e){
+      console.log(e)
     }
   };
 
@@ -50,16 +51,16 @@ class LongMenu extends React.Component {
   };
 
   handleChangePassword = () => {
-    const { open } = this.props;
-    open(true);
-    this.handleClose();
+    const { open } = this.props
+    open(true)
+    this.handleClose()
   };
 
   handleLogout = async () => {
-    this.handleClose();
-    await signOut();
-    Router.push({ pathname: '/' });
-  };
+    this.handleClose()
+    await signOut()
+    Router.push({ pathname: '/' })
+  }
 
   render() {
     const { anchorEl, newQuestions, isAdmin } = this.state;
@@ -81,31 +82,43 @@ class LongMenu extends React.Component {
           PaperProps={{
             style: {
               maxHeight: ITEM_HEIGHT * 6.5,
-              width: 200
-            }
-          }}>
+              width: 200,
+            },
+          }}
+        >
           {!isAdmin && (
             <>
-              <Link href={{ pathname: '/edit-profile' }}>
-                <MenuItem onClick={this.handleClose}>Edit Profile</MenuItem>
-              </Link>
-              <Link href={{ pathname: '/questions' }}>
-                <MenuItem onClick={this.handleClose}>
-                  {newQuestions ? (
-                    <Badge badgeContent={newQuestions} color="error" invisible>
-                      Questions
-                    </Badge>
-                  ) : (
-                    'Questions'
-                  )}
+              <Link href={{ pathname: '/edit-profile'}}>
+                <MenuItem
+                  onClick={this.handleClose}
+                >
+                  Edit Profile
                 </MenuItem>
               </Link>
+          <Link href={{ pathname: '/questions'}}>
+              <MenuItem onClick={this.handleClose}>
+                {newQuestions
+                  ? (
+                    <Badge
+                      badgeContent={newQuestions}
+                      color="error"
+                      invisible={true}
+                    >
+                      Questions
+                    </Badge>
+                  )
+                  : ('Questions')
+                }
+              </MenuItem>
+          </Link>
               <MenuItem onClick={this.handleChangePassword}>
                 Change password
               </MenuItem>
             </>
           )}
-          <MenuItem onClick={this.handleLogout}>Log out</MenuItem>
+          <MenuItem onClick={this.handleLogout}>
+            Log out
+          </MenuItem>
         </Menu>
       </>
     );

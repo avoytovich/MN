@@ -11,7 +11,7 @@ export default function loading(runtimeNames = []) {
   return function(Child) {
     const mapStateToProps = ({ runtime }, props) => {
       const returnObj = {
-        loading: runtime.loading || false
+        loading: runtime.loading || false,
       };
       if (props.runtimeName) {
         returnObj[name] = runtime[`${name}Data`];
@@ -25,7 +25,7 @@ export default function loading(runtimeNames = []) {
 
     @connect(
       mapStateToProps,
-      mapDispatchToProps
+      mapDispatchToProps,
     )
     class Loading extends Component {
       defOptions = {
@@ -35,7 +35,7 @@ export default function loading(runtimeNames = []) {
         withBeTranslate: false,
         unsetLoading: true,
         setData: false,
-        mapper: data => data
+        mapper: data => data,
       };
 
       translatedBeErrors = [
@@ -43,7 +43,7 @@ export default function loading(runtimeNames = []) {
         'postal_code_invalid',
         'SAME_PASSWORD_ERROR',
         'INVALID_PASSWORD_TYPE',
-        'SELECTED_TIMESLOT_NOT_AVAILABLE'
+        'SELECTED_TIMESLOT_NOT_AVAILABLE',
       ];
 
       loadData = async (promise, opts = {}) => {
@@ -56,12 +56,12 @@ export default function loading(runtimeNames = []) {
             if (options.setData) {
               this.props.setData(
                 options.mapper(data.data),
-                `${options.saveTo}Data`
+                `${options.saveTo}Data`,
               );
             } else {
               this.props.updateSpecData(
                 options.mapper(data.data),
-                options.saveTo
+                options.saveTo,
               );
             }
           }
@@ -69,7 +69,7 @@ export default function loading(runtimeNames = []) {
             createNotification({
               type: 'success',
               title: options.showSuccess,
-              message: ''
+              message: '',
             });
           }
         } catch (error) {
@@ -87,7 +87,7 @@ export default function loading(runtimeNames = []) {
             createNotification({
               type: 'error',
               title: this.props.translate(beErrorCode, 'beErrors'),
-              message: ' '
+              message: ' ',
             });
             this.setLoader(false);
             return Promise.reject(error);
@@ -96,7 +96,7 @@ export default function loading(runtimeNames = []) {
             createNotification({
               type: 'error',
               title: options.showError,
-              message: ' '
+              message: ' ',
             });
           }
           if (options.parseError) {
@@ -115,7 +115,7 @@ export default function loading(runtimeNames = []) {
         createNotification({
           type: type,
           title: title,
-          message: ' '
+          message: ' ',
         });
       };
 

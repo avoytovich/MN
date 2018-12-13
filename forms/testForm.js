@@ -15,16 +15,16 @@ const mapDispatchToProps = dispatch =>
 @withRouter
 @connect(
   null,
-  mapDispatchToProps
+  mapDispatchToProps,
 )
 @withFormik({
   handleSubmit(values, { setErrors, props }) {
     props.setData(values, 'testExample');
     setErrors({
-      first: 'Тест'
+      first: 'Тест',
     });
     props.router.push('/');
-  }
+  },
 })
 export default class TestForm extends React.Component {
   handleClick = () => {

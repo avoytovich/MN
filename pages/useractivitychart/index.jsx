@@ -18,7 +18,7 @@ export default class UserActivityChart extends Component {
             <SecondPanel
               title="User activity chart"
               breadCrumb="Home / User activity chart"
-              actionButtons={[<BackToGroupBtn label="Back" key="one" />]}
+              actionButtons={[<BackToGroupBtn label="Back" key={'one'} />]}
             />
             <SearchPanel />
             <ActivityChart />

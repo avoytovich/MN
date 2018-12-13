@@ -34,8 +34,8 @@ const styles = () =>
       backgroundColor: '#fff'
     },
     buttons: {
-      maxWidth: 700,
-      width: '100%'
+        maxWidth: 700,
+        width: '100%'
     }
   });
 

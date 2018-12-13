@@ -22,34 +22,29 @@ export default class Subgroups extends Component {
     this.state = {
       subgroups: [],
       val: ''
-    };
+    };  
   }
+  
 
   addSubgroup = () => {
     if (!this.state.val.length) return;
     // TODO: solve empty description
-    const newGroups = [
-      ...this.state.subgroups,
-      { name: this.state.val, description: '' }
-    ];
+    const newGroups = [...this.state.subgroups, {name: this.state.val, description: ''}];
     this.props.setFieldValue('subgroups', newGroups);
     this.setState({
       subgroups: newGroups,
       val: ''
     });
   };
-
   handleChange = e => {
     this.setState({ val: e.target.value });
   };
-
   editGroup = k => e => {
     this.setState({
       val: this.state.subgroups[k].name,
       subgroups: _.filter(this.state.subgroups, (sg, key) => key !== k)
     });
   };
-
   deleteGroup = k => e => {
     const newGroups = _.filter(this.state.subgroups, (sg, key) => key !== k);
     this.props.setFieldValue('subgroups', newGroups);
@@ -57,7 +52,6 @@ export default class Subgroups extends Component {
       subgroups: newGroups
     });
   };
-
   render() {
     const { classes } = this.props;
     const { subgroups } = this.state;

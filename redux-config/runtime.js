@@ -15,7 +15,7 @@ import {
   ADD_ARR_ELEM,
   SPLICE_ARR_ELEM,
   MERGE_RUNTIME,
-  LAZY_START
+  LAZY_START,
 } from '../constants/actions';
 
 export default function runtime(state = {}, action) {
@@ -33,7 +33,7 @@ export default function runtime(state = {}, action) {
     case SET_RUNTIME_VARIABLE:
       return {
         ...state,
-        [action.name]: action.value
+        [action.name]: action.value,
       };
     case START_LOAD:
       return {
@@ -41,7 +41,7 @@ export default function runtime(state = {}, action) {
         [`${name}Loading`]: true,
         [`${name}Loaded`]: false,
         [`${name}Data`]: null,
-        [`${name}Error`]: null
+        [`${name}Error`]: null,
       };
     case END_LOAD:
       return {
@@ -49,7 +49,7 @@ export default function runtime(state = {}, action) {
         [`${name}Loading`]: false,
         [`${name}Loaded`]: true,
         [`${name}Data`]: data,
-        [`${name}Error`]: null
+        [`${name}Error`]: null,
       };
     case ERROR_LOAD:
       return {
@@ -57,7 +57,7 @@ export default function runtime(state = {}, action) {
         [`${name}Loading`]: false,
         [`${name}Loaded`]: true,
         [`${name}Data`]: null,
-        [`${name}Error`]: action.error
+        [`${name}Error`]: action.error,
       };
     case CUSTOM_ERROR_LOAD:
       return {
@@ -65,7 +65,7 @@ export default function runtime(state = {}, action) {
         [`${name}Loading`]: false,
         [`${name}Loaded`]: true,
         [`${name}Error`]: action.error,
-        ...action.payload
+        ...action.payload,
       };
     case ADD_PAGE_LOAD:
       return {
@@ -74,7 +74,7 @@ export default function runtime(state = {}, action) {
         [`${name}Loaded`]: true,
         [`${name}Data`]: data,
         [`${name}Array`]: oldArray.concat(newArray),
-        [`${name}Error`]: null
+        [`${name}Error`]: null,
       };
     case END_LOAD_REMOVE: //eslint-disable-line
       index = findIndex(oldArray, data);
@@ -88,7 +88,7 @@ export default function runtime(state = {}, action) {
         [`${name}Loading`]: false,
         [`${name}Loaded`]: true,
         [`${name}Array`]: oldArray.slice(),
-        [`${name}Error`]: null
+        [`${name}Error`]: null,
       };
     case END_LOAD_FIRST:
       diff = differenceWith(newArray, oldArray, isEqual);
@@ -98,7 +98,7 @@ export default function runtime(state = {}, action) {
         [`${name}Loaded`]: true,
         [`${name}Array`]: diff.concat(oldArray),
         [`${name}Data`]: data,
-        [`${name}Error`]: null
+        [`${name}Error`]: null,
       };
     case END_LOAD_LAST:
       diff = differenceWith(newArray, oldArray, isEqual);
@@ -108,7 +108,7 @@ export default function runtime(state = {}, action) {
         [`${name}Loaded`]: true,
         [`${name}Array`]: oldArray.concat(diff),
         [`${name}Data`]: data,
-        [`${name}Error`]: null
+        [`${name}Error`]: null,
       };
     case END_LOAD_FIRST_EMPTY:
       return {
@@ -117,7 +117,7 @@ export default function runtime(state = {}, action) {
         [`${name}Loaded`]: true,
         [`${name}Array`]: newArray,
         [`${name}Data`]: data,
-        [`${name}Error`]: null
+        [`${name}Error`]: null,
       };
     case RESET_RUNTIME:
       if (names) {
@@ -134,7 +134,7 @@ export default function runtime(state = {}, action) {
     case UPDATE_SPEC_DATA:
       return {
         ...state,
-        [`${name}Data`]: merge(state[`${name}Data`], data)
+        [`${name}Data`]: merge(state[`${name}Data`], data),
       };
     case ADD_ARR_ELEM:
       if (Array.isArray(el)) {
@@ -171,7 +171,7 @@ export default function runtime(state = {}, action) {
       return {
         ...state,
         [`${name}Loading`]: true,
-        [`${name}Loaded`]: false
+        [`${name}Loaded`]: false,
       };
     default:
       return state;

@@ -6,7 +6,7 @@ import CircularProgress from '@material-ui/core/CircularProgress';
 import './main.sass';
 
 const mapStateToProps = ({ runtime }, props) => ({
-  loading: get(runtime, 'loading')
+  loading: get(runtime, 'loading'),
 });
 
 @connect(mapStateToProps)

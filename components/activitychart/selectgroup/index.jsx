@@ -19,14 +19,14 @@ const styles = theme => ({
       color: '#5f6368',
       '&:hover': {
         border: 'none'
-      }
+      },
     },
     '&:after': {
       content: 'none',
       border: 'none',
       position: 'relative'
     },
-
+    
     '&:focus': {
       background: 'transparent',
       color: 'initial',

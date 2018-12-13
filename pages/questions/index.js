@@ -2,12 +2,12 @@ import React, { Component } from 'react';
 import { Grid } from '@material-ui/core';
 import Layout from 'components/MyLayout.js';
 import SecondPanel from 'components/secondpanel';
-import { getAllQuestions } from 'actions/questions';
-import Questions from 'components/questions';
+import { getAllQuestions } from 'actions/questions'
+import Questions from 'components/questions'
 import { toggleSnackbar } from 'actions/snackbar';
 import { connect } from 'react-redux';
 
-import 'components/profile/style.sass';
+import 'components/profile/style.sass'
 
 @connect(
   null,
@@ -18,16 +18,16 @@ export default class Profile extends Component {
     super(props);
     this.state = {
       data: []
-    };
+    }
   }
 
-  async componentDidMount() {
+  async componentDidMount(){
     try {
-      const data = await getAllQuestions();
-      this.setState({ data });
+      const data = await getAllQuestions()
+      this.setState({data})
     } catch (e) {
-      const { message } = e.response.data.errors[0];
-      this.props.toggleSnackbar(message, 'error');
+      const  { message } = e.response.data.errors[0]
+      this.props.toggleSnackbar(message, 'error')
     }
   }
 
@@ -38,7 +38,7 @@ export default class Profile extends Component {
           <Layout>
             <SecondPanel
               title="Questions"
-              breadCrumb="Manage Groups / Questions"
+              breadCrumb={`Manage Groups / Questions`}
             />
             <Questions groups={this.state.data} />
           </Layout>

@@ -13,19 +13,19 @@ export default class OurButton extends React.Component {
     variant: PropTypes.string,
     className: PropTypes.string,
     buttonFontSize: PropTypes.string,
-    onClick: PropTypes.func
+    onClick: PropTypes.func,
   };
 
   static defaultProps = {
     variant: 'outlined',
-    className: ''
+    className: '',
   };
 
   render() {
     return (
       <Button
         {...omit(this.props, 'className')}
-        className={`def-mp-button ${this.props.className}`}>
+        className={'def-mp-button ' + this.props.className}>
         <Typography variant="button">{this.props.children}</Typography>
       </Button>
     );

@@ -10,13 +10,13 @@ export default class CustomTypography extends React.Component {
     fontSize: PropTypes.string,
     variant: PropTypes.string,
     className: PropTypes.string,
-    onClick: PropTypes.func
+    onClick: PropTypes.func,
   };
 
   static defaultProps = {
     fontSize: '16px',
     variant: 'button',
-    className: ''
+    className: '',
   };
 
   get style() {

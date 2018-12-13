@@ -1,19 +1,16 @@
-import React, { Component } from 'react';
-import { connect } from 'react-redux';
-import { Snackbar, SnackbarContent } from '@material-ui/core';
+import React, { Component } from 'react'
+import { connect } from 'react-redux'
+import { Snackbar, SnackbarContent } from '@material-ui/core'
 
-import { toggleSnackbar } from '../../actions/snackbar';
+import { toggleSnackbar } from '../../actions/snackbar'
 
-function mapStateToProps(state) {
+function mapStateToProps (state) {
   return {
     snackbar: state.snackbar.snackbar
-  };
+  }
 }
 
-@connect(
-  mapStateToProps,
-  { toggleSnackbar }
-)
+@connect(mapStateToProps, { toggleSnackbar })
 export default class GlobalSnackbar extends Component {
   render() {
     const { snackbar } = this.props;
@@ -28,6 +25,7 @@ export default class GlobalSnackbar extends Component {
           style={{ justifyContent: 'center', backgroundColor: snackbar.color }}
         />
       </Snackbar>
-    );
+    )
   }
 }
+

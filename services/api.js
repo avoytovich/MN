@@ -1,46 +1,46 @@
 import axios from 'axios';
 import qs from 'qs';
 
-import { getLocale, isProduction } from './serverService';
+import { getLocale, isProduction } from '../services/serverService';
 
 import { SERVER_URL, PROD_SERVER_URL, FRONT_PROD } from '../constants/global';
 
 export const getAuthHeaders = () => ({
   Authorization: `Bearer ${getLocale('accessToken')}`,
   Organization: getLocale('organizationId'),
-  'Access-Control-Allow-Origin': '*' // temp
+  'Access-Control-Allow-Origin': '*', // temp
 });
 
 const getDefHeaders = () => ({
   'Content-Type': 'application/json',
-  ...getAuthHeaders()
+  ...getAuthHeaders(),
 });
 
 const buildUrl = url => {
   if (isProduction()) {
     return PROD_SERVER_URL + url;
   }
-  // return SERVER_URL + url;
+  //return SERVER_URL + url;
   return url;
 };
 
 export const getFormData = () => ({
   'Content-Type': 'multipart/form-data',
-  ...getAuthHeaders()
+  ...getAuthHeaders(),
 });
 
 export const formData = options =>
   axios({
     headers: getFormData(),
     ...options,
-    url: buildUrl(options.url || options)
+    url: buildUrl(options.url || options),
   });
 
 export const wrapRequest = options =>
   axios({
     headers: getDefHeaders(),
     ...options,
-    url: buildUrl(options.url || options)
+    url: buildUrl(options.url || options),
   });
 
 export const buildCRUD = url => {
@@ -54,18 +54,22 @@ export const buildCRUD = url => {
       if (!data || !id) return Promise.reject('Need Data or id');
       return wrapRequest({ method: 'PUT', url: `${url}/${id}`, data });
     },
-    putWithoutId: (data, plusUrl = '') =>
-      wrapRequest({ method: 'PUT', url: `${url}${plusUrl}`, data }),
+    putWithoutId: (data, plusUrl = '') => {
+      return wrapRequest({ method: 'PUT', url: `${url}${plusUrl}`, data });
+    },
     patch: (id, data) => {
       if (!data || !id) return Promise.reject('Need Data or id');
       return wrapRequest({ method: 'PATCH', url: `${url}/${id}`, data });
     },
-    patchPlus: (data = {}, plusUrl = '') =>
-      wrapRequest({ method: 'PATCH', url: `${url}${plusUrl}`, data }),
-    deleteRequest: (plusUrl = '') =>
-      wrapRequest({ method: 'POST', url: `${url}/delete${plusUrl}` }),
-    sendDelete: (data, plusUrl = '') =>
-      wrapRequest({ method: 'DELETE', url: `${url}${plusUrl}`, data }),
+    patchPlus: (data = {}, plusUrl = '') => {
+      return wrapRequest({ method: 'PATCH', url: `${url}${plusUrl}`, data });
+    },
+    deleteRequest: (plusUrl = '') => {
+      return wrapRequest({ method: 'POST', url: `${url}/delete${plusUrl}` });
+    },
+    sendDelete: (data, plusUrl = '') => {
+      return wrapRequest({ method: 'DELETE', url: `${url}${plusUrl}`, data });
+    },
     get: (params = {}, plusUrl = '', needParamsSerializer, customSerializer) =>
       wrapRequest({
         method: 'GET',
@@ -73,24 +77,24 @@ export const buildCRUD = url => {
         params,
         paramsSerializer: needParamsSerializer
           ? par =>
-              qs.stringify(par, { arrayFormat: 'indices', allowDots: true })
-          : customSerializer
+            qs.stringify(par, { arrayFormat: 'indices', allowDots: true })
+          : customSerializer,
       }),
     getWithId: (id, plusUrl = '') => {
       if (!id) return Promise.reject('Need id');
       return wrapRequest({ method: 'GET', url: `${url}/${id}${plusUrl}` });
     },
     // bookings?profashionalId=5&state=active
-    /* getListWithIdStatus: (id, state, plusUrl = '') => {
+    /*getListWithIdStatus: (id, state, plusUrl = '') => {
       if (!id) return Promise.reject('Need id');
       return wrapRequest({ method: 'GET', url: `${url}?profashionalId=${id}&state=${state}${plusUrl}` });
-    }, */
+    },*/
     getList: (opt = {}, data) => {
       const {
         params: notSpredParams = {},
         additionalUrl,
         method = 'GET',
-        paramsSerializer
+        paramsSerializer,
       } = opt;
       const params = { ...notSpredParams };
       if (params.page === undefined) {
@@ -108,8 +112,8 @@ export const buildCRUD = url => {
         url: sendUrl,
         params,
         paramsSerializer,
-        data
+        data,
       });
-    }
+    },
   };
 };

@@ -3,9 +3,9 @@ import App, { Container } from 'next/app';
 import { Provider } from 'react-redux';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import { MuiThemeProvider } from '@material-ui/core/styles';
-import { NoSsr } from '@material-ui/core';
+import { NoSsr } from '@material-ui/core'
 import JssProvider from 'react-jss/lib/JssProvider';
-import GlobalSnackbar from '../components/GlobalSnackbar';
+import GlobalSnackbar from '../components/GlobalSnackbar'
 import getPageContext from '../page-context';
 import withReduxStore from '../redux-config/with-redux-store';
 import Loader from './_loader';
@@ -18,7 +18,7 @@ export default class MyApp extends App {
     super(props);
     this.pageContext = getPageContext();
   }
-
+  
   pageContext = null;
 
   componentDidMount() {
@@ -47,13 +47,13 @@ export default class MyApp extends App {
             {/* Pass pageContext to the _document though the renderPage enhancer
                 to render collected styles on server side. */}
             <Provider store={reduxStore}>
-              <Fragment>
-                <ModalContainer>
-                  <Component pageContext={this.pageContext} {...pageProps} />
-                </ModalContainer>
-                <GlobalSnackbar />
-                <Loader />
-              </Fragment>
+                <Fragment>
+                  <ModalContainer>
+                    <Component pageContext={this.pageContext} {...pageProps} />
+                  </ModalContainer>
+                  <GlobalSnackbar />
+                  <Loader />
+                </Fragment>
             </Provider>
           </MuiThemeProvider>
         </JssProvider>

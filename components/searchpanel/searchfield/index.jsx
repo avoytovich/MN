@@ -15,7 +15,7 @@ const styles = theme => ({
     backgroundColor: '#f3f5f7',
     '&:before': {
       border: 'none',
-      content: 'none'
+      content: 'none',
     },
     '&:after': {
       content: 'none',
@@ -23,23 +23,24 @@ const styles = theme => ({
       position: 'relative'
     }
   }
-});
+})
+
 
 @withStyles(styles)
 export default class SearchField extends PureComponent {
-  change = e => {
-    if (e.target.value.length === 0) {
-      this.props.onRemove ? this.props.onRemove() : 1;
+  change = (e) => {
+    if(e.target.value.length === 0)
+    {
+      this.props.onRemove?this.props.onRemove(): 1;
     }
     this.props.form.handleChange(e);
-  };
-
+  }
   render() {
     const { name, label, error, field, form, classes, className } = this.props;
     return (
       <Input
         className={classNames(classes.input, className)}
-        name="adwdwad"
+        name={'adwdwad'}
         fullWidth
         label={label}
         onChange={this.change}

@@ -1,24 +1,18 @@
-import React, { Component } from 'react';
-import {
-  withStyles,
-  Avatar,
-  Typography,
-  Button,
-  TextField
-} from '@material-ui/core';
+import React, { Component } from 'react'
+import { withStyles, Avatar, Typography, Button, TextField } from '@material-ui/core';
 import { Formik, Form, Field, withFormik } from 'formik';
-import { signIn } from 'actions/account';
-import { getProfile } from 'actions/profile';
-import { toggleSnackbar } from 'actions/snackbar';
+import { signIn } from 'actions/account'
+import { getProfile } from 'actions/profile'
+import { toggleSnackbar } from 'actions/snackbar'
 import CloseIcon from '@material-ui/icons/Close';
 import * as Yup from 'yup';
 import { connect } from 'react-redux';
-import Router from 'next/router';
-import { wrapField } from 'services/materialformik';
 import { createGroup } from '../../../actions/groups';
-import style from '../styles';
+import Router from 'next/router'
+import { wrapField } from 'services/materialformik';
+import style from '../styles'
 
-const styles = theme => style;
+const styles = theme => (style);
 
 @connect(
   null,
@@ -28,46 +22,44 @@ const styles = theme => style;
   validationSchema: Yup.object().shape({
     Email: Yup.string()
       .email('Invalid email')
-      .required('Required field'),
-    Password: Yup.string().required('Required')
+      .required('Required field')
+      ,
+    Password: Yup.string()
+      .required('Required')
   }),
 
   handleSubmit: async (values, { props }) => {
     try {
-      await signIn(values);
-      await getProfile();
+      await signIn(values)
+      await getProfile()
       Router.push({
         pathname: '/manage-groups'
-      });
+      })
     } catch (e) {
-      const message = 'Error';
-      if (e.response)
+      let message = 'Error';
+      if(e.response)
         props.toggleSnackbar(e.response.data.errors[0].message, 'error');
-      else console.log(e);
+      else
+      console.log(e);
+      
     }
   },
-  mapPropsToValues: () => ({
-    Email: '',
-    Password: ''
-  })
+  mapPropsToValues: () => {
+    return {
+      Email: '',
+      Password: ''
+    }
+  },
+
 })
 @withStyles(styles)
 export default class IconModal extends Component {
   render() {
-    const {
-      classes,
-      handleBlur,
-      handleChange,
-      close,
-      errors,
-      values
-    } = this.props;
+    const { classes, handleBlur, handleChange, close, errors, values } = this.props;
     return (
       <div className={classes.wrap}>
         <CloseIcon onClick={() => close()} />
-        <Typography align="center" className={classes.title}>
-          Sign In
-        </Typography>
+        <Typography align="center" className={classes.title}>Sign In</Typography>
         <Form>
           <Field
             name="Email"
@@ -77,7 +69,7 @@ export default class IconModal extends Component {
             component={wrapField}
             className={classes.input}
           />
-          <Field
+          <Field 
             fullWidth
             className={classes.input}
             name="Password"
@@ -86,20 +78,13 @@ export default class IconModal extends Component {
             value={values.Password}
             component={wrapField}
           />
-          <Typography align="right" className={classes.forgorPassword}>
-            Forgot password?
-          </Typography>
-          <Button type="submit" className={classes.submit}>
-            Sign in
-          </Button>
-          <Typography align="center" className={classes.haveNotAccount}>
-            Don`t have an account ?
-            <Typography component="a" className={classes.signUp}>
-              Sign up
-            </Typography>
+          <Typography align="right" className={classes.forgorPassword}>Forgot password?</Typography>
+          <Button type="submit" className={classes.submit}>Sign in</Button>
+          <Typography align="center" className={classes.haveNotAccount}>Don`t have an account ?
+            <Typography component="a" className={classes.signUp}>Sign up</Typography>
           </Typography>
         </Form>
       </div>
-    );
+    )
   }
 }
