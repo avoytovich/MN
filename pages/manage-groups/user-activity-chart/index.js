@@ -4,6 +4,7 @@ import ArrowBack from "@material-ui/icons/ArrowBack";
 import Router from 'next/router';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
+import qs from "qs";
 
 import Layout from '../../../components/MyLayout';
 import SecondPanel from '../../../components/secondpanel';
@@ -11,9 +12,9 @@ import ClassesNesting from '../../../components/features/withClassesNesting';
 import loading from '../../../services/decorators/loading';
 import {organization} from '../../../services/cruds';
 import { setData } from '../../../actions/updateData';
+import Table from '../../../components/customTable';
 
 import './user-activity-chart.sass';
-import qs from "qs";
 /*import { withRouter } from 'next/router';
 import { Link } from '../../../routes';
 import { connect } from 'react-redux';
@@ -58,10 +59,13 @@ export class UserActivityChart extends Component {
   state = {
     category: 'ALL',
     query: null,
+    choosenGroup: '...',
     //isAdmin: false,
   }
 
   handleCategory = (category) => (this.setState({category}));
+
+  handleChoosenGroup = (choosenGroup) => (this.setState({choosenGroup}))
 
   handleChange = name => event => {
     this.setState({
@@ -73,6 +77,7 @@ export class UserActivityChart extends Component {
     if(e.charCode === 13) {
       this.setState({
         query: e.target.value,
+        choosenGroup: '...'
       });
       //const condition = e.target.value;
       //console.log('condition', condition);
@@ -92,16 +97,16 @@ export class UserActivityChart extends Component {
 
   GetUserActivityChart_loadAndSaveToProps = async () => {
     const { category, query } = this.state;
-    const setQuery = ['ALL', 'GROUP'].some(item => (item == category));
+    //const setQuery = ['ALL', 'GROUP'].some(item => (item == category));
     let params = {};
     query ? params = {
-      searchInGroups: setQuery ? 1 : 0,
+      searchIn: category.toLowerCase(),//setQuery ? 1 : 0,
       query: query,
-      limit: 6,
+      limit: 99,
       offset: 0,
     } : params = {
-      searchInGroups: setQuery ? 1 : 0,
-      limit: 6,
+      searchIn: category.toLowerCase(),//setQuery ? 1 : 0,
+      limit: 99,
       offset: 0,
     };
     const resp = await this.props.loadData(
@@ -118,6 +123,17 @@ export class UserActivityChart extends Component {
     this.props.setData(resp.data, 'userActivityChart');
   };
 
+  handleGetGroup = () => {
+    const { data } = this.props.userActivityChart;
+    let array =[];
+    data.forEach((data, id) => {
+      if (!array.some(item => (item == data.group))) {
+        return array.push(data.group);
+      }
+    });
+    return array;
+  }
+
   componentDidUpdate(prevProps, prevState) {
     const { category, query } = this.state;
     if (prevState.category != category ||
@@ -131,8 +147,10 @@ export class UserActivityChart extends Component {
   }
 
   render() {
-    console.log('this.props', this.props);
+    //console.log('this.props', this.props);
+    //console.log('this.state', this.state);
     const { userActivityChart } = this.props;
+    const { category, choosenGroup } = this.state;
     /*const { pathname } = this.props.router;
     const { groupDetails } = this.props;
     const { isAdmin } = this.state;
@@ -161,7 +179,7 @@ export class UserActivityChart extends Component {
             <Grid container spacing={0} justify="center">
               <Grid item xs={10} sm={10}>
                 <Grid container spacing={0} justify="space-between" className='container'>
-                  <Grid item xs={4} sm={4}>
+                  <Grid item xs={3} sm={3} className='container-grid'>
                     <TextField
                       label="Choose View"
                       id="outlined-select"
@@ -176,14 +194,14 @@ export class UserActivityChart extends Component {
                       margin="normal"
                       variant="outlined"
                     >
-                      {['ALL', 'GROUP', 'SUB'].map((item, id) => (
+                      {['ALL', 'GROUPS', 'SUBGROUPS'].map((item, id) => (
                         <ClassesNesting key={id} value={item}>
                           {item}
                         </ClassesNesting>
                       ))}
                     </TextField>
                   </Grid>
-                  <Grid item xs={4} sm={4}>
+                  <Grid item xs={3} sm={3} className='container-grid'>
                     <TextField
                       InputProps={{
                         className: "field-search-input",
@@ -198,6 +216,39 @@ export class UserActivityChart extends Component {
                       margin="normal"
                       variant="filled"
                     />
+                  </Grid>
+                  {category == 'GROUPS' && (
+                    <Grid item xs={3} sm={3} className='container-grid'>
+                      <TextField
+                        label="Choose Group"
+                        id="outlined-select"
+                        InputProps={{
+                          className: "field-search-input",
+                          onChange: (e) => this.handleChoosenGroup(e.target.value),
+                        }}
+                        select
+                        className='field-select'
+                        value={this.state.choosenGroup}
+                        onChange={this.handleChange('choosenGroup')}
+                        margin="normal"
+                        variant="outlined"
+                      >
+                        {this.handleGetGroup().map((item, id) => (
+                          <ClassesNesting key={id} value={item}>
+                            {item}
+                          </ClassesNesting>
+                        ))}
+                      </TextField>
+                    </Grid>
+                  )}
+                  <Grid item xs={12} sm={12}>
+                    {userActivityChart &&
+                      <Table
+                        {...userActivityChart}
+                        choosenGroup={choosenGroup}
+                        category={category}
+                      />
+                    }
                   </Grid>
                 </Grid>
               </Grid>

@@ -10,10 +10,13 @@ import { bindActionCreators } from 'redux';
 import { get as _get } from 'lodash';
 import { Router } from '../../routes';
 import { setData } from '../../actions/updateData';
+import { getMember } from '../../actions/members';
 import { members } from '../../services/cruds';
 import { myRoleIs } from '../../services/accountService';
+import withModal from '../../services/decorators/withModal';
 import loading from '../../services/decorators/loading';
 import ClassesNesting from './withClassesNesting';
+import MemberModal from "../groups/gallery/memberModal";
 
 import "./features.sass";
 
@@ -41,6 +44,7 @@ const mapStateToProps = ({ runtime }) => ({
 )
 @withRouter
 @loading()
+@withModal(MemberModal, {disableStyles: true, withCloseOutside: true})
 export class Features extends Component {
   constructor(props) {
     super(props);
@@ -179,6 +183,11 @@ export class Features extends Component {
     // } else
     //   return groupDetails.id;
   };
+
+  handleClick = id => async() => {
+    const member = await getMember(id);
+    this.props.open(member);
+  }
 
   render() {
     const { groupDetails, groupMembers, subgroups } = this.props;
@@ -339,7 +348,7 @@ export class Features extends Component {
                     return (
                       <Grid key={index} item xs={6} sm={3}>
                         <div className="grid-info">
-                          <Link route="edit-member" params={{  memberId: id }} >
+                          {isAdmin && (<Link route="edit-member" params={{  memberId: id }} >
                             <div
                               style={{
                                 backgroundImage: `url(${_get(imageContent, 'mediumImage') ||
@@ -352,7 +361,20 @@ export class Features extends Component {
                                 <p className="info-member-title">{title}</p>
                               </div>
                             </div>
-                          </Link>
+                          </Link>) || (<div
+                              style={{
+                                backgroundImage: `url(${_get(imageContent, 'mediumImage') ||
+                                '/static/svg/placeholder.svg'})`,
+                              }}
+                              className="grid-info-list"
+                              onClick={this.handleClick(id)}
+                            >
+                              <div className="grid-info-list-info">
+                                <p className="info-member-name">{`${firstName} ${lastName}`}</p>
+                                <p className="info-member-title">{title}</p>
+                              </div>
+                            </div>
+                          )}
                         </div>
                       </Grid>
                     );
