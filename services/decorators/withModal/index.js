@@ -21,7 +21,7 @@ export default function withModal(ComponentModal, options = {}) {
       render() {
         return (
           <Fragment>
-            <Modal open={this.state.open} onClose={options.withCloseOutside?this.handleClose: null}>
+            <Modal style={{zIndex: 13000}} open={this.state.open} onClose={options.withCloseOutside?this.handleClose: null}>
               {
                 options.disableStyles ?
                   <>
