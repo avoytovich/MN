@@ -7,12 +7,13 @@
     "dev": "node server.js",
     "build": "next build",
     "start": "NODE_ENV=production node server.js",
-    "prod": "NODE_ENV=production pm2 start server.js"
+    "prod": "NODE_ENV=production pm2 start server.js",
+    "lint": "eslint '*/**' --fix"
   },
   "author": "Mykola",
   "license": "ISC",
   "dependencies": {
-    "@babel/runtime": "^7.1.5",
+    "@babel/runtime": "^7.2.0",
     "@material-ui/core": "^1.3.1",
     "@material-ui/icons": "^1.1.0",
     "@types/next": "^7.0.5",
@@ -23,30 +24,30 @@
     "classnames": "^2.2.6",
     "cookie-parser": "^1.4.3",
     "css-loader": "^1.0.1",
-    "dotenv": "^6.1.0",
+    "dotenv": "^6.2.0",
     "express": "^4.16.3",
     "express-http-proxy": "^1.5.0",
     "extract-text-webpack-plugin": "^3.0.2",
     "formik": "^0.11.11",
-    "http-proxy-middleware": "^0.19.0",
+    "http-proxy-middleware": "^0.19.1",
     "js-cookie": "^2.2.0",
     "lodash": "^4.17.10",
     "moment": "^2.22.2",
     "next": "^7.0.2",
     "next-assets-import": "0.0.2",
     "next-compose-plugins": "^2.1.1",
-    "next-images": "^1.0.1",
+    "next-images": "^1.0.3",
     "next-routes": "^1.4.2",
-    "node-sass": "^4.10.0",
+    "node-sass": "^4.11.0",
     "owl.carousel": "^2.3.4",
     "prop-types": "^15.6.2",
-    "qs": "^6.5.2",
+    "qs": "^6.6.0",
     "react": "^16.6.3",
     "react-circular-progressbar": "^1.0.0",
     "react-div-100vh": "^0.3.2",
     "react-dom": "^16.6.3",
     "react-dropzone": "^7.0.1",
-    "react-image-crop": "^6.0.4",
+    "react-image-crop": "^6.0.9",
     "react-infinite-scroll-component": "^4.2.0",
     "react-infinite-scroller": "^1.2.2",
     "react-intl": "^2.7.2",
@@ -55,9 +56,9 @@
     "react-notifications": "^1.4.3",
     "react-redux": "^5.1.1",
     "react-slick": "^0.23.2",
-    "react-svg": "^7.1.0",
+    "react-svg": "^7.2.2",
     "redux": "^4.0.1",
-    "redux-devtools-extension": "^2.13.5",
+    "redux-devtools-extension": "^2.13.7",
     "redux-thunk": "^2.3.0",
     "sass-loader": "^7.1.0",
     "styled-jsx": "^2.2.7",
@@ -65,7 +66,7 @@
     "yup": "^0.26.6"
   },
   "devDependencies": {
-    "@babel/plugin-proposal-decorators": "^7.1.6",
+    "@babel/plugin-proposal-decorators": "^7.2.0",
     "@babel/preset-react": "^7.0.0-beta.51",
     "@babel/preset-stage-0": "^7.0.0-beta.51",
     "babel-core": "^6.26.3",
@@ -74,14 +75,27 @@
     "babel-plugin-transform-decorators-legacy": "^1.3.5",
     "babel-polyfill": "^6.26.0",
     "babel-preset-stage-0": "^6.24.1",
-    "eslint": "~3.3.1",
-    "eslint-config-airbnb": "~10.0.1",
-    "eslint-config-prettier": "^2.9.0",
-    "eslint-plugin-babel": "~3.3.0",
-    "eslint-plugin-import": "~1.13.0",
-    "eslint-plugin-jsx-a11y": "~2.1.0",
-    "eslint-plugin-prettier": "^2.4.0",
-    "eslint-plugin-react": "~6.1.1",
-    "prettier": "^1.15.2"
+    "eslint": "^5.9.0",
+    "eslint-config-airbnb": "^17.1.0",
+    "eslint-config-prettier": "^3.3.0",
+    "eslint-plugin-babel": "^5.3.0",
+    "eslint-plugin-import": "^2.14.0",
+    "eslint-plugin-jsx-a11y": "^6.1.2",
+    "eslint-plugin-prettier": "^3.0.0",
+    "eslint-plugin-react": "^7.11.1",
+    "husky": "^1.2.0",
+    "lint-staged": "^8.1.0",
+    "prettier": "^1.15.3"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "lint-staged"
+    }
+  },
+  "lint-staged": {
+    "*.{js,jsx,ts,tsx}": [
+      "eslint --fix",
+      "git add"
+    ]
   }
 }

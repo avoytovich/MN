@@ -5,11 +5,6 @@
     "plugin:prettier/recommended",
     "prettier/react"
   ],
-  "exmaFeatures": {
-    "jsx": true,
-    "modules": true,
-    "experimentalObjectRestSpread": true
-  },
   "env": {
     "browser": true,
     "node": true,
@@ -19,12 +14,6 @@
     "import/core-modules": ["components", "actions", "api", "reducers", "utils", "constants"]
   },
   "parser": "babel-eslint",
-  "parserOptions": {
-    "ecmaFeatures": {
-      "jsx": true,
-      "experimentalObjectRestSpread": true
-    }
-  },
   "rules": {
     "func-names": 0,
     "max-len": ["error", 150, 4, {
@@ -38,6 +27,8 @@
     "react/prefer-stateless-function": 0,
     "react/jsx-first-prop-new-line": 0,
     "react/jsx-filename-extension": 0,
+    "react/destructuring-assignment": 0,
+    "react/no-array-index-key": 0,
     "import/prefer-default-export": 0,
     "no-return-assign": 0,
     "react/no-multi-comp": 0,
@@ -51,14 +42,19 @@
       "allow": ["~"]
     }],
     "no-plusplus": 0,
+    "react/no-unescaped-entities": 0,
     "no-unused-expressions": ["warn", { "allowShortCircuit": true, "allowTernary": true}],
     "import/no-unresolved": 0,
-    //remove the import/no-extraneous-dependencies errors
     "import/no-extraneous-dependencies": 0,
     "jsx-a11y/no-static-element-interactions": 0,
     "jsx-a11y/img-has-alt": 0,
     "jsx-a11y/label-has-for": 0,
+    "jsx-a11y/alt-text": 0,
+    "jsx-a11y/click-events-have-key-events": 0,
+    "jsx-a11y/anchor-is-valid": 0,
+    "jsx-a11y/no-noninteractive-element-interactions": 0,
     "default-case": 0,
+    "no-case-declarations": 0,
     "no-unused-vars": ["error", {
       "vars": "all",
       "args": "none"
@@ -67,12 +63,10 @@
       "props": false
     }],
     "object-shorthand": 0,
-    // ESLint plugin for prettier formatting
-    // https://github.com/prettier/eslint-plugin-prettier
+    "prefer-promise-reject-errors": 0,
     "prettier/prettier": [
       "error",
       {
-        // https://github.com/prettier/prettier#options
         "singleQuote": true,
         "trailingComma": "none"
       }
