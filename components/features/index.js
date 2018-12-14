@@ -10,10 +10,13 @@ import { bindActionCreators } from 'redux';
 import { get as _get } from 'lodash';
 import { Router } from '../../routes';
 import { setData } from '../../actions/updateData';
+import { getMember } from '../../actions/members';
 import { members } from '../../services/cruds';
 import { myRoleIs } from '../../services/accountService';
+import withModal from '../../services/decorators/withModal';
 import loading from '../../services/decorators/loading';
 import ClassesNesting from './withClassesNesting';
+import MemberModal from "../groups/gallery/memberModal";
 
 import "./features.sass";
 
@@ -41,6 +44,7 @@ const mapStateToProps = ({ runtime }) => ({
 )
 @withRouter
 @loading()
+@withModal(MemberModal, {disableStyles: true, withCloseOutside: true})
 export class Features extends Component {
   constructor(props) {
     super(props);
@@ -180,6 +184,11 @@ export class Features extends Component {
     //   return groupDetails.id;
   };
 
+  handleClick = id => async() => {
+    const member = await getMember(id);
+    this.props.open(member);
+  }
+
   render() {
     const { groupDetails, groupMembers, subgroups } = this.props;
     const isAdmin = myRoleIs();
@@ -233,6 +242,7 @@ export class Features extends Component {
                     />
                   </FormControl>
                   <TextField
+                    label="Sort By:"
                     id="outlined-select"
                     InputProps={{
                       className: "field-search-input",
@@ -247,7 +257,7 @@ export class Features extends Component {
                   >
                     {orderBy.map(option => (
                       <ClassesNesting key={option.value} value={option.value}>
-                        {`Sort By: ${option.label}`}
+                        {option.label}
                       </ClassesNesting>
                     ))}
                   </TextField>
@@ -262,6 +272,7 @@ export class Features extends Component {
               <Grid container spacing={0} justify="center" className='container'>
                 <Grid item xs={6} sm={6} className="user-activity-left">
                   <TextField
+                    label="Choose View"
                     id="outlined-select"
                     InputProps={{
                       className: "field-search-input",
@@ -279,7 +290,7 @@ export class Features extends Component {
                   >
                     {this.props.mainGroup?[this.props.mainGroup, ...subgroups].map((item, id) => (
                       <ClassesNesting key={id} value={item.name}>
-                        {`Choose View: Group ${item.name}`}
+                        {item.name == 'ROOT' ? `Group: ${item.name}` : `SubGroup: ${item.name}`}
                       </ClassesNesting>
                     )): null}
                   </TextField>
@@ -310,7 +321,7 @@ export class Features extends Component {
                   {isAdmin && (
                     <Grid item xs={6} sm={3}>
                       <div className="grid-info">
- 			                  <Link route="create-member" params={{ groupId: this.handleIdCreateMember() }} >
+                        <Link href={{ pathname: '/create-member', query: { groupId: this.handleIdCreateMember() } }}>
                           <div
                             style={{
                               backgroundImage: `url(${'/static/svg/placeholder_add.svg'})`,
@@ -337,7 +348,7 @@ export class Features extends Component {
                     return (
                       <Grid key={index} item xs={6} sm={3}>
                         <div className="grid-info">
-                          <Link route="edit-member" params={{  memberId: id }} >
+                          {isAdmin && (<Link route="edit-member" params={{  memberId: id }} >
                             <div
                               style={{
                                 backgroundImage: `url(${_get(imageContent, 'mediumImage') ||
@@ -350,7 +361,20 @@ export class Features extends Component {
                                 <p className="info-member-title">{title}</p>
                               </div>
                             </div>
-                          </Link>
+                          </Link>) || (<div
+                              style={{
+                                backgroundImage: `url(${_get(imageContent, 'mediumImage') ||
+                                '/static/svg/placeholder.svg'})`,
+                              }}
+                              className="grid-info-list"
+                              onClick={this.handleClick(id)}
+                            >
+                              <div className="grid-info-list-info">
+                                <p className="info-member-name">{`${firstName} ${lastName}`}</p>
+                                <p className="info-member-title">{title}</p>
+                              </div>
+                            </div>
+                          )}
                         </div>
                       </Grid>
                     );

@@ -59,13 +59,15 @@ export default class Member extends Component {
   }
 
   render() {
+    const { router } = this.props;
     return (
       <Grid container spacing={0} justify="center">
         <Grid item xs={12} sm={12}>
           <Layout>
             <SecondPanel
               title="Member"
-              breadCrumb={`Manage Groups / Group / Member`}
+              breadCrumb={router.asPath.indexOf('?') != -1 ?
+                'Manage Groups / Member' : 'Manage Groups / Group / Member'}
             />
             <EditProfile
               user={this.state}
