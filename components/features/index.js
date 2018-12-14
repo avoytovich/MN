@@ -335,20 +335,7 @@ export class Features extends Component {
                                 <p className="info-member-title">{title}</p>
                               </div>
                             </div>
-                          </Link>) || (<div
-                              style={{
-                                backgroundImage: `url(${_get(imageContent, 'mediumImage') ||
-                                '/static/svg/placeholder.svg'})`,
-                              }}
-                              className="grid-info-list"
-                              onClick={this.handleClick(id)}
-                            >
-                              <div className="grid-info-list-info">
-                                <p className="info-member-name">{`${firstName} ${lastName}`}</p>
-                                <p className="info-member-title">{title}</p>
-                              </div>
-                            </div>
-                          )}
+                          </Link>
                         </div>
                       </Grid>
                     );
