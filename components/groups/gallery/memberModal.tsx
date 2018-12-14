@@ -1,9 +1,10 @@
 import * as React from 'react';
 import { Fragment } from 'react';
-import { Avatar, Typography, Grid, List, ListItem, ListItemText, ListItemSecondaryAction } from '@material-ui/core';
+import { Avatar, Typography, Grid, List, ListItem, ListItemText, ListItemSecondaryAction, IconButton, Icon } from '@material-ui/core';
 import './modal.sass';
 import { Member, Question } from 'actions/members';
 import map from 'lodash/map';
+import Close from '@material-ui/icons/Close'
 
 interface MemberProps {
     modalProps: Member
@@ -36,11 +37,12 @@ const keys = [
     },
 ]
 
-const MemberModal: React.SFC<MemberProps> = ({ modalProps }) => (
+const MemberModal: React.SFC<MemberProps> = ({ modalProps, close }) => (
     <div className="wrapper-modal">
+        <IconButton className="close-btn" onClick={close}><Close/></IconButton>
         <Grid container className="grid" spacing={0}>
             <Grid item sm={7} xs={12}>
-                <Avatar className="avatar" src={modalProps.imageContent.mediumImage} />
+                <Avatar className="avatar" src={modalProps.imageContent? modalProps.imageContent.mediumImage: ''} />
             </Grid>
             <Grid className="info" item sm={5} xs={12}>
                 <Typography align="right" className="text fname">
