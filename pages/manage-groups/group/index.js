@@ -12,16 +12,16 @@ import SecondPanel from 'components/secondpanel';
 import Features from 'components/features';
 import { group } from 'services/cruds';
 import loading from 'services/decorators/loading';
-import { setData } from 'actions/updateData';
+import { resetData, updateSpecData } from 'actions/updateData';
 import { getSingle } from 'actions/groups';
 
 import './group.sass';
 
 const mapDispatchToProps = dispatch =>
-  bindActionCreators({ setData, getSingle }, dispatch);
+  bindActionCreators({ updateSpecData, resetData, getSingle }, dispatch);
 
 const mapStateToProps = ({ runtime }) => ({
-  groupDetails: runtime.groupDetails,
+  groupDetails: runtime.groupDetailsData,
 });
 
 @connect(
@@ -35,6 +35,10 @@ export class Group extends Component {
     this.GetGroupDetails_loadAndSaveToProps();
   }
   
+  componentWillUnmount = () => {
+    this.props.resetData('groupDetails');
+  }
+
   GetGroupDetails_loadAndSaveToProps = async () => {
     const {
       query: { id }
@@ -56,7 +60,7 @@ export class Group extends Component {
     if (resp.data.data && !resp.data.data.subgroups.some(item => (item.name == 'ROOT'))) {
       resp.data.data.subgroups.unshift({name: 'ROOT', id: id})
     }
-    this.props.setData(resp.data, 'groupDetails');
+    this.props.updateSpecData('groupDetails', resp.data);
     this.props.getSingle({groupId: id});
   };
 
@@ -87,6 +91,7 @@ export class Group extends Component {
   render() {
     const { pathname } = this.props.router;
     const { groupDetails } = this.props;
+
     if (!groupDetails) return null;
     const data = _get(groupDetails, 'data');
     const quizAvailable = !!data.images.length;
