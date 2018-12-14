@@ -86,6 +86,7 @@ export default class GroupInfo extends Component {
       info,
       info: { id },
     } = this.props;
+    const { isAdmin } = this.state;
     return <div className="d-flex f-row group-info-wrapper">
         <Avatar className={classes.avatar} src={info.icon || '/static/png/icon-group.png'} />
         <div className="group-icon" />
@@ -119,7 +120,8 @@ export default class GroupInfo extends Component {
               </ListItem>
             ))}
           </List>
-        <div className="actions-block d-flex jcc ai-center">
+        
+        {myRoleIs() && <div className="actions-block d-flex jcc ai-center">
           <TheLink route="editgroup" params={{ id: info.id }}>
             <a>
               <div className="d-flex edit ai-center">
@@ -138,6 +140,8 @@ export default class GroupInfo extends Component {
               </Typography>
             </div>
         </div>
-      </div></div>
+        }
+      </div>   
+      </div>
   }
 }

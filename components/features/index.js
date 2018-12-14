@@ -1,7 +1,7 @@
 import { Component, Fragment } from 'react';
 import { Grid, IconButton, TextField, FormControl, MenuItem } from '@material-ui/core';
 import CreateIcon from '@material-ui/icons/Create';
-import { withRouter } from 'next/router';
+import Router, { withRouter } from 'next/router';
 import { Link } from '../../routes';
 import InfiniteScroll from 'react-infinite-scroll-component';
 import qs from "qs";
@@ -17,7 +17,6 @@ import withModal from '../../services/decorators/withModal';
 import loading from '../../services/decorators/loading';
 import ClassesNesting from './withClassesNesting';
 import MemberModal from "../groups/gallery/memberModal";
-
 import "./features.sass";
 
 const orderBy = [
@@ -57,6 +56,7 @@ export class Features extends Component {
           total_count: 0
         }
       },
+      isAdmin: false,
       orderBy: 'firstname',
       group: 'ROOT'
     }
@@ -173,8 +173,9 @@ export class Features extends Component {
 
   render() {
     const { groupDetails, groupMembers } = this.props;
-    const { elements, membersInfo } = this.state;
+    const { elements, membersInfo, isAdmin } = this.state;
     if (!groupMembers) return null;
+    console.log(myRoleIs());
     return (
       <Fragment>
         <div className="features-wrapper">
@@ -192,13 +193,16 @@ export class Features extends Component {
                 <Grid item xs={6} sm={6}>
                   <div className='group'>
                     <p className='name'>{groupDetails.name}</p>
-                      <IconButton
-                        /*onClick={this.handleClick}*/
-                      >
-                        <Link route="editgroup" params={{id: groupDetails.id}}>
-                          <CreateIcon />
-                        </Link>
-                      </IconButton><br/>
+                      {myRoleIs() && 
+                        <IconButton
+                          /*onClick={this.handleClick}*/
+                        >
+                          <Link route="editgroup" params={{id: groupDetails.id}}>
+                            <CreateIcon />
+                          </Link>
+                        </IconButton>
+                      }
+                      <br/>
                     <p className='description'>{groupDetails.description}</p>
                   </div>
                 </Grid>
@@ -294,7 +298,7 @@ export class Features extends Component {
                   direction="row"
                   justify="flex-start"
                   className="infinite-scroll-component-list">
-                  <Grid item xs={6} sm={3}>
+                  { myRoleIs() && <Grid item xs={6} sm={3}>
                     <div className="grid-info">
                       <Link href={{ pathname: '/edit-member', query: { groupId: groupDetails.id } }}>
                         <div
@@ -311,6 +315,7 @@ export class Features extends Component {
                       </Link>
                     </div>
                   </Grid>
+                  }
                   {elements.map((item, index) => {
                     const {
                       firstName,
@@ -321,8 +326,9 @@ export class Features extends Component {
                     } = item;
                     return (
                       <Grid key={index} item xs={6} sm={3}>
-                        <div className="grid-info">
-                          <Link href={{ pathname: '/edit-member', query: { memberId: id } }}>
+                        <div onClick={myRoleIs() === false? this.handleClick(id): 
+                          () => Router.push({pathname: '/edit-member', query: { memberId: id }})
+                        } className="grid-info">
                             <div
                               style={{
                                 backgroundImage: `url(${_get(imageContent, 'mediumImage') ||
@@ -335,7 +341,6 @@ export class Features extends Component {
                                 <p className="info-member-title">{title}</p>
                               </div>
                             </div>
-                          </Link>
                         </div>
                       </Grid>
                     );
