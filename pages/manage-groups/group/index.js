@@ -6,8 +6,7 @@ import { bindActionCreators } from 'redux';
 import { get as _get } from 'lodash';
 import qs from 'qs';
 import { Button } from '@material-ui/core';
-import find from 'lodash/find';
-import get from 'lodash/get';
+
 import Layout from 'components/MyLayout';
 import SecondPanel from 'components/secondpanel';
 import Features from 'components/features';
@@ -15,55 +14,36 @@ import { group } from 'services/cruds';
 import loading from 'services/decorators/loading';
 import { setData } from 'actions/updateData';
 import { getSingle } from 'actions/groups';
-import { myRoleIs } from "../../../services/accountService";
 
 import './group.sass';
 
 const mapDispatchToProps = dispatch =>
   bindActionCreators({ setData, getSingle }, dispatch);
 
-const mapStateToProps = ({ runtime, groups }, {router}) => ({
+const mapStateToProps = ({ runtime }) => ({
   groupDetails: runtime.groupDetails,
-  subgroups: get(find(groups.groups, el => el.id === parseInt(router.query.id)), 'subgroups') || [],
-  mainGroup: find(groups.groups, el => el.id === parseInt(router.query.id))
 });
 
-@withRouter
 @connect(
   mapStateToProps,
   mapDispatchToProps
 )
+@withRouter
 @loading()
 export class Group extends Component {
-  state = {
-    isAdmin: false,
-  }
-
   componentDidMount() {
     this.GetGroupDetails_loadAndSaveToProps();
-    
-    this.setState({
-      isAdmin: myRoleIs(),
-    })
   }
-  componentDidUpdate = (prevProps) => {
-    console.log(this.props.router);
-    // if(this.props.router.query.id !== prevProps.router.query.id || this.props.router.query.sub !== prevProps.router.query.sub)
-    //   {
-    //     console.log('updateTTTTT');
-    //     this.GetGroupDetails_loadAndSaveToProps();
-    //   }
-  }
+  
   GetGroupDetails_loadAndSaveToProps = async () => {
     const {
-      query: { id, sub }
+      query: { id }
     } = this.props.router;
-    const selected = sub? sub: id;
-
+    
     const resp = await this.props.loadData(
       group.get(
         {
-          groupId: selected
+          groupId: id
         },
         '/GetGroupDetails',
         false,
@@ -73,8 +53,11 @@ export class Group extends Component {
         saveTo: 'groupDetails'
       }
     );
-    this.props.getSingle({groupId: id});
+    if (resp.data.data && !resp.data.data.subgroups.some(item => (item.name == 'ROOT'))) {
+      resp.data.data.subgroups.unshift({name: 'ROOT', id: id})
+    }
     this.props.setData(resp.data, 'groupDetails');
+    this.props.getSingle({groupId: id});
   };
 
   titleCase = str => {
@@ -102,10 +85,8 @@ export class Group extends Component {
   };
 
   render() {
-    //console.log('this.props', this.props);
     const { pathname } = this.props.router;
     const { groupDetails } = this.props;
-    const { isAdmin } = this.state;
     if (!groupDetails) return null;
     const data = _get(groupDetails, 'data');
     const quizAvailable = !!data.images.length;
@@ -119,7 +100,7 @@ export class Group extends Component {
                 </Button>
               ]}*/
               actionButtons={[
-                !isAdmin && quizAvailable === true ? (
+                quizAvailable === true ? (
                   <Link
                     key="link-quiz"
                     route="quiz"
@@ -143,7 +124,7 @@ export class Group extends Component {
               title="Group Content"
             />
           </div>
-          <Features mainGroup={this.props.mainGroup} subgroups={this.props.subgroups} groupDetails={data} />
+          <Features  groupDetails={data} />
         </Layout>
       </Fragment>
     );

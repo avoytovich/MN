@@ -158,7 +158,7 @@ export default class Gallery extends PureComponent {
             key={key} className={classes.card}>
               <CardMedia className={classes.media} image={image.mediumImage}>
                 <Typography className={classes.mediaText}>
-                  {image.firstName}
+                  {image.firstName} {image.lastName}
                 </Typography>
               </CardMedia>
             </Card>

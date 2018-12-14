@@ -8,10 +8,9 @@ import qs from "qs";
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { get as _get } from 'lodash';
-import { Router } from '../../routes';
+
 import { setData } from '../../actions/updateData';
 import { members } from '../../services/cruds';
-import { myRoleIs } from '../../services/accountService';
 import loading from '../../services/decorators/loading';
 import ClassesNesting from './withClassesNesting';
 
@@ -54,35 +53,14 @@ export class Features extends Component {
         }
       },
       orderBy: 'firstname',
+      group: 'ROOT'
     }
   }
 
-  componentWillMount() {
-    this.loadAndSaveMembersList();
+  componentDidUpdate = (prevProps) => {
+    if(this.props.groupDetails.id !== prevProps.groupDetails.id)
+      this.loadAndSaveMembersList();
   }
-
-  componentDidUpdate(prevProps) {
-    const { id } = this.props.groupDetails;
-    const { subgroups } = this.props;
-
-    // if (!subgroups.some(item => (item.name == 'ROOT'))) {
-    //   subgroups.unshift({name: 'ROOT', id: id})
-    // }
-  }
-
-  componentDidMount() {
-    const { id } = this.props.groupDetails;
-    const { subgroups } = this.props;
-
-  }
-
-  executeGetGroupId = (currentSubGroup) => {
-    const { groupDetails } = this.props;
-    const { id } = this.props.router.query;
-    return (currentSubGroup &&
-      (currentSubGroup['name'] == 'ROOT' && id || currentSubGroup['id'])) ||
-        groupDetails.id;
-  };
 
   loadAndSaveMembersList = async condition => {
     if (this.props.groupDetails.subgroups.some(item => {
@@ -91,8 +69,10 @@ export class Features extends Component {
       await this.setState({
         offset: 0,
         elements: [],
+        group: condition,
       });
     }
+    
     if (condition == 'firstname' || condition ==  'lastname') {
       await this.setState({
         offset: 0,
@@ -123,7 +103,7 @@ export class Features extends Component {
     const resp = await this.props.loadData(
       members.get(
         {
-          groupId: this.executeGetGroupId(currentSubGroup[0]),
+          groupId: currentSubGroup[0] && currentSubGroup[0]['id'] || groupDetails.id,
           limit: 12,
           offset: offset,
           search: search,
@@ -166,23 +146,8 @@ export class Features extends Component {
     document.addEventListener('keypress', this.handleSubmit);
   };
 
-  handleIdCreateMember = () => {
-    const { groupDetails, router } = this.props;
-    const { group } = this.state;
-    console.log(group);
-    return groupDetails.id;
-    // if (group != 'ROOT') {
-    //   const currentSubGroup = groupDetails.subgroups.filter(item => {
-    //     return item.name == group;
-    //   });
-    //   return currentSubGroup[0] && currentSubGroup[0]['id'];
-    // } else
-    //   return groupDetails.id;
-  };
-
   render() {
-    const { groupDetails, groupMembers, subgroups } = this.props;
-    const isAdmin = myRoleIs();
+    const { groupDetails, groupMembers } = this.props;
     const { elements, membersInfo } = this.state;
     if (!groupMembers) return null;
     return (
@@ -202,16 +167,13 @@ export class Features extends Component {
                 <Grid item xs={6} sm={6}>
                   <div className='group'>
                     <p className='name'>{groupDetails.name}</p>
-                    {isAdmin && (
                       <IconButton
                         /*onClick={this.handleClick}*/
                       >
                         <Link route="editgroup" params={{id: groupDetails.id}}>
                           <CreateIcon />
                         </Link>
-                      </IconButton>
-                    )}
-                    <br/>
+                      </IconButton><br/>
                     <p className='description'>{groupDetails.description}</p>
                   </div>
                 </Grid>
@@ -265,23 +227,20 @@ export class Features extends Component {
                     id="outlined-select"
                     InputProps={{
                       className: "field-search-input",
-                      onChange: (val) => {
-                        console.log(val);
-                        // Router.pushRoute('group', {id: this.props.mainGroup.id, sub: })
-                      },
+                      onChange: (e) => this.loadAndSaveMembersList(e.target.value),
                     }}
                     select
                     className='field-select'
-                    value={this.props.groupDetails.name}
+                    value={this.state.group}
                     onChange={this.handleChange('group')}
                     margin="normal"
                     variant="outlined"
                   >
-                    {this.props.mainGroup?[this.props.mainGroup, ...subgroups].map((item, id) => (
+                    {groupDetails.subgroups.map((item, id) => (
                       <ClassesNesting key={id} value={item.name}>
                         {`Choose View: Group ${item.name}`}
                       </ClassesNesting>
-                    )): null}
+                    ))}
                   </TextField>
                 </Grid>
                 <Grid item xs={6} sm={6} className="user-activity-right">
@@ -298,7 +257,8 @@ export class Features extends Component {
                 next={() => this.loadAndSaveMembersList()}
                 dataLength={this.state.elements.length}
                 hasMore={
-                  elements.length < membersInfo.pagination.total_count
+                  elements.length <
+                  membersInfo.pagination.total_count
                 }
                 className="infinite-scroll-component">
                 <Grid
@@ -307,25 +267,23 @@ export class Features extends Component {
                   direction="row"
                   justify="flex-start"
                   className="infinite-scroll-component-list">
-                  {isAdmin && (
-                    <Grid item xs={6} sm={3}>
-                      <div className="grid-info">
- 			                  <Link route="create-member" params={{ groupId: this.handleIdCreateMember() }} >
-                          <div
-                            style={{
-                              backgroundImage: `url(${'/static/svg/placeholder_add.svg'})`,
-                            }}
-                            className="grid-info-list"
-                          >
-                            <div className="grid-info-list-info">
-                              <p className="info-member-name">+ Add Profile</p>
-                              <p className="info-member-title">Press here</p>
-                            </div>
+                  <Grid item xs={6} sm={3}>
+                    <div className="grid-info">
+                      <Link href={{ pathname: '/edit-member', query: { groupId: groupDetails.id } }}>
+                        <div
+                          style={{
+                            backgroundImage: `url(${'/static/svg/placeholder_add.svg'})`,
+                          }}
+                          className="grid-info-list"
+                        >
+                          <div className="grid-info-list-info">
+                            <p className="info-member-name">+ Add Profile</p>
+                            <p className="info-member-title">Press here</p>
                           </div>
-                        </Link>
-                      </div>
-                    </Grid>
-                  )}
+                        </div>
+                      </Link>
+                    </div>
+                  </Grid>
                   {elements.map((item, index) => {
                     const {
                       firstName,
@@ -337,7 +295,7 @@ export class Features extends Component {
                     return (
                       <Grid key={index} item xs={6} sm={3}>
                         <div className="grid-info">
-                          <Link route="edit-member" params={{  memberId: id }} >
+                          <Link href={{ pathname: '/edit-member', query: { memberId: id } }}>
                             <div
                               style={{
                                 backgroundImage: `url(${_get(imageContent, 'mediumImage') ||
