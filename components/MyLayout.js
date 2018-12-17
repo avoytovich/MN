@@ -1,10 +1,14 @@
 import Header from './header/header';
 import Footer from 'components/footer';
 
+import './MyLayout.sass';
+
 const Layout = props => (
   <div>
     <Header />
-    {props.children}
+      <div className='general-wrapper'>
+        {props.children}
+      </div>
     <Footer />
   </div>
 );
