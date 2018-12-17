@@ -68,6 +68,12 @@ export class Features extends Component {
       this.loadAndSaveMembersList();
   }
 
+  componentDidMount() {
+    this.setState({
+      isAdmin: myRoleIs(),
+    })
+  }
+
   loadAndSaveMembersList = async condition => {
     if (this.props.groupDetails.subgroups.some(item => {
       return item.name == condition;
@@ -152,10 +158,9 @@ export class Features extends Component {
     document.addEventListener('keypress', this.handleSubmit);
   };
 
-  handleIdCreateMember = () => {
+  /*handleIdCreateMember = () => {
     const { groupDetails, router } = this.props;
     const { group } = this.state;
-    console.log(group);
     return groupDetails.id;
     // if (group != 'ROOT') {
     //   const currentSubGroup = groupDetails.subgroups.filter(item => {
@@ -164,7 +169,7 @@ export class Features extends Component {
     //   return currentSubGroup[0] && currentSubGroup[0]['id'];
     // } else
     //   return groupDetails.id;
-  };
+  };*/
 
   handleClick = id => async() => {
     const member = await getMember(id);
@@ -175,7 +180,6 @@ export class Features extends Component {
     const { groupDetails, groupMembers } = this.props;
     const { elements, membersInfo, isAdmin } = this.state;
     if (!groupMembers) return null;
-    console.log(myRoleIs());
     return (
       <Fragment>
         <div className="features-wrapper">
@@ -193,7 +197,7 @@ export class Features extends Component {
                 <Grid item xs={6} sm={6}>
                   <div className='group'>
                     <p className='name'>{groupDetails.name}</p>
-                      {myRoleIs() && 
+                      { isAdmin &&
                         <IconButton
                           /*onClick={this.handleClick}*/
                         >
@@ -298,7 +302,7 @@ export class Features extends Component {
                   direction="row"
                   justify="flex-start"
                   className="infinite-scroll-component-list">
-                  { myRoleIs() && <Grid item xs={6} sm={3}>
+                  { isAdmin && <Grid item xs={6} sm={3}>
                     <div className="grid-info">
                       <Link href={{ pathname: '/edit-member', query: { groupId: groupDetails.id } }}>
                         <div
@@ -326,9 +330,10 @@ export class Features extends Component {
                     } = item;
                     return (
                       <Grid key={index} item xs={6} sm={3}>
-                        <div onClick={myRoleIs() === false? this.handleClick(id): 
-                          () => Router.push({pathname: '/edit-member', query: { memberId: id }})
-                        } className="grid-info">
+                        <div
+                          onClick={ !isAdmin ? this.handleClick(id):
+                            () => Router.push({pathname: '/edit-member', query: { memberId: id }}) }
+                          className="grid-info" >
                             <div
                               style={{
                                 backgroundImage: `url(${_get(imageContent, 'mediumImage') ||
