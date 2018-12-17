@@ -5,6 +5,7 @@ import EditIcon from 'static/svg/edit.svg'
 import RemoveIcon from 'static/svg/garbage.svg'
 import { Form, Field , withFormik } from 'formik';
 import { withStyles, Grid, TextField, Divider, Button, Modal, Paper } from '@material-ui/core';
+import Router from 'next/router';
 import './style.sass'
 import { toggleSnackbar } from '../../actions/snackbar';
 import { connect } from 'react-redux';
@@ -17,6 +18,7 @@ import DefaultAvatar from 'static/png/defaultAvatar.png'
 import * as Yup from 'yup';
 import ReactCrop from 'react-image-crop'
 import './cropper.sass'
+
 
 const imageMaxSize = 5550000 // bytes
 const acceptedFileTypes = 'image/png, image/jpg, image/jpeg'

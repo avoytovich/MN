@@ -211,11 +211,11 @@ export default class Questions extends Component {
         <Grid className="group-questions-wrapper" container direction="column" wrap="wrap">
           <div className="group-questions-container">
             <Typography className="group-questions-title">New Questions</Typography>
-            {newQuestions.length ? newQuestions : "There is no new questions"}
+            {newQuestions.length ? newQuestions : "There are no new questions"}
           </div>
           <div className="group-questions-container">
             <Typography className="group-questions-title">Previous Questions</Typography>
-              {answered.length ? answered : "There is no answered questions"}
+              {answered.length ? answered : "There are no answered questions"}
           </div>
         </Grid>
       </Fragment>

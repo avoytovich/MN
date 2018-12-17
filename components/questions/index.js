@@ -39,7 +39,7 @@ export default class Questions extends Component {
             <div className="questions-container">
               <Typography className="questions-title">Group Questions</Typography>
             <List component="div" className="questions-list" disablePadding>
-              {groups.length ? groups : 'There is no questions now'}
+              {groups.length ? groups : 'There are no questions now'}
             </List>
             </div>
           </Grid>
