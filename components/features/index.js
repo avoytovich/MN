@@ -60,21 +60,39 @@ export class Features extends Component {
       orderBy: 'firstname',
       group: 'ROOT'
     }
-    this.loadAndSaveMembersList();
+    //this.loadAndSaveMembersList();
   }
   
-  componentDidUpdate = (prevProps) => {
+  componentDidUpdate = (prevProps, prevState) => {
     if(this.props.groupDetails.id !== prevProps.groupDetails.id)
       this.loadAndSaveMembersList();
+    const { groupDetails, router } = this.props;
+    const { group } = this.state;
+    /*if (group == 'ROOT' && router.query.sub) {
+      Router.push({
+        pathname: `/manage-groups/group/${groupDetails.id}`
+      });
+    }*/
   }
 
   componentDidMount() {
+    const { groupDetails, router } = this.props;
+    const { group } = this.state;
+    if (router.query.sub) {
+      groupDetails.subgroups.forEach( async(item, id) => {
+        if (item.id == router.query.sub) {
+          await this.loadAndSaveMembersList(item.name);
+        }
+      });
+    } else {
+      this.loadAndSaveMembersList();
+    }
     this.setState({
       isAdmin: myRoleIs(),
-    })
+    });
   }
 
-  loadAndSaveMembersList = async condition => {
+  loadAndSaveMembersList = async (condition) => {
     if (this.props.groupDetails.subgroups.some(item => {
       return item.name == condition;
     }) ) {
@@ -177,6 +195,8 @@ export class Features extends Component {
   }
 
   render() {
+    //console.log('this.props', this.props);
+    //console.log('this.state', this.state);
     const { groupDetails, groupMembers } = this.props;
     const { elements, membersInfo, isAdmin } = this.state;
     if (!groupMembers) return null;
