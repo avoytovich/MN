@@ -5,6 +5,8 @@ import Head from 'next/head';
 import { changeQuery } from '../services/serverService';
 import Modal from '../components/modal/index';
 import SignUpModal from '../components/landing/signUpModal';
+import SignInModal from '../components/landing/signInModal';
+import ForgotPasswordModal from '../components/landing/forgotPasswordModal';
 import VerifyModal from '../components/modals/verify/modal';
 import { Router } from '../routes';
 
@@ -12,11 +14,15 @@ import { Router } from '../routes';
 export default class ModalContainer extends React.Component {
   state = {
     signUp: false,
+    signIn: false,
+    forgotPassword: false,
     verify: false,
     title: null,
     modalNames: [
       'signUp',
+      'signIn',
       'verify',
+      'forgotPassword'
     ],
   };
 
@@ -56,6 +62,12 @@ export default class ModalContainer extends React.Component {
         )}
         <Modal open={this.state.signUp} withClose onClose={this.onClose}>
           <SignUpModal onClose={this.onClose} />
+        </Modal>
+        <Modal open={this.state.signIn} withClose onClose={this.onClose}>
+          <SignInModal onClose={this.onClose} />
+        </Modal>
+        <Modal open={this.state.forgotPassword} withClose onClose={this.onClose}>
+          <ForgotPasswordModal onClose={this.onClose} />
         </Modal>
         <Modal open={this.state.verify} withClose onClose={this.onClose}>
           <VerifyModal onClose={this.onClose} />

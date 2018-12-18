@@ -14,9 +14,7 @@ import * as Yup from 'yup';
 import { connect } from 'react-redux';
 import Router from 'next/router';
 
-import style from '../styles';
-
-const styles = theme => style;
+import '../style.sass'
 
 @connect(
   null,
@@ -54,19 +52,18 @@ const styles = theme => style;
     }
   }
 })
-@withStyles(styles)
 export default class IconModal extends Component {
   render() {
-    const { classes, close, errors } = this.props;
+    const { close, errors } = this.props;
     return (
-      <div className={classes.wrap}>
+      <div className="modal-wrap">
         <CloseIcon onClick={() => close()} />
-        <Typography align="center" className={classes.title}>
+        <Typography align="center" className="modal-title">
           Change Password
         </Typography>
         <Form>
           <TextField
-            className={classes.input}
+            className="modal-input"
             onChange={this.props.handleChange}
             helperText={this.props.errors.oldPassword}
             error={this.props.errors.oldPassword !== undefined}
@@ -77,7 +74,7 @@ export default class IconModal extends Component {
             margin="normal"
           />
           <TextField
-            className={classes.input}
+            className="modal-input"
             onChange={this.props.handleChange}
             helperText={this.props.errors.password}
             error={this.props.errors.password !== undefined}
@@ -88,7 +85,7 @@ export default class IconModal extends Component {
             margin="normal"
           />
           <TextField
-            className={classes.input}
+            className="modal-input"
             onChange={this.props.handleChange}
             helperText={this.props.errors.confirmPassword}
             error={this.props.errors.confirmPassword !== undefined}
@@ -98,7 +95,7 @@ export default class IconModal extends Component {
             fullWidth
             margin="normal"
           />
-          <Button type="submit" className={`${classes.submit} ${classes.changePassword}`}>
+          <Button type="submit" className="modal-submit modal-change-password">
             Change Password
           </Button>
         </Form>

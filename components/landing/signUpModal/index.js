@@ -13,12 +13,12 @@ import * as Yup from 'yup';
 import { connect } from 'react-redux';
 import Router from 'next/router';
 import { withRouter } from 'next/router';
-import { changeQuery } from '../../../services/serverService';
 import { signUpSchema } from 'services/validateSchemas';
 import omit from 'lodash/omit'
 import { wrapField } from 'services/materialformik'
+import {changeQuery} from "services/serverService";
 
-import style from '../styles';
+import '../style.sass';
 
 const inputNames = [
   { name: "OrganizationId", label: "OrganizationId", type:"text" },
@@ -30,8 +30,6 @@ const inputNames = [
   { name: "LastName", label: "Last Name", type:"text" },
   { name: "Department", label: "Department", type:"text" }
 ]
-
-const styles = theme => style;
 
 @withRouter
 @connect(
@@ -57,13 +55,12 @@ const styles = theme => style;
     }
   }
 })
-@withStyles(styles)
 export default class IconModal extends Component {
   render() {
     const { classes, errors, values } = this.props;
     return (
-      <div className={classes.wrap}>
-        <Typography align="center" className={classes.title}>
+      <div className="modal-wrap">
+        <Typography align="center" className="modal-title">
           Sign Up
         </Typography>
         <Form>
@@ -71,7 +68,7 @@ export default class IconModal extends Component {
             const { name, label, type } = inputInfo
             return (
               <Field
-                className={classes.input}
+                className="modal-input"
                 value={values[name]}
                 onChange={this.props.handleChange}
                 type={type}
@@ -84,12 +81,16 @@ export default class IconModal extends Component {
               />
             )
           })}
-          <Button type="submit" className={classes.submit}>
+          <Button type="submit" className="modal-submit">
             Sign Up
           </Button>
-          <Typography align="center" className={classes.haveNotAccount}>
+          <Typography align="center" className="modal-have-not-account">
             Already have an account?
-            <Typography component="a" className={classes.signUp}>
+            <Typography
+              component="a"
+              className="modal-sign-up"
+              onClick={() => Router.pushRoute(changeQuery(this.props.router, 'modal', 'signIn'))}
+            >
               Log In
             </Typography>
           </Typography>

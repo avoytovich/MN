@@ -2,8 +2,7 @@ import React from 'react';
 import Router from 'next/router';
 import { withRouter } from 'next/router';
 import Link from 'next/link';
-import NoSSR from 'react-no-ssr';
-import { Button, Grid } from '@material-ui/core';
+import { Button } from '@material-ui/core';
 import CWAG_Logo from '../static/png/CWAG_Logo.png';
 import HUB_Logo from '../static/jpg/hub-logo.jpg';
 import PDZ_Logo from '../static/gif/phideltatheta.gif';
@@ -13,161 +12,220 @@ import PlaceIcon from '@material-ui/icons/Place';
 import MailIcon from '@material-ui/icons/MailOutline';
 import PhoneIcon from '@material-ui/icons/Phone';
 
+import { IconButton, Menu, MenuItem, Badge } from '@material-ui/core';
+import MenuIcon from '@material-ui/icons/Menu';
+
 import { Player, BigPlayButton } from 'video-react';
 import Video from '../static/mp4/long_video.mp4';
 import './style.sass';
 import 'video-react/styles/scss/video-react.scss';
 
-import SignInModal from '../components/landing/signInModal';
-import withModal from '../services/decorators/withModal';
 import {changeQuery} from "../services/serverService";
-
-@withModal(SignInModal)
-class SigInBtn extends React.Component {
-  render() {
-    const { open } = this.props;
-    return (
-      <p className="landing-auth-btn" onClick={() => open(true)}>
-        Sign In
-      </p>
-    );
-  }
-}
+import { getNewQuestions } from '../actions/questions';
+import { getLocale } from 'services/serverService';
 
 @withRouter
-class SignUpBtn extends React.Component {
-
-  handleClick = () => (Router.pushRoute(changeQuery(this.props.router, 'modal', 'signUp')));
-
-  render() {
-    const { open } = this.props;
-    return (
-      <p className="landing-auth-btn" onClick={this.handleClick}>
-        Sign Up
-      </p>
-    );
-  }
-}
-
 export default class App extends React.Component {
+  state = {
+    anchorEl: null,
+    isAuthed: false
+  };
+
+  handleClick = event => {
+      this.setState({ anchorEl: event.currentTarget });
+  };
+
+  handleClose = () => {
+    this.setState({ anchorEl: null });
+  };
+
+  componentDidMount(){
+    this.setState({isAuthed : !!getLocale('token')})
+  }
+
   render() {
-    const { open } = this.props;
+    const { anchorEl, isAuthed } = this.state;
+    const open = Boolean(anchorEl);
     return (
       <div className="landing-container">
-        <Grid className="landing-header" container justify="space-between">
-          <Grid item>
-            <Grid container>
+        <div className="landing-header" >
+          <div className="landing-logo-container" >
               <div className="landing-logo" />
               <h1 className="landing-logo-title">MetKnow</h1>
-            </Grid>
-          </Grid>
-          <Grid item>
-            <Grid container wrap="nowrap">
-              <SigInBtn />
-              <SignUpBtn />
-            </Grid>
-          </Grid>
-        </Grid>
-        <Grid className="landing-top-container">
+          </div>
+          <div className="landing-auth-container" >
+            <IconButton
+              aria-label="More"
+              aria-owns={open ? 'landing-menu' : null}
+              aria-haspopup="true"
+              onClick={this.handleClick}
+              className="landing-menu"
+            >
+              <MenuIcon
+                className="landing-hamburger"
+              />
+            </IconButton>
+            <Menu
+              id="landing-menu"
+              anchorEl={anchorEl}
+              open={open}
+              onClose={this.handleClose}
+              PaperProps={{
+                style: {
+                  width: 110
+                }
+              }}
+            >
+              {isAuthed
+                ? (
+                  <Link href={{ pathname: '/manage-groups'}}>
+                  <MenuItem onClick={this.handleClose}>
+                    Groups
+                  </MenuItem>
+                  </Link>
+                )
+                : (
+                  <>
+                    <MenuItem onClick={() => (Router.pushRoute(changeQuery(this.props.router, 'modal', 'signIn')))}>
+                      Sign In
+                    </MenuItem>
+                    <MenuItem onClick={() => (Router.pushRoute(changeQuery(this.props.router, 'modal', 'signUp')))}>
+                      Sign Up
+                    </MenuItem>
+                  </>
+
+                )
+
+              }
+
+            </Menu>
+
+            {isAuthed
+                  ? (
+                <Link href={{ pathname: '/manage-groups'}}>
+                  <p
+                    className="landing-auth-btn"
+                    onClick={() => (Router.pushRoute(changeQuery(this.props.router, 'modal', 'signIn')))}
+                  >
+                    Groups
+                  </p>
+                </Link>
+                )
+                : (
+                  <>
+                    <p
+                      className="landing-auth-btn"
+                      onClick={() => (Router.pushRoute(changeQuery(this.props.router, 'modal', 'signIn')))}
+                    >
+                      Sign In
+                    </p>
+                    <p
+                      className="landing-auth-btn"
+                      onClick={() => (Router.pushRoute(changeQuery(this.props.router, 'modal', 'signUp')))}
+                    >
+                      Sign Up
+                    </p>
+                  </>
+
+                )
+
+            }
+          </div>
+        </div>
+        <div className="landing-top-container">
           <div className="landing-wrapper">
             <h1 className="landing-top-title">
               Build a stronger community in your organization
             </h1>
-            <Grid container className="landing-top-btns-container">
+            <div className="landing-top-btns-container">
               <Button className="landing-white-btn" href="#video">
                 Learn More
               </Button>
               <Button className="landing-green-btn" href="#landing-contact-us">
                 Contact Us For a Demo
               </Button>
-            </Grid>
+            </div>
           </div>
-        </Grid>
-        <Grid className="landing-introducing-container">
-          <Grid className="landing-introducing-dots-container">
+        </div>
+        <div className="landing-introducing-container">
+          <div className="landing-introducing-dots-container">
             <div className="landing-wrapper">
               <h1 className="landing-title">Introducing</h1>
             </div>
-          </Grid>
-
+          </div>
           <div className="landing-wrapper">
-            <Grid container wrap="nowrap" className="landing-introducing-top">
+            <div className="landing-introducing-top">
               <img className="landing-introducing-left-img" src={Left_Phone} />
               <h1 className="landing-description">
                 The easiest way for everyone to get to know each other
               </h1>
-            </Grid>
-            <Grid
-              container
-              wrap="nowrap"
-              className="landing-introducing-bottom">
-              <Grid>
-                <Grid container direction="column">
+            </div>
+            <div className="landing-introducing-bottom">
+              <div className="landing-introducing-bottom-text-container">
                   <h1 className="landing-description">
                     With our gamified process, the members of your organizations
                     now have a tool in their pocket to learn everyone’s name.
                   </h1>
                   <Button className="landing-green-btn">Request a demo</Button>
-                </Grid>
-              </Grid>
+              </div>
               <img
                 className="landing-introducing-right-img"
                 src={Right_Phone}
               />
-            </Grid>
+            </div>
           </div>
-        </Grid>
-        <Grid id="video" className="landing-video-container">
-          <Grid className="landing-video-dots-container">
+        </div>
+        <div id="video" className="landing-video-container">
+          <div className="landing-video-dots-container">
             <div className="landing-wrapper">
               <h1 className="landing-title">Video</h1>
             </div>
-          </Grid>
+          </div>
           <div className="landing-video">
             <Player src={Video} fluid={false} height={465}>
               <BigPlayButton position="center" />
             </Player>
           </div>
-        </Grid>
+        </div>
         <br />
-        <Grid className="landing-advantages-container">
-          <Grid className="landing-advantage">
+        <div className="landing-advantages-container">
+          <div className="landing-advantage">
             <h3 className="landing-advantage-title">70%</h3>
             <p className="landing-advantage-description">
               of US Workers are not engaged at work
             </p>
-          </Grid>
-          <Grid className="landing-advantage">
+          </div>
+          <div className="landing-advantage">
             <h3 className="landing-advantage-title">87%</h3>
             <p className="landing-advantage-description">
               of engaged employees are less likely to leave their jobs
             </p>
-          </Grid>
-          <Grid className="landing-advantage">
+          </div>
+          <div className="landing-advantage">
             <h3 className="landing-advantage-title">2/3</h3>
             <p className="landing-advantage-description">
               Two of the top three reasons someone leaves an organizationis
               because they feel like they do not have a relationship with their
               boss or their co-workers.{' '}
             </p>
-          </Grid>
-          <Grid className="landing-advantage">
+          </div>
+          <div className="landing-advantage">
             <h3 className="landing-advantage-title">2.5x</h3>
             <p className="landing-advantage-description">
               Organizations with highly engaged employees have 2.5X the revenue
               than their competitors who do not.
             </p>
-          </Grid>
-          <Grid className="landing-advantage">
+          </div>
+          <div className="landing-advantage">
             <h3 className="landing-advantage-title">53%</h3>
             <p className="landing-advantage-description">
               53% of HR professionals say employee engagement rises when
               onboarding is improved
             </p>
-          </Grid>
-        </Grid>
+          </div>
+        </div>
 
-        <Grid className="landing-responses-container">
+        <div className="landing-responses-container">
           <div className="landing-responses-circle" />
           <div className="landing-wrapper">
             <h1 className="landing-responses-title">What our Clients say</h1>
@@ -178,12 +236,12 @@ export default class App extends React.Component {
                   when we merged offices. It made our first week in the new
                   office run much more smoothly
                 </p>
-                <Grid container>
+                <div className="landing-response-bottom">
                   <h3 className="landing-response-author">
                     Paula A. Hub MidAmerica
                   </h3>
                   <img src={HUB_Logo} className="landing-response-icon" />
-                </Grid>
+                </div>
                 <div className="landing-response-triangle" />
               </div>
               <div className="landing-response">
@@ -192,10 +250,10 @@ export default class App extends React.Component {
                   and connect with the other attendees important to their
                   agenda. MetKnow solved this problem in Sun Valley.”
                 </p>
-                <Grid container>
+                <div className="landing-response-bottom">
                   <h3 className="landing-response-author">Karen W. CWAG</h3>
                   <img src={CWAG_Logo} className="landing-response-icon" />
-                </Grid>
+                </div>
                 <div className="landing-response-triangle" />
               </div>
               <div className="landing-response">
@@ -204,19 +262,19 @@ export default class App extends React.Component {
                   seamlessly into the flow of things. Strong relationships have
                   helped us become a very efficient team.”{' '}
                 </p>
-                <Grid container>
+                <div className="landing-response-bottom">
                   <h3 className="landing-response-author">
                     Andrew N. Phi Delta Theta
                   </h3>
                   <img src={PDZ_Logo} className="landing-response-icon" />
-                </Grid>
+                </div>
                 <div className="landing-response-triangle" />
               </div>
             </div>
           </div>
-        </Grid>
+        </div>
 
-        <Grid id="landing-contact-us" className="landing-contact-us-container">
+        <div id="landing-contact-us" className="landing-contact-us-container">
           <div className="landing-wrapper">
             <h1 className="landing-contact-us-title">MetKnow</h1>
             <p className="landing-contact-us-text">
@@ -247,23 +305,20 @@ export default class App extends React.Component {
               </a>
             </div>
           </div>
-        </Grid>
-
-        <Grid className="landing-footer-container">
-          <Grid container>
-            <Link href={{ pathname: '/privacy-policy'}}>
-              <a className="landing-footer-link">
-                Privacy Policy
-              </a>
-            </Link>
-            <Link href={{ pathname: '/terms-of-use'}}>
-              <a className="landing-footer-link">
-                Terms of use
-              </a>
-            </Link>
-            <p className="landing-footer-copyright">© 2018 MetKnow</p>
-          </Grid>
-        </Grid>
+        </div>
+        <div className="landing-footer-container">
+          <Link href={{ pathname: '/privacy-policy'}}>
+            <a className="landing-footer-link">
+              Privacy Policy
+            </a>
+          </Link>
+          <Link href={{ pathname: '/terms-of-use'}}>
+            <a className="landing-footer-link">
+              Terms of use
+            </a>
+          </Link>
+          <p className="landing-footer-copyright">© 2018 MetKnow</p>
+        </div>
       </div>
     );
   }
