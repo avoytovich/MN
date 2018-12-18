@@ -32,11 +32,11 @@ import {changeQuery} from "services/serverService";
 
   handleSubmit: async (values, { props }) => {
     try {
-      await signIn(values)
-      await getProfile()
-      Router.push({
-        pathname: '/manage-groups'
-      })
+     const data =  await signIn(values);
+       await getProfile();
+        Router.push({
+          pathname: data.newUser ? '/edit-profile' : '/manage-groups'
+        })
     } catch (e) {
       let message = 'Error';
       if(e.response)
