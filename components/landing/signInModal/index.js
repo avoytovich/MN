@@ -6,14 +6,17 @@ import { getProfile } from 'actions/profile'
 import { toggleSnackbar } from 'actions/snackbar'
 import CloseIcon from '@material-ui/icons/Close';
 import * as Yup from 'yup';
+
 import { connect } from 'react-redux';
 import { createGroup } from '../../../actions/groups';
 import Router from 'next/router'
+import { withRouter } from 'next/router';
 import { wrapField } from 'services/materialformik';
-import style from '../styles'
+import '../style.sass';
 
-const styles = theme => (style);
+import {changeQuery} from "services/serverService";
 
+@withRouter
 @connect(
   null,
   { toggleSnackbar }
@@ -22,8 +25,7 @@ const styles = theme => (style);
   validationSchema: Yup.object().shape({
     Email: Yup.string()
       .email('Invalid email')
-      .required('Required field')
-      ,
+      .required('Required field'),
     Password: Yup.string()
       .required('Required')
   }),
@@ -52,14 +54,12 @@ const styles = theme => (style);
   },
 
 })
-@withStyles(styles)
 export default class IconModal extends Component {
   render() {
-    const { classes, handleBlur, handleChange, close, errors, values } = this.props;
+    const { handleBlur, handleChange, close, errors, values } = this.props;
     return (
-      <div className={classes.wrap}>
-        <CloseIcon onClick={() => close()} />
-        <Typography align="center" className={classes.title}>Sign In</Typography>
+      <div className="modal-wrap">
+        <Typography align="center" className="modal-title">Sign In</Typography>
         <Form>
           <Field
             name="Email"
@@ -67,21 +67,33 @@ export default class IconModal extends Component {
             value={values.Email}
             label="Email"
             component={wrapField}
-            className={classes.input}
+            className="modal-input"
           />
           <Field 
             fullWidth
-            className={classes.input}
+            className="modal-input"
             name="Password"
             type="password"
             label="Password"
             value={values.Password}
             component={wrapField}
           />
-          <Typography align="right" className={classes.forgorPassword}>Forgot password?</Typography>
-          <Button type="submit" className={classes.submit}>Sign in</Button>
-          <Typography align="center" className={classes.haveNotAccount}>Don`t have an account ?
-            <Typography component="a" className={classes.signUp}>Sign up</Typography>
+          <Typography
+            align="right"
+            className="modal-forgot-password"
+            onClick={() => Router.pushRoute(changeQuery(this.props.router, 'modal', 'forgotPassword'))}
+          >
+            Forgot password?
+          </Typography>
+          <Button type="submit" className="modal-submit">Sign in</Button>
+          <Typography align="center" className="modal-have-not-account">Don`t have an account ?
+            <Typography
+              component="a"
+              className="modal-sign-up"
+              onClick={() => Router.pushRoute(changeQuery(this.props.router, 'modal', 'signUp'))}
+            >
+              Sign up
+            </Typography>
           </Typography>
         </Form>
       </div>

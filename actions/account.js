@@ -58,11 +58,10 @@ export async function signOut () {
   }
 }
 
-export async function resetPassword () {
+export async function resetPassword (payload) {
   try {
-    const { email } = JSON.parse(localStorage.getItem('user'))
-    await authedRequest.post('ResetPassword', {email})
-    return Promise.resolve()
+    const { data } = await authedRequest.post('/ResetPassword', payload)
+    return Promise.resolve(data)
   } catch (e) {
     return Promise.reject(e)
   }

@@ -29,6 +29,9 @@ function unauthorizedResponseInterceptor (error) {
   /* handling 401 */
   console.log('error');
   if (!error.response || error.response.status === 401 || error.response.status === 404) {
+    if(error.response.status === 401){
+      localStorage.removeItem('user')
+    }
     Router.push({
       pathname: '/'
     })
