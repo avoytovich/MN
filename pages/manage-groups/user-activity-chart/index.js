@@ -1,6 +1,6 @@
 import { Component, Fragment } from 'react';
-import { Grid, TextField, Button } from '@material-ui/core';
-import ArrowBack from "@material-ui/icons/ArrowBack";
+import { Grid, TextField, Button, InputAdornment } from '@material-ui/core';
+import { ArrowBack, Clear } from "@material-ui/icons";
 import Router from 'next/router';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
@@ -73,12 +73,16 @@ export class UserActivityChart extends Component {
     });
   };
 
+  handleCustomChange = (e) => {
+    this.setState({
+      query: e.target.value,
+      choosenGroup: '...',
+    })
+  }
+
   handleSubmit = (e) => {
     if(e.charCode === 13) {
-      this.setState({
-        query: e.target.value,
-        choosenGroup: '...'
-      });
+      this.GetUserActivityChart_loadAndSaveToProps();
       //const condition = e.target.value;
       //console.log('condition', condition);
       //this.GetUserActivityChart_loadAndSaveToProps(condition);
@@ -94,6 +98,14 @@ export class UserActivityChart extends Component {
   handleFocus = () => {
     document.addEventListener('keypress', this.handleSubmit);
   };
+
+  handleClear = async (e) => {
+    await this.setState({
+      query: '',
+      choosenGroup: '...'
+    });
+    this.GetUserActivityChart_loadAndSaveToProps();
+  }
 
   GetUserActivityChart_loadAndSaveToProps = async () => {
     const { category, query } = this.state;
@@ -136,8 +148,7 @@ export class UserActivityChart extends Component {
 
   componentDidUpdate(prevProps, prevState) {
     const { category, query } = this.state;
-    if (prevState.category != category ||
-      prevState.query != query) {
+    if (prevState.category != category) {
       return this.GetUserActivityChart_loadAndSaveToProps();
     }
   }
@@ -207,12 +218,21 @@ export class UserActivityChart extends Component {
                         className: "field-search-input",
                         onBlur: this.handleBlur,
                         onFocus: this.handleFocus,
+                        endAdornment: (
+                          <InputAdornment variant="filled" position="end">
+                            <Clear
+                              className="endAdornment-search-clear"
+                              onClick={this.handleClear}/>
+                          </InputAdornment>
+                        )
                       }}
                       id="outlined-search"
                       className='field-search'
                       placeholder='Search by Name'
-                      type="search"
-                      /*onChange={(e) => this.handleChange(e)}*/
+                      value={this.state.query}
+                      type="text"
+                      onChange={this.handleCustomChange}
+                      //onChange={this.handleChange('query')}
                       margin="normal"
                       variant="filled"
                     />
