@@ -89,12 +89,13 @@ export class Group extends Component {
   };
 
   render() {
+    //console.log('this.props', this.props);
     const { pathname } = this.props.router;
     const { groupDetails } = this.props;
 
     if (!groupDetails) return null;
     const data = _get(groupDetails, 'data');
-    const quizAvailable = !!data.images.length;
+    const { quizIsAvailable } = data;
     return (
       <Fragment>
         <Layout>
@@ -105,7 +106,7 @@ export class Group extends Component {
                 </Button>
               ]}*/
               actionButtons={[
-                quizAvailable === true ? (
+                quizIsAvailable === true ? (
                   <Link
                     key="link-quiz"
                     route="quiz"
