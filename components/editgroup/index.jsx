@@ -73,13 +73,12 @@ export default class EditGroup extends Component {
   render() {
     const { router, group } = this.props;
     const { handleChange, values, errors, setFieldValue, icon } = this.props;
-    console.log(values);
     const name = get(group, 'name');
     return (
       <Form>
         <SecondPanel
           title="Edit Group"
-          breadCrumb="Manage-groups / Edit group"
+          breadCrumb="Manage Groups / Edit group"
           actionButtons={[
             <Link route="manage-groups">
               <a>

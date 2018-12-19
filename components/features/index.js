@@ -66,8 +66,11 @@ export class Features extends Component {
   componentDidUpdate = (prevProps, prevState) => {
     if(this.props.groupDetails.id !== prevProps.groupDetails.id)
       this.loadAndSaveMembersList();
-    const { groupDetails, router } = this.props;
+    const { groupDetails, router, handleGroup } = this.props;
     const { group } = this.state;
+    if (prevState.group != this.state.group) {
+      handleGroup(group);
+    }
     /*if (group == 'ROOT' && router.query.sub) {
       Router.push({
         pathname: `/manage-groups/group/${groupDetails.id}`
