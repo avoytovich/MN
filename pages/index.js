@@ -2,7 +2,7 @@ import React from 'react';
 import Router from 'next/router';
 import { withRouter } from 'next/router';
 import Link from 'next/link';
-import { Button } from '@material-ui/core';
+import { Button, Grid } from '@material-ui/core';
 import CWAG_Logo from '../static/png/CWAG_Logo.png';
 import HUB_Logo from '../static/jpg/hub-logo.jpg';
 import PDZ_Logo from '../static/gif/phideltatheta.gif';
@@ -20,7 +20,7 @@ import Video from '../static/mp4/long_video.mp4';
 import './style.sass';
 import 'video-react/styles/scss/video-react.scss';
 
-import {changeQuery} from "../services/serverService";
+import { changeQuery } from '../services/serverService';
 import { getNewQuestions } from '../actions/questions';
 import { getLocale } from 'services/serverService';
 
@@ -32,15 +32,15 @@ export default class App extends React.Component {
   };
 
   handleClick = event => {
-      this.setState({ anchorEl: event.currentTarget });
+    this.setState({ anchorEl: event.currentTarget });
   };
 
   handleClose = () => {
     this.setState({ anchorEl: null });
   };
 
-  componentDidMount(){
-    this.setState({isAuthed : !!getLocale('token')})
+  componentDidMount() {
+    this.setState({ isAuthed: !!getLocale('token') });
   }
 
   render() {
@@ -48,22 +48,19 @@ export default class App extends React.Component {
     const open = Boolean(anchorEl);
     return (
       <div className="landing-container">
-        <div className="landing-header" >
-          <div className="landing-logo-container" >
-              <div className="landing-logo" />
-              <h1 className="landing-logo-title">MetKnow</h1>
+        <div className="landing-header">
+          <div className="landing-logo-container">
+            <div className="landing-logo" />
+            <h1 className="landing-logo-title">MetKnow</h1>
           </div>
-          <div className="landing-auth-container" >
+          <div className="landing-auth-container">
             <IconButton
               aria-label="More"
               aria-owns={open ? 'landing-menu' : null}
               aria-haspopup="true"
               onClick={this.handleClick}
-              className="landing-menu"
-            >
-              <MenuIcon
-                className="landing-hamburger"
-              />
+              className="landing-menu">
+              <MenuIcon className="landing-hamburger" />
             </IconButton>
             <Menu
               id="landing-menu"
@@ -74,77 +71,94 @@ export default class App extends React.Component {
                 style: {
                   width: 110
                 }
-              }}
-            >
-              {isAuthed
-                ? (
-                  <Link href={{ pathname: '/manage-groups'}}>
-                  <MenuItem onClick={this.handleClose}>
-                    Groups
+              }}>
+              {isAuthed ? (
+                <Link href={{ pathname: '/manage-groups' }}>
+                  <MenuItem onClick={this.handleClose}>Groups</MenuItem>
+                </Link>
+              ) : (
+                <>
+                  <MenuItem
+                    onClick={() =>
+                      Router.pushRoute(
+                        changeQuery(this.props.router, 'modal', 'signIn')
+                      )
+                    }>
+                    Sign In
                   </MenuItem>
-                  </Link>
-                )
-                : (
-                  <>
-                    <MenuItem onClick={() => (Router.pushRoute(changeQuery(this.props.router, 'modal', 'signIn')))}>
-                      Sign In
-                    </MenuItem>
-                    <MenuItem onClick={() => (Router.pushRoute(changeQuery(this.props.router, 'modal', 'signUp')))}>
-                      Sign Up
-                    </MenuItem>
-                  </>
-
-                )
-
-              }
-
+                  <MenuItem
+                    onClick={() =>
+                      Router.pushRoute(
+                        changeQuery(this.props.router, 'modal', 'signUp')
+                      )
+                    }>
+                    Sign Up
+                  </MenuItem>
+                </>
+              )}
             </Menu>
 
-            {isAuthed
-                  ? (
-                <Link href={{ pathname: '/manage-groups'}}>
-                  <p
-                    className="landing-auth-btn"
-                    onClick={() => (Router.pushRoute(changeQuery(this.props.router, 'modal', 'signIn')))}
-                  >
-                    Groups
-                  </p>
-                </Link>
-                )
-                : (
-                  <>
-                    <p
-                      className="landing-auth-btn"
-                      onClick={() => (Router.pushRoute(changeQuery(this.props.router, 'modal', 'signIn')))}
-                    >
-                      Sign In
-                    </p>
-                    <p
-                      className="landing-auth-btn"
-                      onClick={() => (Router.pushRoute(changeQuery(this.props.router, 'modal', 'signUp')))}
-                    >
-                      Sign Up
-                    </p>
-                  </>
-
-                )
-
-            }
+            {isAuthed ? (
+              <Link href={{ pathname: '/manage-groups' }}>
+                <p
+                  className="landing-auth-btn"
+                  onClick={() =>
+                    Router.pushRoute(
+                      changeQuery(this.props.router, 'modal', 'signIn')
+                    )
+                  }>
+                  Groups
+                </p>
+              </Link>
+            ) : (
+              <>
+                <p
+                  className="landing-auth-btn"
+                  onClick={() =>
+                    Router.pushRoute(
+                      changeQuery(this.props.router, 'modal', 'signIn')
+                    )
+                  }>
+                  Sign In
+                </p>
+                <p
+                  className="landing-auth-btn"
+                  onClick={() =>
+                    Router.pushRoute(
+                      changeQuery(this.props.router, 'modal', 'signUp')
+                    )
+                  }>
+                  Sign Up
+                </p>
+              </>
+            )}
           </div>
         </div>
         <div className="landing-top-container">
           <div className="landing-wrapper">
-            <h1 className="landing-top-title">
-              Build a stronger community in your organization
-            </h1>
-            <div className="landing-top-btns-container">
-              <Button className="landing-white-btn" href="#video">
-                Learn More
-              </Button>
-              <Button className="landing-green-btn" href="#landing-contact-us">
-                Contact Us For a Demo
-              </Button>
-            </div>
+            <Grid container direction="row">
+              <Grid item>
+                <h1 className="landing-top-title">
+                  Build a stronger community in your organization
+                </h1>
+                <div className="landing-top-btns-container">
+                  <Button className="landing-white-btn" href="#video">
+                    Learn More
+                  </Button>
+                  <Button
+                    className="landing-green-btn"
+                    href="#landing-contact-us">
+                    Contact Us For a Demo
+                  </Button>
+                </div>
+              </Grid>
+              <Grid item>
+                <img
+                  className="landing-top-screenshot"
+                  src="/static/png/landing-bg.png"
+                />
+              </Grid>
+            </Grid>
           </div>
         </div>
         <div className="landing-introducing-container">
@@ -162,11 +176,11 @@ export default class App extends React.Component {
             </div>
             <div className="landing-introducing-bottom">
               <div className="landing-introducing-bottom-text-container">
-                  <h1 className="landing-description">
-                    With our gamified process, the members of your organizations
-                    now have a tool in their pocket to learn everyone’s name.
-                  </h1>
-                  <Button className="landing-green-btn">Request a demo</Button>
+                <h1 className="landing-description">
+                  With our gamified process, the members of your organizations
+                  now have a tool in their pocket to learn everyone’s name.
+                </h1>
+                <Button className="landing-green-btn">Request a demo</Button>
               </div>
               <img
                 className="landing-introducing-right-img"
@@ -307,15 +321,11 @@ export default class App extends React.Component {
           </div>
         </div>
         <div className="landing-footer-container">
-          <Link href={{ pathname: '/privacy-policy'}}>
-            <a className="landing-footer-link">
-              Privacy Policy
-            </a>
+          <Link href={{ pathname: '/privacy-policy' }}>
+            <a className="landing-footer-link">Privacy Policy</a>
           </Link>
-          <Link href={{ pathname: '/terms-of-use'}}>
-            <a className="landing-footer-link">
-              Terms of use
-            </a>
+          <Link href={{ pathname: '/terms-of-use' }}>
+            <a className="landing-footer-link">Terms of use</a>
           </Link>
           <p className="landing-footer-copyright">© 2018 MetKnow</p>
         </div>

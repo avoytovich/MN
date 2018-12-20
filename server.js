@@ -29,4 +29,4 @@ app.prepare().then(() => {
     });
 });
 
-//API_HOST=http://18.217.30.162
+//API_HOST=localhost
