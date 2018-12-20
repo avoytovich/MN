@@ -101,7 +101,6 @@ export default (state = initialState, action: any) => {
           moment(group.dateOfLastUpdate).unix()
         )
       );
-      console.log(filtered);
       return {
         ...state,
         groups: filtered

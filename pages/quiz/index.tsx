@@ -1,5 +1,5 @@
 import * as React from 'react';
-import {
+import Router, {
   withRouter,
   WithRouterProps,
   SingletonRouter,
@@ -20,6 +20,7 @@ interface Props {
 
 class Quiz extends React.Component<Props> {
   render() {
+    //console.log('this.props', this.props);
     const query = this.props.router.query as ThreeStringProps;
     return (
       <MainErrorBoundary>
@@ -34,13 +35,17 @@ class Quiz extends React.Component<Props> {
                     key={'quiz-progress'} />
                 ]}
                 actionButtons={[
-                  <Link route="group" params={{ id: query.id }} key={'buttonone'}>
+                  //<Link route="group" params={{ id: query.id }} key={'buttonone'}>
                     <a>
-                      <Button variant="outlined" color="primary">
+                      <Button
+                        variant="outlined"
+                        color="primary"
+                        onClick={() => Router.back()}
+                      >
                         Back
                     </Button>
                     </a>
-                  </Link>
+                  //</Link>
                 ]}
               />
               <QuizShow

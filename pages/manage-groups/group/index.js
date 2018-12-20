@@ -31,6 +31,11 @@ const mapStateToProps = ({ runtime }) => ({
 @withRouter
 @loading()
 export class Group extends Component {
+
+  state={
+    group: ''
+  };
+
   componentDidMount() {
     this.GetGroupDetails_loadAndSaveToProps();
   }
@@ -88,13 +93,19 @@ export class Group extends Component {
     return path.charAt(0).toUpperCase() + path.substring(1);
   };
 
-  render() {
-    const { pathname } = this.props.router;
-    const { groupDetails } = this.props;
+  handleGroup = (group) => this.setState({ group });
 
+  render() {
+    //console.log('this.props', this.props);
+    //console.log('this.state', this.state);
+    const { pathname } = this.props.router;
+    const { groupDetails, router } = this.props;
+    const { group } = this.state;
     if (!groupDetails) return null;
     const data = _get(groupDetails, 'data');
-    const quizAvailable = !!data.images.length;
+    const { quizIsAvailable } = data;
+    const subgroups = _get(groupDetails, 'data.subgroups');
+    const currentGroup = subgroups.filter(item => item.name === group);
     return (
       <Fragment>
         <Layout>
@@ -105,12 +116,12 @@ export class Group extends Component {
                 </Button>
               ]}*/
               actionButtons={[
-                quizAvailable === true ? (
+                quizIsAvailable === true ? (
                   <Link
                     key="link-quiz"
                     route="quiz"
                     params={{
-                      id: data.id
+                      id: currentGroup[0] && currentGroup[0]['id'] || data.id
                     }}>
                     <a>
                       <Button
@@ -129,7 +140,7 @@ export class Group extends Component {
               title="Group Content"
             />
           </div>
-          <Features  groupDetails={data} />
+          <Features  groupDetails={data} handleGroup={this.handleGroup}/>
         </Layout>
       </Fragment>
     );
