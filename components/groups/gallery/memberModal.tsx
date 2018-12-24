@@ -1,6 +1,9 @@
 import * as React from 'react';
 import { Fragment } from 'react';
-import { Avatar, Typography, Grid, List, ListItem, ListItemText, ListItemSecondaryAction, IconButton, Icon } from '@material-ui/core';
+import Router from 'next/router';
+import { Avatar, Typography, Grid, List, ListItem, ListItemText, IconButton, Icon } from '@material-ui/core';
+import Button from './../../material-wrap/button';
+import { myRoleIs } from "../../../services/accountService";
 import './modal.sass';
 import { Member, Question } from 'actions/members';
 import map from 'lodash/map';
@@ -35,7 +38,9 @@ const keys = [
         id: 'aboutme',
         label: 'About me'
     },
-]
+];
+
+const isAdmin = myRoleIs();
 
 const MemberModal: React.SFC<MemberProps> = ({ modalProps, close }) => (
     <div className="wrapper-modal">
@@ -70,6 +75,19 @@ const MemberModal: React.SFC<MemberProps> = ({ modalProps, close }) => (
                         ))
                     }
                 </List>
+                {isAdmin && (<Button
+                  className="btn-edit-profile"
+                  variant="contained"
+                  color="secondary"
+                  onClick={() => (
+                    Router.push({
+                      pathname: '/edit-member',
+                      query: {memberId: modalProps.id}
+                    })
+                  )}
+                >
+                  Edit Profile
+                </Button>)}
             </Grid>
         </Grid>
 
