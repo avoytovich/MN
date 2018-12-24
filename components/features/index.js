@@ -354,8 +354,7 @@ export class Features extends Component {
                     return (
                       <Grid key={index} item xs={6} sm={3}>
                         <div
-                          onClick={ !isAdmin ? this.handleClick(id):
-                            () => Router.push({pathname: '/edit-member', query: { memberId: id }}) }
+                          onClick={ this.handleClick(id) }
                           className="grid-info" >
                             <div
                               style={{
