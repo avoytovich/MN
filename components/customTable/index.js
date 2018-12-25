@@ -46,8 +46,8 @@ function getSorting(order, orderBy) {
 
 const rows = [
   { id: 'name', numeric: false, disablePadding: true, label: 'NAME' },
-  { id: 'group', numeric: true, disablePadding: false, label: 'NAME COMMUNITY' },
-  { id: 'position', numeric: true, disablePadding: false, label: 'TITLE' },
+  { id: 'group', numeric: true, disablePadding: false, label: 'GROUP' },
+  { id: 'position', numeric: true, disablePadding: false, label: 'POSITION' },
   { id: 'scores', numeric: true, disablePadding: false, label: 'TOP SCORES' },
   { id: 'quizzess', numeric: true, disablePadding: false, label: 'QUIZZESS TAKEN' }
 ];
@@ -84,7 +84,7 @@ class EnhancedTableHead extends React.Component {
                       direction={order}
                       onClick={this.createSortHandler(row.id)}
                     >
-                      {row.label}
+                      {category == 'SUBGROUPS' && row.id == 'group' ? 'SUBGROUP' : row.label}
                     </TableSortLabel>
                   </Tooltip>
                 </TableCell>

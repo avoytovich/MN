@@ -44,14 +44,14 @@ const isAdmin = myRoleIs();
 
 const MemberModal: React.SFC<MemberProps> = ({ modalProps, close }) => (
     <div className="wrapper-modal">
-        <IconButton className="close-btn" onClick={close}><Close/></IconButton>
         <Grid container className="grid" spacing={0}>
             <Grid item sm={7} xs={12}>
-                <Avatar className="avatar" src={modalProps.imageContent? modalProps.imageContent.mediumImage: ''} />
+              <IconButton className="close-btn" onClick={close}><Close/></IconButton>
+              <Avatar className="avatar" src={modalProps.imageContent? modalProps.imageContent.mediumImage: ''} />
             </Grid>
             <Grid className="info" item sm={5} xs={12}>
                 <Typography align="right" className="text fname">
-                    {modalProps.firstName}
+                    {`${modalProps.firstName} ${modalProps.lastName}`}
                 </Typography>
                 <hr className="hline" />
                 {
