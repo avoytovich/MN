@@ -105,7 +105,8 @@ export class Group extends Component {
     const data = _get(groupDetails, 'data');
     const subgroups = _get(groupDetails, 'data.subgroups');
     const currentGroup = subgroups.filter(item => item.name === group);
-    const { quizIsAvailable } = currentGroup[0];
+    const quizIsAvailable = group === 'ROOT' ?
+        _get(groupDetails, 'data.quizIsAvailable') : _get(currentGroup[0], 'quizIsAvailable');
     return (
       <Fragment>
         <Layout>
