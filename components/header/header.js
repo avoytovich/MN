@@ -80,7 +80,6 @@ export default class Header extends Component {
     this.setState({
       isAdmin: myRoleIs(),
       isNewUser: isNewUser(),
-      previewImage
       previewImage,
       title
     })
@@ -89,8 +88,7 @@ export default class Header extends Component {
 
   render() {
     const { classes } = this.props;
-    const { isNewUser, previewImage } = this.state;
-    const { previewImage, title } = this.state
+    const { isNewUser, previewImage , title } = this.state;
     const mobileLinks = this.getLink().slice(1)
 
     return (

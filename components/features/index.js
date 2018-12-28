@@ -336,8 +336,7 @@ export class Features extends Component {
                   direction="row"
                   justify="flex-start"
                   className="infinite-scroll-component-list">
-                  { isAdmin && <Grid item xs={6} sm={3}>
-                  { myRoleIs() && <Grid item  xs={12} sm={6} md={3}>
+                  { isAdmin && <Grid item xs={12} sm={6} md={3}>
                     <div className="grid-info">
                       <Link href={{ pathname: '/edit-member', query: { groupId: groupDetails.id } }}>
                         <div
@@ -364,14 +363,10 @@ export class Features extends Component {
                       id
                     } = item;
                     return (
-                      <Grid key={index} item xs={6} sm={3}>
+                      <Grid key={index} item xs={12} sm={6} md={3}>
                         <div
                           onClick={ this.handleClick(id) }
                           className="grid-info" >
-                      <Grid key={index} item xs={12} sm={6} md={3}>
-                        <div onClick={myRoleIs() === false? this.handleClick(id): 
-                          () => Router.push({pathname: '/edit-member', query: { memberId: id }})
-                        } className="grid-info">
                             <div
                               style={{
                                 backgroundImage: `url(${_get(imageContent, 'mediumImage') ||
