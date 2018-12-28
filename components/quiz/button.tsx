@@ -41,8 +41,8 @@ const styles = (theme: Theme) => createStyles({
             backgroundColor: 'green',
         },
         '&:after': {
-            width: 25,
-            height: 25,
+            width: 20,
+            height: 20,
             position: 'relative',
             content: "\'\'",
             background: 'url(/static/svg/check.svg)',
@@ -70,6 +70,42 @@ const styles = (theme: Theme) => createStyles({
     },
     neutral: {
            
+    },
+    [`@media (max-width:960px)`]: {
+      button: {
+        width: '100%',
+        fontSize: 16,
+        height: 36,
+        color: '#748191',
+        '& span': {
+          display: 'block',
+          float: 'left',
+          paddingLeft: 20,
+        },
+        '&:hover': {
+          backgroundColor: 'initial'
+        }
+      },
+      letter: {
+        fontSize: 20,
+        fontWeight: 400,
+        top: 0,
+        width: 36,
+        bottom: 0,
+        height: '100%',
+        left: 0,
+        position: 'absolute',
+        textAlign: 'center',
+        color: '#fff',
+        paddingTop: 6,
+        background: '#748191',
+        borderRadius: 23
+      },
+      wrong: {
+        '&:after': {
+          transform: 'translateY(-3px)'
+        }
+      },
     }
 });
 

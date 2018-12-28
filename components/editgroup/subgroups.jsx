@@ -10,7 +10,8 @@ import {
   Grid,
   TextField,
   Icon,
-  withStyles
+  withStyles,
+  Hidden
 } from '@material-ui/core';
 import Edit from '@material-ui/icons/Edit';
 import Trash from '@material-ui/icons/Delete';
@@ -28,6 +29,7 @@ import { bindActionCreators } from 'redux';
 import withModal from 'services/decorators/withModal';
 import DeleteModal from './deleteModal';
 import { updateSpecData } from 'actions/updateData';
+import './editgroup.sass'
 
 @connect(
   null,
@@ -123,12 +125,15 @@ export default class Subgroups extends Component {
           </Grid>
           <Grid item xs={2}>
             <Button
-              className={classes.addButton}
+              className={`${classes.addButton} edit-group-btn`}
               variant="contained"
               onClick={this.addSubgroup}
-              color="primary">
+              color="primary"
+            >
               <div className={classes.plusIcon} />
-              <Typography className={classes.addText}>add</Typography>
+              <Hidden mdDown>
+                <Typography className={classes.addText}>add</Typography>
+              </Hidden>
             </Button>
           </Grid>
           <Grid item xs={12}>
