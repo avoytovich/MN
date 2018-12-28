@@ -30,6 +30,21 @@ const styles = theme => ({
     display: 'block',
     position: 'relative',
     margin: '0 auto'
+  },
+  [`@media (max-width:960px)`]: {
+    item: {
+      flexDirection: 'column',
+      paddingTop: 15,
+      paddingBottom: 15,
+      paddingLeft: 0,
+      paddingRight: 0,
+      minHeight: 'auto',
+    },
+    list: {
+      paddingTop: 0,
+      paddingBottom: 0,
+      minHeight: 'calc(100vh - 451px)'
+    },
   }
 });
 

@@ -274,7 +274,7 @@ export default class Profile extends Component{
           <Grid className={classes.wrap}>
             <Form >
               <Grid container>
-                  <Grid container justify="center">
+                  <Grid  className={classes.profileTop} container  justify="center">
                     <img
                       src={imageContent ? imageContent.mediumImage : DefaultAvatar}
                       className="profile-img"
@@ -309,7 +309,7 @@ export default class Profile extends Component{
                     </Grid>
                   </Grid>
                   <Grid className={classes.wrapInputs} container justify="center">
-                    <Grid item xs={6} className={classes.leftInputs}>
+                    <Grid item xs={12} md={6} className={classes.leftInputs}>
                       <Grid container direction="column">
                         {leftTopInputs}
                         <h1 className="profile-input-title">Your Gender</h1>
@@ -334,7 +334,7 @@ export default class Profile extends Component{
                         {leftBottomInputs}
                       </Grid>
                     </Grid>
-                    <Grid item xs={6} className={classes.rightInputs}>
+                    <Grid item xs={12} md={6} className={classes.rightInputs}>
                       <Grid container direction="column">
                         {rightInputs}
                       </Grid>

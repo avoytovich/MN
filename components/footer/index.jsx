@@ -9,7 +9,7 @@ export default class Footer extends PureComponent {
     return (
       <footer className="footer-wrapped">
         <div className="main d-flex ai-center">
-          <div className="d-flex ai-center">
+          <div className="d-flex ai-center logo-container">
             <div
               style={{ backgroundImage: 'url(/static/png/logo-image.png)' }}
               className="logo"

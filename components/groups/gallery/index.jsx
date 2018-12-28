@@ -97,7 +97,8 @@ const settings = {
         slidesToShow: 3,
         slidesToScroll: 3,
         infinite: true,
-        dots: true
+        dots: true,
+        arrows: false
       }
     },
     {
@@ -105,14 +106,16 @@ const settings = {
       settings: {
         slidesToShow: 3,
         slidesToScroll: 3,
-        initialSlide: 2
+        initialSlide: 2,
+        arrows: false
       }
     },
     {
       breakpoint: 480,
       settings: {
         slidesToShow: 1,
-        slidesToScroll: 1
+        slidesToScroll: 1,
+        arrows: false
       }
     }
   ]
@@ -138,7 +141,9 @@ export default class Gallery extends PureComponent {
     const { classes, images, open } = this.props;
 
     return (
-      <div style={{ width: 'calc(100% - 440px)', marginLeft: 25 }}>
+      <div
+        className='gallery-container'
+      >
         <Slider arrows={images.length > 3}  {...settings}>
           {images.map((image, key) => (
             <Card 

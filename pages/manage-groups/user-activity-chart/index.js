@@ -181,7 +181,7 @@ export class UserActivityChart extends Component {
                   onClick={this.handleBack}
                 >
                     <ArrowBack/>
-                    BACK
+                    <span className='button-text'>BACK</span>
                 </Button>
               ]}
               breadCrumb={`Manage Groups / User Activity Chart`}

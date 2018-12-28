@@ -1,6 +1,7 @@
 import { Component, Fragment } from 'react';
-import { Grid, IconButton, TextField, FormControl, MenuItem } from '@material-ui/core';
+import { Grid, IconButton, TextField, FormControl, MenuItem, Collapse  } from '@material-ui/core';
 import CreateIcon from '@material-ui/icons/Create';
+import ArrowIcon from '@material-ui/icons/KeyboardArrowUp'
 import Router, { withRouter } from 'next/router';
 import { Link } from '../../routes';
 import InfiniteScroll from 'react-infinite-scroll-component';
@@ -48,6 +49,7 @@ export class Features extends Component {
   constructor(props) {
     super(props);
     this.state = {
+      open: true,
       offset: 0,
       elements: [],
       search: null,
@@ -201,15 +203,22 @@ export class Features extends Component {
     //console.log('this.props', this.props);
     //console.log('this.state', this.state);
     const { groupDetails, groupMembers } = this.props;
-    const { elements, membersInfo, isAdmin } = this.state;
+    const { elements, membersInfo, isAdmin, open } = this.state;
     if (!groupMembers) return null;
     return (
       <Fragment>
         <div className="features-wrapper">
           <Grid container spacing={0} justify="center">
-            <Grid item xs={8} sm={8}>
+            <Grid item xs={12} sm={12} md={8}>
               <Grid container spacing={0} justify="center" className='container'>
-                <Grid item xs={2} sm={2}>
+                <IconButton
+                  className="search-panel-open"
+                  onClick = { () => { this.setState({open: !open}) }}
+                  style = {{   transform : !open ? 'rotate3d(1, 0, 0, 180deg)' : 'rotate3d(1, 0, 0, 0)' }}
+                >
+                  <ArrowIcon/>
+                </IconButton>
+                <Grid item xs={false} sm={3} md={2}>
                   <div
                     style={{
                       backgroundImage: `url('/static/svg/group-features.svg')`,
@@ -217,7 +226,7 @@ export class Features extends Component {
                     className="icon"
                   />
                 </Grid>
-                <Grid item xs={6} sm={6}>
+                <Grid item xs={false} sm={9} md={6}>
                   <div className='group'>
                     <p className='name'>{groupDetails.name}</p>
                       { isAdmin &&
@@ -233,53 +242,55 @@ export class Features extends Component {
                     <p className='description'>{groupDetails.description}</p>
                   </div>
                 </Grid>
-                <Grid item xs={4} sm={4}>
-                  <FormControl>
+                <Collapse in={open}>
+                  <Grid item xs={12} sm={12} md={4}>
+                    <FormControl>
+                      <TextField
+                        InputProps={{
+                          className: "field-search-input",
+                          onBlur: this.handleBlur,
+                          onFocus: this.handleFocus,
+                        }}
+                        id="outlined-search"
+                        className='field-search'
+                        placeholder='Search in Group'
+                        type="search"
+                        /*onChange={(e) => this.handleChange(e)}*/
+                        margin="normal"
+                        variant="filled"
+                      />
+                    </FormControl>
                     <TextField
+                      label="Sort By:"
+                      id="outlined-select"
                       InputProps={{
                         className: "field-search-input",
-                        onBlur: this.handleBlur,
-                        onFocus: this.handleFocus,
+                        onChange: (e) => this.loadAndSaveMembersList(e.target.value)
                       }}
-                      id="outlined-search"
-                      className='field-search'
-                      placeholder='Search in Group'
-                      type="search"
-                      /*onChange={(e) => this.handleChange(e)}*/
+                      select
+                      className='field-select'
+                      value={this.state.orderBy}
+                      onChange={this.handleChange('orderBy')}
                       margin="normal"
-                      variant="filled"
-                    />
-                  </FormControl>
-                  <TextField
-                    label="Sort By:"
-                    id="outlined-select"
-                    InputProps={{
-                      className: "field-search-input",
-                      onChange: (e) => this.loadAndSaveMembersList(e.target.value)
-                    }}
-                    select
-                    className='field-select'
-                    value={this.state.orderBy}
-                    onChange={this.handleChange('orderBy')}
-                    margin="normal"
-                    variant="outlined"
-                  >
-                    {orderBy.map(option => (
-                      <ClassesNesting key={option.value} value={option.value}>
-                        {option.label}
-                      </ClassesNesting>
-                    ))}
-                  </TextField>
-                </Grid>
+                      variant="outlined"
+                    >
+                      {orderBy.map(option => (
+                        <ClassesNesting key={option.value} value={option.value}>
+                          {option.label}
+                        </ClassesNesting>
+                      ))}
+                    </TextField>
+                  </Grid>
+                </Collapse>
               </Grid>
             </Grid>
           </Grid>
         </div>
         <div className="features-wrapper-addition">
           <Grid container spacing={0} justify="center">
-            <Grid item xs={8} sm={8}>
+            <Grid item xs={12} sm={12} md={8}>
               <Grid container spacing={0} justify="center" className='container'>
-                <Grid item xs={6} sm={6} className="user-activity-left">
+                <Grid item xs={12} sm={12} md={6} className="user-activity-left">
                   <TextField
                     label="Choose View"
                     id="outlined-select"
@@ -326,6 +337,7 @@ export class Features extends Component {
                   justify="flex-start"
                   className="infinite-scroll-component-list">
                   { isAdmin && <Grid item xs={6} sm={3}>
+                  { myRoleIs() && <Grid item  xs={12} sm={6} md={3}>
                     <div className="grid-info">
                       <Link href={{ pathname: '/edit-member', query: { groupId: groupDetails.id } }}>
                         <div
@@ -356,6 +368,10 @@ export class Features extends Component {
                         <div
                           onClick={ this.handleClick(id) }
                           className="grid-info" >
+                      <Grid key={index} item xs={12} sm={6} md={3}>
+                        <div onClick={myRoleIs() === false? this.handleClick(id): 
+                          () => Router.push({pathname: '/edit-member', query: { memberId: id }})
+                        } className="grid-info">
                             <div
                               style={{
                                 backgroundImage: `url(${_get(imageContent, 'mediumImage') ||

@@ -3,46 +3,34 @@ import { Typography, Grid, withStyles, createStyles, WithStyles, Theme } from '@
 
 import BreadCrumbs from './breadcrumbs';
 
-interface PanelProps extends WithStyles<typeof styles> {
+import './index.sass'
+
+interface PanelProps {
   title: string,
   breadCrumb: string,
   actionButtons?: JSX.Element[],
   centerButtons?: JSX.Element[],
 }
 
-const styles = (theme: Theme) => createStyles({
-  root: {
-    height: 74,
-    backgroundCcolor: '#fafafa',
-    borderBottom: '1px solid rgba(0,0,0,0.1)'
-  },
-  title: {
-    marginLeft: 37
-  },
-  actionButtons: {
-    paddingRight: 20
-  }
-})
-
 class SecondPanel extends Component<PanelProps> {
   render() {
-    const { title, breadCrumb, actionButtons = [], centerButtons = [], classes } = this.props;
+    const { title, breadCrumb, actionButtons = [], centerButtons = [] } = this.props;
 
     return (
-      <Grid container className={classes.root} alignItems="center">
-        <Grid item xs={4} sm={4}>
-          <div className={classes.title}>
-            <Typography variant="title">{title}</Typography>
+      <Grid container className="second-panel-container" alignItems="center">
+        <Grid item xs={6} sm={6} md={4}>
+          <div className="second-panel-title">
+            <Typography noWrap variant="title">{title}</Typography>
             <BreadCrumbs text={breadCrumb} />
           </div>
         </Grid>
         {
           centerButtons.length ?
             <Fragment>
-              <Grid item xs={4} sm={4} className="custom-button">
+              <Grid item xs={3} sm={3} md={4} className="custom-button">
                 {centerButtons.map((Element, k) => <Fragment key={`center-${k}`}>{Element}</Fragment>)}
               </Grid>
-              <Grid item xs={4} sm={4} className={classes.actionButtons} >
+              <Grid item xs={3} sm={3} md={4} className="second-panel-action-buttons" >
                 <div style={{
                   display: 'flex',
                   justifyContent: 'flex-end',
@@ -53,7 +41,7 @@ class SecondPanel extends Component<PanelProps> {
               </Grid>
             </Fragment>
             :
-            <Grid item xs={8} sm={8} className={classes.actionButtons} >
+            <Grid item xs={6} sm={6} md={8} className="second-panel-action-buttons">
               <div style={{
                 display: 'flex',
                 justifyContent: 'flex-end',
@@ -69,4 +57,4 @@ class SecondPanel extends Component<PanelProps> {
   }
 }
 
-export default withStyles(styles)(SecondPanel);
+export default SecondPanel;
