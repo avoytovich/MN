@@ -1,11 +1,11 @@
 import * as React from 'react';
 import { Grid, Button } from '@material-ui/core';
 import Layout from 'components/MyLayout';
-import Secondpanel from 'components/secondpanel';
+import Secondpanel from 'components/secondpanel/index';
 import { connect } from 'react-redux';
-import SearchMemberForm from 'components/SearchMemberForm';
-import Table from 'components/Table';
-import { getInvites } from '../../actions/invites';
+import SearchMemberForm from 'components/SearchMemberForm/index';
+import Table from 'components/Table/index';
+import { getInvites } from '../../../actions/invites';
 
 const data = [
 {
