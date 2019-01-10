@@ -48,8 +48,12 @@ export default class Profile extends Component {
   }
 
   handleSuccessRequest = values => {
-    //TODO: Add handling first using app
-    Router.back()
+    const user = JSON.parse(localStorage.getItem('user'))
+    if(user && user.newUser){
+      Router.push('/manage-groups');
+    } else {
+      Router.back();
+    }
   }
 
 

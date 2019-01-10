@@ -87,11 +87,6 @@
     "lint-staged": "^8.1.0",
     "prettier": "^1.15.3"
   },
-  "husky": {
-    "hooks": {
-      "pre-commit": "lint-staged"
-    }
-  },
   "lint-staged": {
     "*.{js,jsx,ts,tsx}": [
       "eslint --fix",
