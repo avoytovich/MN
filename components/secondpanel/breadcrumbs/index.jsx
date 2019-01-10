@@ -2,11 +2,22 @@ import React, { Component, Fragment } from 'react';
 import Link from 'next/link';
 import Router, { withRouter } from 'next/router';
 import { Typography } from '@material-ui/core';
+import { isNewUser } from "../../../services/accountService";
 
 import './breadcrumbs.sass';
 
 @withRouter
 export default class BreadCrumbs extends Component {
+
+  state = {
+    isNewUser: false,
+  }
+
+  componentDidMount() {
+    this.setState({
+      isNewUser: isNewUser(),
+    })
+  }
 
   handlePath = (el, key) => {
     const { text } = this.props;
@@ -18,6 +29,7 @@ export default class BreadCrumbs extends Component {
 
   render() {
     const { text } = this.props;
+    const { isNewUser } = this.state;
     const path = text.split('/');
     return (
       <Fragment>
@@ -27,8 +39,12 @@ export default class BreadCrumbs extends Component {
         >
           {
             path.slice(0, path.length).map((el, key) => (
-              <a style={{margin: 0, verticalAlign: 'baseline'}} onClick={() => this.handlePath(el, key)}>
-                <Typography className="title-chunk">
+              <a style={{margin: 0, verticalAlign: 'baseline'}}
+                 onClick={() => {
+                   isNewUser ? null : this.handlePath(el, key);
+                }}
+              >
+                <Typography className={isNewUser ? 'title-chunk-new-user' : "title-chunk"}>
                   {`${el}${key !== path.length - 1 ? `/` : ''}`}
                 </Typography>
               </a>

@@ -33,7 +33,7 @@ const mapStateToProps = ({ runtime }) => ({
 export class Group extends Component {
 
   state={
-    group: ''
+    group: 'ROOT'
   };
 
   componentDidMount() {
@@ -48,7 +48,7 @@ export class Group extends Component {
     const {
       query: { id }
     } = this.props.router;
-    
+
     const resp = await this.props.loadData(
       group.get(
         {
@@ -103,9 +103,10 @@ export class Group extends Component {
     const { group } = this.state;
     if (!groupDetails) return null;
     const data = _get(groupDetails, 'data');
-    const { quizIsAvailable } = data;
     const subgroups = _get(groupDetails, 'data.subgroups');
     const currentGroup = subgroups.filter(item => item.name === group);
+    const quizIsAvailable = group === 'ROOT' ?
+        _get(groupDetails, 'data.quizIsAvailable') : _get(currentGroup[0], 'quizIsAvailable');
     return (
       <Fragment>
         <Layout>

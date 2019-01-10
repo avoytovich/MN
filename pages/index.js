@@ -15,6 +15,7 @@ import PhoneIcon from '@material-ui/icons/Phone';
 import { IconButton, Menu, MenuItem, Badge } from '@material-ui/core';
 import MenuIcon from '@material-ui/icons/Menu';
 
+import { isNewUser } from "../services/accountService";
 import { Player, BigPlayButton } from 'video-react';
 import Video from '../static/mp4/long_video.mp4';
 import './style.sass';
@@ -28,7 +29,8 @@ import { getLocale } from 'services/serverService';
 export default class App extends React.Component {
   state = {
     anchorEl: null,
-    isAuthed: false
+    isAuthed: false,
+    isNewUser: false,
   };
 
   handleClick = event => {
@@ -40,11 +42,14 @@ export default class App extends React.Component {
   };
 
   componentDidMount(){
-    this.setState({isAuthed : !!getLocale('token')})
+    this.setState({
+      isAuthed: !!getLocale('token'),
+      isNewUser: isNewUser(),
+    })
   }
 
   render() {
-    const { anchorEl, isAuthed } = this.state;
+    const { anchorEl, isAuthed, isNewUser } = this.state;
     const open = Boolean(anchorEl);
     return (
       <div className="landing-container">
@@ -76,7 +81,7 @@ export default class App extends React.Component {
                 }
               }}
             >
-              {isAuthed
+              {isAuthed && !isNewUser
                 ? (
                   <Link href={{ pathname: '/manage-groups'}}>
                   <MenuItem onClick={this.handleClose}>
@@ -100,7 +105,7 @@ export default class App extends React.Component {
 
             </Menu>
 
-            {isAuthed
+            {isAuthed && !isNewUser
                   ? (
                 <Link href={{ pathname: '/manage-groups'}}>
                   <p

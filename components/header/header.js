@@ -13,7 +13,7 @@ import DefaultAvatar from 'static/png/defaultAvatar.png';
 
 import '../../sass/common.sass';
 import './header.sass';
-import { myRoleIs } from "../../services/accountService";
+import { myRoleIs, isNewUser } from "../../services/accountService";
 
 const styles = theme => ({
   appBar: {
@@ -69,6 +69,7 @@ export default class Header extends Component {
   state = {
     previewImage: DefaultAvatar,
     isAdmin: false,
+    isNewUser: false,
   }
 
   getLink = () => {
@@ -81,6 +82,7 @@ export default class Header extends Component {
     const previewImage = get(user, 'profile.imageContent.previewImage')
     this.setState({
       isAdmin: myRoleIs(),
+      isNewUser: isNewUser(),
       previewImage
     })
 
@@ -88,7 +90,7 @@ export default class Header extends Component {
 
   render() {
     const { classes } = this.props;
-    const { previewImage } = this.state
+    const { isNewUser, previewImage } = this.state;
     return (
       <AppBar className={classes.appBar}>
         <Grid alignItems="center" container>
@@ -102,7 +104,7 @@ export default class Header extends Component {
             {this.getLink().map((item, id) => {
               const { route, title, className, variant } = item;
               return (
-                <Link key={id} route={route}>
+                <Link key={id} route={isNewUser ? '' : route}>
                   <a>
                     <Typography className={className || ''} variant={variant}>
                       {title}

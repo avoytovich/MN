@@ -6,7 +6,7 @@ import { getNewQuestions } from 'actions/questions';
 import Router from 'next/router';
 import ChangePasswordModal from 'components/landing/changePasswordModal';
 import withModal from 'services/decorators/withModal';
-import { myRoleIs } from "../../../services/accountService";
+import { myRoleIs, isNewUser } from "../../../services/accountService";
 
 
 // import i18n from '../../../services/decorators/i18n';
@@ -28,11 +28,13 @@ class LongMenu extends React.Component {
     anchorEl: null,
     newQuestions: 0,
     isAdmin: false,
+    isNewUser: false,
   };
 
   componentDidMount() {
     this.setState({
       isAdmin: myRoleIs(),
+      isNewUser: isNewUser(),
     })
   }
 
@@ -63,7 +65,7 @@ class LongMenu extends React.Component {
   }
 
   render() {
-    const { anchorEl, newQuestions, isAdmin } = this.state;
+    const { anchorEl, newQuestions, isAdmin, isNewUser } = this.state;
     const open = Boolean(anchorEl);
     return (
       <>
@@ -86,7 +88,7 @@ class LongMenu extends React.Component {
             },
           }}
         >
-          {!isAdmin && (
+          {!isAdmin && !isNewUser && (
             <>
               <Link href={{ pathname: '/edit-profile'}}>
                 <MenuItem
