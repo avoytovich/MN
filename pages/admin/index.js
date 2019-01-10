@@ -90,7 +90,7 @@ const mapStateToProps = ({ runtime }) => ({
 export class AdminPanel extends Component {
   state = {
     query: '',
-    countSelected: 0,
+    selected: 0,
     //isAdmin: false,
   }
 
@@ -186,14 +186,17 @@ export class AdminPanel extends Component {
     this.props.setData(resp.data, 'joinRequests');
   };
 
-  handleNumSelected = countSelected => this.setState({countSelected});
+  handleNumSelected = (selectInfo, selected) => {
+    console.log('selectInfo', selectInfo);
+    this.setState({selectInfo, selected})
+  };
 
   render() {
     //console.log('this.props', this.props);
     //console.log('this.state', this.state);
     const { joinRequests } = this.props;
-    const { query, countSelected } = this.state;
-    const countSelectedItem = _get(countSelected, 'length');
+    const { query, selected } = this.state;
+    const countSelectedItem = _get(selected, 'length');
     return(
       <Fragment>
         <Layout>

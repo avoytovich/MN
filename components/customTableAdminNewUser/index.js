@@ -16,8 +16,9 @@ import { lighten } from '@material-ui/core/styles/colorManipulator';
 import qs from "qs";
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
+import { get as _get } from 'lodash';
 
-import {group} from "../../services/cruds";
+import { group, organization } from "../../services/cruds";
 import loading from '../../services/decorators/loading';
 import { setData } from '../../actions/updateData';
 import ClassesNesting from '../../components/features/withClassesNesting';
@@ -25,9 +26,9 @@ import ClassesNesting from '../../components/features/withClassesNesting';
 import './customTableAdminNewUser.sass';
 
 let counter = 0;
-function createData(order, firstName, lastName, department, email, group, info, review) {
+function createData(order, firstName, lastName, department, email, group, info, review, requestId) {
   counter += 1;
-  return { id: counter, order, firstName, lastName, department, email, group, info, review };
+  return { id: counter, order, firstName, lastName, department, email, group, info, review, requestId };
 }
 
 function desc(a, b, orderBy) {
@@ -162,6 +163,13 @@ class EnhancedTable extends React.Component {
     selectReview: {
       initial: '...'
     },
+    condition: {
+      initial: false
+    },
+    helperText: {
+      initial: 'Group:'
+    },
+    selectInfo: [],
   };
 
   componentDidUpdate(prevProps, prevState) {
@@ -169,8 +177,8 @@ class EnhancedTable extends React.Component {
     if (data != prevProps.data) {
       let array = [];
       data.forEach((item, id) => {
-        const {firstname, lastname, department, email} = item;
-        array.push(createData(id, firstname, lastname, department, email, null, null, null));
+        const {firstname, lastname, department, email, requestId} = item;
+        array.push(createData(id, firstname, lastname, department, email, null, null, null, requestId));
       });
       this.setState({
         data: array,
@@ -182,8 +190,8 @@ class EnhancedTable extends React.Component {
     const { data } = this.props;
     let array = [];
     data && data.forEach((item, id) => {
-      const { firstname, lastname, department, email } = item;
-      array.push(createData(id, firstname, lastname, department, email, null, null, null));
+      const { firstname, lastname, department, email, requestId } = item;
+      array.push(createData(id, firstname, lastname, department, email, null, null, null, requestId));
     });
     this.setState({
       data: array,
@@ -204,20 +212,57 @@ class EnhancedTable extends React.Component {
 
   handleSelectAllClick = async event => {
     const { handleNumSelected } = this.props;
-    if (event.target.checked) {
+
+    const { data, selected } = this.state;
+    //await this.setState(state => ({ selected: state.data.map(n => n.id) }));
+    data.map(item => {
+      this.handleClick(event, item.id, item.requestId);
+    });
+    //await this.setState(state => ({ selected: state.data.map(n => n.id) }));
+    //handleNumSelected(this.state.selectInfo, this.state.selected);
+
+    /*if (event.target.checked) {
       await this.setState(state => ({ selected: state.data.map(n => n.id) }));
-      handleNumSelected(this.state.selected);
+      if (!this.state.selectInfo[0]) {
+        data.map(item => {
+          this.handleClick(event, item.id, item.requestId);
+        });
+        await this.setState(state => state.data.map(n => {
+          state.condition[n.requestId] = true;
+          state.helperText[n.requestId] = 'required';
+        }));
+        handleNumSelected(this.state.selectInfo);
+      }
       return;
     }
     await this.setState({ selected: [] });
-    handleNumSelected(this.state.selected);
+    if (!this.state.selectInfo[0]) {
+      await this.setState(state => state.data.map(n => {
+        state.condition[n.requestId] = false;
+        state.helperText[n.requestId] = 'Group:';
+      }));
+      handleNumSelected(this.state.selectInfo);
+    }*/
   };
 
-  handleClick = async (event, id) => {
+  handleClick = async (event, id, requestId) => {
     const { handleNumSelected } = this.props;
-    const { selected } = this.state;
+    const { selected, data, selectGroup, selectInfo } = this.state;
     const selectedIndex = selected.indexOf(id);
     let newSelected = [];
+
+    if (!selectGroup[requestId]) {
+      return this.setState({
+        condition: {
+          ...this.state.condition,
+          [requestId]: true
+        },
+        helperText: {
+          ...this.state.helperText,
+          [requestId]: 'required'
+        }
+      });
+    }
 
     if (selectedIndex === -1) {
       newSelected = newSelected.concat(selected, id);
@@ -233,7 +278,51 @@ class EnhancedTable extends React.Component {
     }
 
     await this.setState({ selected: newSelected });
-    handleNumSelected(this.state.selected);
+    const currentData = data.filter(item => item.id === id);
+
+    if (currentData[0] && this.isSelected(id)) {
+      if (selectGroup[requestId] && !selected.length) {
+        await this.setState({
+          selectInfo: [
+            {
+              requestId: currentData[0].requestId,
+              //groupName: selectGroup[currentData[0].requestId].name,
+              groupId: selectGroup[currentData[0].requestId].id
+            }
+          ]
+        });
+      } else {
+        await this.setState({
+          selectInfo: [
+            ...selectInfo,
+            {
+              requestId: currentData[0].requestId,
+              //groupName: selectGroup[currentData[0].requestId].name,
+              groupId: selectGroup[currentData[0].requestId].id
+            }
+          ]
+        });
+      }
+    } else if (currentData[0] && !this.isSelected(id)) {
+      await this.setState({
+        condition: {
+          ...this.state.condition,
+          [requestId]: false
+        },
+        helperText: {
+          ...this.state.helperText,
+          [requestId]: 'Group:'
+        }
+      });
+      const baseSelectInfo = selectInfo.filter(item => item.requestId != currentData[0].requestId)
+      await this.setState({
+        selectInfo: [
+          ...baseSelectInfo,
+        ]
+      });
+    }
+
+    handleNumSelected(this.state.selectInfo, this.state.selected);
   };
 
   handleChangePage = (event, page) => {
@@ -265,14 +354,81 @@ class EnhancedTable extends React.Component {
     this.props.setData(resp.data, 'groups');
   };
 
-  handleChangeGroup = id => event => {
-    this.setState({
+  handleChangeGroup = (id, requestId) => async event => {
+    const { groups, handleNumSelected } = this.props;
+    const { selected } = this.state;
+    const currentGroup = groups.data.filter(item => item.name === event.target.value);
+    const baseSelected = selected.filter(item => item != id);
+    await this.setState({
       selectGroup: {
         ...this.state.selectGroup,
-        [id]: event.target.value,
+        [requestId]: {
+          name: event.target.value,
+          id: currentGroup[0].id,
+        }
+      },
+      selected: [
+        ...baseSelected,
+      ],
+      condition: {
+        ...this.state.condition,
+        [requestId]: false
+      },
+      helperText: {
+        ...this.state.helperText,
+        [requestId]: 'Group:'
       }
     });
+    handleNumSelected(this.state.selectInfo, this.state.selected);
   };
+
+  handleAcceptJoinRequest = async (id, value) => {
+    if (value == 'Approve') {
+      const { selectGroup } = this.state;
+      if (!selectGroup[id]) {
+        return this.setState({
+          condition: {
+            ...this.state.condition,
+            [id]: true
+          },
+          helperText: {
+            ...this.state.helperText,
+            [id]: 'required'
+          }
+        });
+      }
+      const params = {
+        requestId: id,
+      }
+      const resp = await this.props.loadData(
+        organization.post(
+          params,
+          `/AcceptJoinRequest?requestId=${params.requestId}`,
+          false,
+          par => qs.stringify(par, { indices: false })
+        ),
+        {
+          saveTo: 'acceptJoinRequest'
+        }
+      );
+    }
+    if (value == 'Reject') {
+      const params = {
+        requestId: id,
+      }
+      const resp = await this.props.loadData(
+        organization.post(
+          params,
+          `/DeclineJoinRequest?requestId=${params.requestId}`,
+          false,
+          par => qs.stringify(par, { indices: false })
+        ),
+        {
+          saveTo: 'declineJoinRequest'
+        }
+      );
+    }
+  }
 
   handleChangeReview = id => event => {
     this.setState({
@@ -281,6 +437,7 @@ class EnhancedTable extends React.Component {
         [id]: event.target.value,
       }
     });
+    this.handleAcceptJoinRequest(id, event.target.value);
   };
 
   handleClickInfoButton = id => event => {
@@ -291,20 +448,25 @@ class EnhancedTable extends React.Component {
     console.log('this.props', this.props);
     console.log('this.state', this.state);
     const { classes, groups } = this.props;
-    const { data, order, orderBy, selected, rowsPerPage, page, selectGroup, selectReview } = this.state;
+    const {
+      data, order, orderBy,
+      selected, rowsPerPage, page,
+      selectGroup, selectReview, condition,
+      helperText } = this.state;
     const emptyRows = rowsPerPage - Math.min(rowsPerPage, data.length - page * rowsPerPage);
-    const SelectGroups = ({id}) => (
+    const SelectGroups = ({id, requestId}) => (
       <TextField
-        label="Group:"
+        label={helperText[requestId] || helperText['initial']}
         id="outlined-select"
         InputProps={{
           className: "field-search-input",
           //onChange: (e) => this.loadAndSaveMembersList(e.target.value),
         }}
         select
+        error={condition[requestId] || condition['initial']}
         className='field-select'
-        value={selectGroup[id] || selectGroup['initial']}
-        onChange={this.handleChangeGroup(id)}
+        value={selectGroup[requestId] && selectGroup[requestId].name || selectGroup['initial']}
+        onChange={this.handleChangeGroup(id, requestId)}
         margin="normal"
         variant="outlined"
       >
@@ -377,7 +539,7 @@ class EnhancedTable extends React.Component {
                         <Checkbox
                           checked={isSelected}
                           color="primary"
-                          onClick={event => this.handleClick(event, n.id)}
+                          onClick={event => this.handleClick(event, n.id, n.requestId)}
                         />
                       </TableCell>
                       <TableCell component="th" scope="row" padding="none">
@@ -387,9 +549,13 @@ class EnhancedTable extends React.Component {
                       <TableCell padding="none">{n.lastName}</TableCell>
                       <TableCell padding="none">{n.department}</TableCell>
                       <TableCell padding="none">{n.email}</TableCell>
-                      <TableCell padding="none"><SelectGroups id={n.id} /></TableCell>
+                      <TableCell padding="none">
+                        <SelectGroups
+                          id={n.id}
+                          requestId={n.requestId} />
+                      </TableCell>
                       <TableCell padding="none"><InfoButton id={n.id} /></TableCell>
-                      <TableCell padding="none"><SelectReview id={n.id} /></TableCell>
+                      <TableCell padding="none"><SelectReview id={n.requestId} /></TableCell>
                     </TableRow>
                   );
                 })}

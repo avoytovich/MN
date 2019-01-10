@@ -327,7 +327,7 @@ export class Features extends Component {
                   className="infinite-scroll-component-list">
                   { isAdmin && <Grid item xs={6} sm={3}>
                     <div className="grid-info">
-                      <Link href={{ pathname: '/edit-member', query: { groupId: groupDetails.id } }}>
+                      <Link route='create-member' params={{ groupId: groupDetails.id }}>
                         <div
                           style={{
                             backgroundImage: `url(${'/static/svg/placeholder_add.svg'})`,
