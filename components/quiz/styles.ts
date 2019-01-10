@@ -36,7 +36,36 @@ const styles = () =>
     buttons: {
         maxWidth: 700,
         width: '100%'
+    },
+    [`@media (max-width:960px)`]: {
+      wrapper: {
+        display: 'flex',
+        flexDirection: 'column',
+        minHeight: 'calc(100vh - 156px)',
+        backgroundColor: '#f3f5f7',
+        alignItems: 'center',
+        position: 'relative',
+        paddingBottom: 20
+      },
+      buttons: {
+        width: '90%',
+        flexDirection: 'column'
+      },
+      circleWrapper: {
+        marginTop: 20,
+        width: '80vw',
+        height: '80vw',
+        padding: 10
+      },
+      line: {
+        display: 'block',
+        marginTop: 60,
+        maxWidth: 700,
+        width: '100%',
+        marginBottom: 25
+      },
     }
+
   });
 
 export default styles;

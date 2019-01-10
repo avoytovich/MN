@@ -9,6 +9,7 @@ import withModal from 'services/decorators/withModal/index';
 import { connect } from 'react-redux'
 import { updateSpecData } from 'actions/updateData';
 import { myRoleIs } from "../../../services/accountService";
+import ThreeDotsMenu from '../threeDotsMenu'
 
 import GroupDeleteModal from './groupModal';
 
@@ -43,6 +44,7 @@ const styles = theme => ({
     fontWeight: 'bold',
     cursor: 'pointer',
     opacity: '0.5',
+    color: '#4f5863',
     '&:hover': {
       opacity: '1',
       color: 'gray'
@@ -56,6 +58,37 @@ const styles = theme => ({
   listItem: {
     paddingTop: 0,
     paddingBottom: 0
+  },
+  [`@media (max-width:960px)`]: {
+    avatar: {
+      borderRadius: 0,
+      marginTop: 0,
+      marginLeft: 12,
+      width: 50,
+      height: 50
+    },
+    listItem: {
+      paddingLeft: 12,
+      paddingRight: 12
+    },
+    mcount: {
+      fontSize: 14,
+      marginTop: 6,
+    },
+    lupdate: {
+      marginTop: 5,
+      fontSize: 12,
+    },
+    subgroupText: {
+      fontSize: [[14], '!important'],
+      lineHeight: '1.5',
+      opacity: '1',
+    },
+    subgroupList: {
+      marginTop: 3,
+      padding: 0,
+      maxHeight: 63,
+    },
   }
 });
 
@@ -88,6 +121,16 @@ export default class GroupInfo extends Component {
     } = this.props;
     const { isAdmin } = this.state;
     return <div className="d-flex f-row group-info-wrapper">
+      {myRoleIs() &&
+        (
+          <ThreeDotsMenu
+            id={info.id}
+            handleDelete={this.handleDelete}
+            info={info}
+          />
+        )
+      }
+
         <Avatar className={classes.avatar} src={info.icon || '/static/png/icon-group.png'} />
         <div className="group-icon" />
         <div className="d-flex f-column margin-info">
@@ -112,7 +155,7 @@ export default class GroupInfo extends Component {
                 key={`subgroup-${key}`}>
                 <TheLink route="group" params={{id: info.id, sub: subgroup.id}}>
                   <a style={{margin: 0, padding: 0}}>
-                <ListItemText className={classes.subgroupText}>
+                <ListItemText className={classes.subgroupText} disableTypography>
                   {subgroup.name}
                 </ListItemText>
                 </a>

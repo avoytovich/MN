@@ -159,10 +159,10 @@ export default class ActivityChart extends Component {
         </Typography>
         <Paper className={classes.paper}>
           <Grid container>
-            <Grid item xs={9}>
+            <Grid item xs={12} md={9}>
               <SelectGroup items={['Some subgroup', 'Brand new subgroup']} />
             </Grid>
-            <Grid item xs={3}>
+            <Grid item xs={12} md={3}>
               <SearchField label="Search by Name" />
             </Grid>
           </Grid>

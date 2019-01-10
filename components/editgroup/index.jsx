@@ -2,7 +2,7 @@ import { Component } from 'react';
 import Main from './main';
 import { Form, withFormik } from 'formik';
 import SecondPanel from '../secondpanel';
-import { Button, NoSsr } from '@material-ui/core';
+import { Button, NoSsr, Hidden } from '@material-ui/core';
 import { bindActionCreators } from 'redux';
 import { createQuestions } from 'actions/questions';
 import { connect } from 'react-redux';
@@ -14,6 +14,10 @@ import get from 'lodash/get';
 import NoSSR from '@material-ui/core/NoSsr'
 import { loadIcons, getSingle, editGroup } from 'actions/groups';
 import { resetData } from 'actions/updateData';
+import Redo from '@material-ui/icons/Redo';
+import Save from '@material-ui/icons/Save';
+
+import './editgroup.sass'
 
 const mapStateToProps = ({ groups, questions, runtime }, { router }) => ({
   group: find(groups.groups, g => g.id === parseInt(router.query.id, 10)),
@@ -82,13 +86,32 @@ export default class EditGroup extends Component {
           actionButtons={[
             <Link route="manage-groups">
               <a>
-                <Button variant="outlined" color="secondary">
-                  Cancel
+                <Button
+                  variant="outlined"
+                  color="secondary"
+                  className="edit-group-btn"
+                >
+                  <Hidden mdDown>
+                    Cancel
+                  </Hidden>
+                  <Hidden mdUp>
+                    <Redo/>
+                  </Hidden>
                 </Button>
               </a>
             </Link>,
-            <Button variant="contained" type="submit" color="primary">
+            <Button
+              variant="contained"
+              type="submit"
+              color="primary"
+              className="edit-group-btn"
+            >
+              <Hidden mdDown>
               Save
+              </Hidden>
+              <Hidden mdUp>
+                <Save/>
+              </Hidden>
             </Button>
           ]}
         />

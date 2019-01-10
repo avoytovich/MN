@@ -12,7 +12,7 @@ import { myRoleIs, isNewUser } from "../../../services/accountService";
 // import i18n from '../../../services/decorators/i18n';
 
 import { menuProps } from '../../../constants/texts';
-import Link from 'next/link';
+import { Link } from '../../../routes';
 /*const options = [
   'Profile',
   'Edit',

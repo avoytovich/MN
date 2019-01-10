@@ -181,7 +181,7 @@ export class UserActivityChart extends Component {
                   onClick={this.handleBack}
                 >
                     <ArrowBack/>
-                    BACK
+                    <span className='button-text'>BACK</span>
                 </Button>
               ]}
               breadCrumb={`Manage Groups / User Activity Chart`}
@@ -190,7 +190,7 @@ export class UserActivityChart extends Component {
             <Grid container spacing={0} justify="center">
               <Grid item xs={10} sm={10}>
                 <Grid container spacing={0} justify="space-between" className='container'>
-                  <Grid item xs={3} sm={3} className='container-grid'>
+                  <Grid item xs={12} sm={12} md={3} className='container-grid'>
                     <TextField
                       label="Choose View"
                       id="outlined-select"
@@ -212,7 +212,7 @@ export class UserActivityChart extends Component {
                       ))}
                     </TextField>
                   </Grid>
-                  <Grid item xs={3} sm={3} className='container-grid'>
+                  <Grid item xs={12} sm={12} md={3} className='container-grid'>
                     <TextField
                       InputProps={{
                         className: "field-search-input",

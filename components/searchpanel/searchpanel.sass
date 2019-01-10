@@ -9,3 +9,41 @@
 
 .search-form
   margin-top: 15px
+.search-panel-container
+  .search-panel-open
+    display: none
+
+@media screen and (max-width: 960px)
+  .search-panel-container
+    position: relative
+    min-height: 40px
+    padding: 10px 0
+    height: auto
+
+    .wrapper-input-search
+      max-width: none
+      width: calc(100% - 28px)
+      margin: 0 auto 10px
+
+      .searchfield-input input
+        padding-left: 142px !important
+
+
+
+    .search-form
+      flex-direction: column
+
+    .search-panel-title
+      font-size: 16px
+      color: #5f6368
+      margin-left: 14px
+      text-align: left
+
+    .search-panel-open
+      display: inline-flex
+      position: absolute
+      right: 3px
+      top: 3px
+      width: 34px
+      height: 34px
+      transition: all 0.3s

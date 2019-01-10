@@ -18,7 +18,7 @@ const ActivityChartButton = () => (
           svgClassName="svg-icon"
     src="/static/svg/user-activity-chart.svg"/>
     {/* <div className="icon" /> */}
-    User activity chart
+    <span className="button-text">User activity chart</span>
   </Button>
 )
 

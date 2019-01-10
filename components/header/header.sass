@@ -1,4 +1,15 @@
+.app-bar-container
+  &.app-bar
+    position: relative
+    padding: 20px
+    background-color: #224483
+    flex-direction: row
+  .app-bar-avatar
+    width: 51px
+    height: 51px
 
+  .app-bar-container-mobile
+    display: none
 a
   vertical-align: middle
   margin: 15px
@@ -36,3 +47,82 @@ a
 .links
   .group-first-item
     margin-left: 94px
+
+@media screen and (max-width: 960px)
+  .app-bar-drawer.app-bar-drawer-container
+    top: 64px
+    z-index: 1000
+
+  .app-bar-drawer.app-bar-drawer-paper
+    background-color: #37578f
+    box-shadow: 3px 5.2px 6px 0 rgba(105, 105, 105, 0.08)
+  .app-bar-container
+    &.app-bar
+      position: fixed
+      padding: 0
+      flex-direction: row
+      height: 64px
+    .logo-image
+      width: 47px
+      height: 45px
+
+    .app-bar
+      &-container-desktop
+        display: none
+
+      &-container-mobile
+        display: flex
+        padding: 0 12px 0 16px
+
+      &-title
+        font-size: 16px
+        font-weight: 800
+        line-height: normal
+        letter-spacing: 0.2px
+        color: #ffffff
+
+
+      &-icon
+        color: white
+        width: 36px
+        height: 36px
+
+        &-button
+          margin-right: 0
+
+  .app-bar-drawer
+    .app-bar-drawer-list
+      padding: 7.5px 0
+      &-divider
+        background-color: rgba(255,255,255, 0.5)
+        margin: 0 15px
+      &-item
+        padding: 7.5px 15px
+        &-avatar
+          height: 36px
+          width: 36px
+          position: absolute
+          left: 15px
+        &-text
+          opacity: 0.7
+          font-family: Muli
+          font-size: 15px
+          font-weight: bold
+          font-style: normal
+          font-stretch: normal
+          line-height: normal
+          letter-spacing: normal
+          color: #ffffff
+          padding: 0
+
+    &-action-links
+      .app-bar-drawer-list-item
+        padding-left: 65px
+        //&:first-child
+        //  padding-left: 65px
+          //.app-bar-drawer-list-item-text
+          //  padding-left: 10px
+
+  .header-wrapper
+    margin-top: 64px
+

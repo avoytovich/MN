@@ -8,6 +8,10 @@
     display: flex
     justify-content: center
     align-items: center
+    flex-wrap: nowrap
+
+    .search-panel-open
+      display: none
   .user-activity-left
     display: flex
     justify-content: flex-start
@@ -74,6 +78,8 @@
     display: flex
     justify-content: flex-end
     align-items: center
+
+
     .user-activity-chat
       display: flex
       justify-content: space-around
@@ -163,3 +169,202 @@
             .info-member-title
               opacity: 0.8
               font-size: 18px
+
+@media (max-width:960px)
+  .features-wrapper
+    display: flex
+    justify-content: center
+    align-items: center
+    background-color: #e7e7e7
+
+    height: auto
+    flex-direction: column
+    .container
+      display: flex
+      justify-content: center
+      align-items: center
+
+      justify-content: flex-start
+      padding: 14px
+      position: relative
+      flex-wrap: wrap
+
+      .search-panel-open
+        display: inline-flex
+        position: absolute
+        right: 3px
+        top: 63px
+        width: 34px
+        height: 34px
+        transition: all 0.3s
+
+
+    .user-activity-left
+      display: flex
+      justify-content: flex-start
+      align-items: center
+
+      justify-content: center
+    .icon
+
+      background-repeat: no-repeat
+      background-position: center
+      background-size: cover
+
+      width: 64px
+      height: 64px
+      margin-right: 10px
+    .group
+      transform: translateY(-7px)
+      .name
+        display: inline
+        vertical-align: middle
+        font-family: Muli
+        font-size: 24px
+        font-weight: bold
+        font-style: normal
+        font-stretch: normal
+        line-height: normal
+        letter-spacing: normal
+        color: #5f6368
+      .description
+        display: inline
+        font-family: Muli
+        font-size: 19px
+        font-weight: 600
+        font-style: normal
+        font-stretch: normal
+        line-height: normal
+        letter-spacing: normal
+        color: #9e9e9e
+    .field-search, .field-sort, .field-select
+      width: 300px
+      text-decoration: none
+      padding: 0px 15px
+      background-color: white
+      border-radius: 2px
+
+      width: calc(100vw - 28px)
+      .field-search-input
+        font-family: Muli
+        font-size: 15px
+        font-weight: normal
+        font-style: normal
+        font-stretch: normal
+        line-height: 1.33
+        letter-spacing: normal
+        color: #5f6368
+        margin: auto
+        width: 100%
+        &:before
+          border: none
+          content: none
+        &:after
+          content: none
+          border: none
+          position: relative
+    .field-select
+      .field-search-input
+        margin-top: 16px
+  .features-wrapper-addition
+    display: flex
+    justify-content: center
+    align-items: center
+    height: 70px
+    background-color: #f3f5f7
+    .user-activity-right
+      display: flex
+      justify-content: flex-end
+      align-items: center
+      .user-activity-chat
+        display: flex
+        justify-content: space-around
+        align-items: center
+        width: 210px
+        height: 35px
+        color: #ff6f00
+        border: 1px #ff6f00 solid
+        border-radius: 30px
+        .user-activity-chat-signature
+          font-family: Muli
+          font-size: 14px
+          font-weight: bold
+          font-style: normal
+          font-stretch: normal
+          line-height: normal
+          letter-spacing: normal
+          color: #ff6f00
+    .field-search, .field-sort , .field-select
+      text-decoration: none
+      padding: 0px 15px
+      background-color: #f3f5f7
+      border-radius: 2px
+      border: 1px solid #b7b8bc
+
+      margin: 0 auto
+      width: calc(100vw - 28px)
+      display: block
+      .field-search-input
+        font-family: Muli
+        font-size: 15px
+        font-weight: normal
+        font-style: normal
+        font-stretch: normal
+        line-height: 1.33
+        letter-spacing: normal
+        color: #5f6368
+        margin: 16px auto auto
+        width: 100%
+        &:before
+          border: none
+          content: none
+        &:after
+          content: none
+          border: none
+          position: relative
+  .features-wrapper-members
+    display: flex
+    justify-content: center
+    align-items: center
+    background-color: #f3f5f7
+    .infinite-scroll-component
+      overflow: hidden !important
+      .infinite-scroll-component-list
+        padding: 3px !important
+        .grid-info
+          margin-bottom: 50px
+          border-radius: 3px
+          .grid-info-list
+            position: relative
+            margin: 0px 0px
+            cursor: pointer
+            height: 360px
+            border-radius: 3px
+            border: solid 1px #d9d9d9
+            background-repeat: no-repeat
+            background-position: center
+            background-size: cover
+            .grid-info-list-info
+              position: absolute
+              bottom: 0px
+              text-indent: 20px
+              min-height: 80px
+              width: 100%
+              line-height: 1.7
+              text-align: left
+              z-index: 10
+              background-color: rgba(25, 34, 38, 0.5)
+              .info-member-name, .info-member-title
+                margin: 10px
+                font-family: Muli
+                font-size: 20px
+                font-weight: 600
+                font-style: normal
+                font-stretch: normal
+                line-height: normal
+                letter-spacing: normal
+                text-align: center
+                color: #ffffff
+              .info-member-title
+                opacity: 0.8
+                font-size: 18px

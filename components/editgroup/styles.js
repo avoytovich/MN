@@ -100,6 +100,11 @@ const styles = theme => ({
     fontSize: 20,
     fontWeight: 600,
     color: '#224483'
+  },
+  [`@media (max-width:960px)`]: {
+    plusIcon: {
+      marginRight: 0
+    }
   }
 });
 

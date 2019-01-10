@@ -29,6 +29,9 @@ class QuizProgress extends React.Component<QuizProgressProps>{
             percent = 0;
         if(this.props.loading)
             return null;
+        if(this.props.current === this.props.total){
+            return null
+        }
         return (
             <div className="bar">
                 <div style={{width: `${percent}%`}} className="fill"/>

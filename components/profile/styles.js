@@ -101,6 +101,34 @@ export default {
     cursor: 'pointer',
     marginTop: '-3px'
 
+  },
+  [`@media (max-width:960px)`]: {
+    profileTop: {
+      flexDirection: 'column',
+      alignItems: 'center'
+    },
+    wrapInputs: {
+      flexDirection: 'column',
+      alignItems: 'center',
+      flexWrap: 'nowrap'
+
+    },
+    leftInputs: {
+      paddingRight:'0px',
+      width: '100%'
+    },
+
+    rightInputs: {
+      paddingLeft:'0px',
+      width: '100%'
+    },
+    wrap: {
+      padding: '30px 30px 50px'
+    },
+    input: {
+      display: 'block'
+    },
+
   }
 
 }

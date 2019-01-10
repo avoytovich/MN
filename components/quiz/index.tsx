@@ -122,7 +122,7 @@ class QuizShow extends React.Component<Props> {
                   status = 'wrong';
                 const disabled = !!this.props.wrong || !!this.props.correct;
                 console.log(this.props.wrong,this.props.correct);
-                return (<Grid key={key + 'question'} item xs={6}>
+                return (<Grid key={key + 'question'} item xs={12} md={6}>
                   <AnswerButton
                     disabled={disabled}
                     title={variant}
