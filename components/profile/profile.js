@@ -210,7 +210,7 @@ export default class Profile extends Component{
 
 
   render() {
-    const { classes, setFieldValue, handleBlur, handleChange, close, errors, values, isMember, inputNames } = this.props;
+    const { classes, setFieldValue, handleBlur, handleChange, close, errors, values, isNewMember, inputNames } = this.props;
     const { imageContent } = values
     const { imgSrc } = this.state
     const inputs = inputNames.map(input => {
@@ -224,7 +224,7 @@ export default class Profile extends Component{
           label={input.label}
           fullWidth
           component={wrapField}
-          disabled={isEmail}
+          disabled={!isNewMember && isEmail}
           inputProps={{
             className: classes.innerInput
           }}

@@ -68,6 +68,7 @@ export default class Member extends Component {
               handleSuccessRequest={this.handleSuccessRequest}
               inputNames={inputNames}
               schema={memberInfoSchema}
+              isNewMember
             />
           </Layout>
         </Grid>
