@@ -214,6 +214,7 @@ export default class Profile extends Component{
     const { imageContent } = values
     const { imgSrc } = this.state
     const inputs = inputNames.map(input => {
+      const isEmail = input.name === 'email'
       return(
         <Field
           className={classes.input}
@@ -223,6 +224,7 @@ export default class Profile extends Component{
           label={input.label}
           fullWidth
           component={wrapField}
+          disabled={isEmail}
           inputProps={{
             className: classes.innerInput
           }}
