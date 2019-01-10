@@ -15,7 +15,7 @@ interface MemberProps {
 
 const keys = [
     {
-        id: 'department',
+        id: 'company',
         label: 'Department'
     },
     {
@@ -27,7 +27,7 @@ const keys = [
         label: 'Email'
     },
     {
-        id: 'number',
+        id: 'phone',
         label: 'Phone number'
     },
     {
@@ -35,7 +35,7 @@ const keys = [
         label: 'City'
     },
     {
-        id: 'aboutme',
+        id: 'public',
         label: 'About me'
     },
 ];
