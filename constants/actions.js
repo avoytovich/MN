@@ -19,6 +19,8 @@ export const MERGE_RUNTIME = 'MERGE_RUNTIME';
 // snackbar
 export const TOGGLE_SNACKBAR = 'TOGGLE_SNACKBAR'
 
+// member
+export const UPDATE_MEMBER = 'UPDATE_MEMBER'
 
 // localization
 export const CHANGE_LANGUAGE = 'CHANGE_LANGUAGE';

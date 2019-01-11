@@ -3,10 +3,11 @@ import { withRouter } from 'next/router';
 import { Button, Grid } from '@material-ui/core';
 import Layout from 'components/MyLayout.js';
 import SecondPanel from 'components/secondpanel';
-import { getMember, editMember } from 'actions/member'
+import { getMember, editMember, updateMember } from 'actions/member'
 import Router from 'next/router';
 import EditProfile from 'components/profile/profile'
 import { memberInfoSchema } from '../../services/validateSchemas';
+import { connect } from 'react-redux';
 
 import 'components/profile/style.sass'
 
@@ -21,6 +22,10 @@ const inputNames = [
   { name:"public", label:"About Me" }
 ]
 
+@connect(
+  null,
+  { updateMember }
+)
 @withRouter
 export default class Member extends Component {
   state = {
@@ -51,6 +56,7 @@ export default class Member extends Component {
     const { memberId } = this.props.router.query
     values.id = memberId
     const data = await editMember(values)
+    this.props.updateMember(data)
     return data
   }
 

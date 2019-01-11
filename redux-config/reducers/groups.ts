@@ -9,7 +9,8 @@ import {
   EDIT_GROUP,
   DELETE_GROUP,
   SET_MODAL_DELETE,
-  SEARCH_GROUPS
+  SEARCH_GROUPS,
+  UPDATE_MEMBER
 } from '../../constants/actions';
 
 const initialState = {
@@ -116,6 +117,31 @@ export default (state = initialState, action: any) => {
         ...state,
         groups: filtered
       });
+    }
+    case UPDATE_MEMBER: {
+      return Object.assign({}, state, {
+        ...state,
+        groups: state.groups.map(group => {
+          return ({
+            ...group,
+            images: group.images.map(member => {
+              return (
+                member.memberId === action.data.id
+                  ? {
+                    firstName: action.data.firstName,
+                    lastName: action.data.lastName,
+                    mediumImage: action.data.imageContent.mediumImage,
+                    memberId: action.data.id
+                  }
+                  : member
+              )
+
+            })
+        })
+
+        })
+        }
+      )
     }
     default:
       return state;
