@@ -241,8 +241,8 @@ export class Features extends Component {
                 <Grid item xs={false} sm={9} md={6}>
                   <div className='group'>
                     <p className='name'>{groupDetails.name}</p>
-                      { isAdmin &&
-                        <IconButton
+                    { isAdmin &&
+                      <IconButton
                       /* onClick={this.handleClick} */
                       >
                         <Link
@@ -250,8 +250,7 @@ export class Features extends Component {
                           params={{ id: groupDetails.id }}>
                           <CreateIcon />
                         </Link>
-                      </IconButton>
-                    )}
+                    </IconButton> }
                     <br/>
                     <p className="description">{groupDetails.description}</p>
                   </div>
