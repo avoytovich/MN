@@ -1,14 +1,14 @@
 import { Component, Fragment } from 'react';
 import { Grid, TextField, Button, InputAdornment } from '@material-ui/core';
-import { Dehaze, Settings, Clear, Search, DoneAll } from "@material-ui/icons";
-import qs from "qs";
+import { Dehaze, Settings, Clear, Search, DoneAll } from '@material-ui/icons';
+import qs from 'qs';
 import { get as _get } from 'lodash';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import Router from 'next/router';
 
 import loading from '../../services/decorators/loading';
-import {organization} from '../../services/cruds';
+import { organization } from '../../services/cruds';
 import { setData } from '../../actions/updateData';
 import Table from '../../components/customTableAdminNewUser';
 import Layout from '../../components/MyLayout';
@@ -20,40 +20,39 @@ import './admin.sass';
 const ButtonInfo = {
   Approve: {
     name: 'Approve',
-    className: "approve-button",
+    className: 'approve-button',
     onClick: () => {
       console.log('Approve');
     }
   },
   Reject: {
     name: 'Reject',
-    className: "reject-button",
+    className: 'reject-button',
     onClick: () => {
-    console.log('Reject');
+      console.log('Reject');
     }
   },
   Verticals: {
     name: '',
-    className: "vertical-button",
+    className: 'vertical-button',
     onClick: () => {
-    console.log('VerticalButtons');
+      console.log('VerticalButtons');
     }
   }
 };
 
-const CustomButton = ({IconComponent}) => {
+const CustomButton = ({ IconComponent }) => {
   let data;
-  IconComponent === DoneAll ? data = ButtonInfo.Approve :
-    IconComponent === Clear ? data = ButtonInfo.Reject :
-      data = ButtonInfo.Verticals
+  IconComponent === DoneAll
+    ? (data = ButtonInfo.Approve)
+    : IconComponent === Clear
+    ? (data = ButtonInfo.Reject)
+    : (data = ButtonInfo.Verticals);
   const { name, className, onClick } = data;
   return (
-    <Button
-      className={className}
-      onClick={onClick}
-    >
+    <Button className={className} onClick={onClick}>
       {name}
-      <IconComponent/>
+      <IconComponent />
     </Button>
   );
 };
@@ -63,13 +62,13 @@ const withIcon = IconComponents =>
     render() {
       return (
         <>
-        {IconComponents.map((IconComponent, id) => (
-          <CustomButton key={id} IconComponent={IconComponent} />
-        ))}
+          {IconComponents.map((IconComponent, id) => (
+            <CustomButton key={id} IconComponent={IconComponent} />
+          ))}
         </>
-      )
+      );
     }
-  }
+  };
 
 const ButtonWithIconVB = withIcon([Dehaze, Settings]);
 const ButtonWithIconHB = withIcon([DoneAll, Clear]);
@@ -79,40 +78,40 @@ const mapDispatchToProps = dispatch =>
 
 const mapStateToProps = ({ runtime }) => ({
   organizationMembers: runtime.organizationMembers,
-  joinRequests: runtime.joinRequests,
+  joinRequests: runtime.joinRequests
 });
 
 @connect(
   mapStateToProps,
-  mapDispatchToProps,
+  mapDispatchToProps
 )
 @loading()
 export class AdminPanel extends Component {
   state = {
     query: '',
-    selected: 0,
-    //isAdmin: false,
-  }
+    selected: 0
+    // isAdmin: false,
+  };
 
   componentDidMount() {
     this.GetJoinRequests_loadAndSaveToProps();
   }
 
-  handleSubmit = (e) => {
-    if(e.charCode === 13) {
+  handleSubmit = e => {
+    if (e.charCode === 13) {
       this.GetOrganizationMembers_loadAndSaveToProps();
       this.GetJoinRequests_loadAndSaveToProps();
-      //this.GetUserActivityChart_loadAndSaveToProps();
-      //const condition = e.target.value;
-      //console.log('condition');
-      //this.GetUserActivityChart_loadAndSaveToProps(condition);
+      // this.GetUserActivityChart_loadAndSaveToProps();
+      // const condition = e.target.value;
+      // console.log('condition');
+      // this.GetUserActivityChart_loadAndSaveToProps(condition);
     }
   };
 
   handleSearchStart = () => {
     this.GetOrganizationMembers_loadAndSaveToProps();
     this.GetJoinRequests_loadAndSaveToProps();
-  }
+  };
 
   handleBlur = () => {
     document.removeEventListener('keypress', this.handleSubmit);
@@ -122,37 +121,36 @@ export class AdminPanel extends Component {
     document.addEventListener('keypress', this.handleSubmit);
   };
 
-  handleClear = async (e) => {
-    /*await this.setState({
+  handleClear = async e => {
+    /* await this.setState({
       query: '',
       choosenGroup: '...'
     });
-    this.GetUserActivityChart_loadAndSaveToProps();*/
-  }
+    this.GetUserActivityChart_loadAndSaveToProps(); */
+  };
 
-  handleCustomChange = (e) => {
+  handleCustomChange = e => {
     this.setState({
-      query: e.target.value,
-    })
-  }
+      query: e.target.value
+    });
+  };
 
   GetOrganizationMembers_loadAndSaveToProps = async () => {
     const { query } = this.state;
     let params = {};
-    query ? params = {
-      query: query,
-      limit: 99,
-      offset: 0,
-    } : params = {
-      limit: 99,
-      offset: 0,
-    };
+    query
+      ? (params = {
+          query: query,
+          limit: 99,
+          offset: 0
+        })
+      : (params = {
+          limit: 99,
+          offset: 0
+        });
     const resp = await this.props.loadData(
-      organization.get(
-        params,
-        '/GetOrganizationMembers',
-        false,
-        par => qs.stringify(par, { indices: false })
+      organization.get(params, '/GetOrganizationMembers', false, par =>
+        qs.stringify(par, { indices: false })
       ),
       {
         saveTo: 'organizationMembers'
@@ -164,20 +162,19 @@ export class AdminPanel extends Component {
   GetJoinRequests_loadAndSaveToProps = async () => {
     const { query } = this.state;
     let params = {};
-    query ? params = {
-      query: query,
-      limit: 99,
-      offset: 0,
-    } : params = {
-      limit: 99,
-      offset: 0,
-    };
+    query
+      ? (params = {
+          query: query,
+          limit: 99,
+          offset: 0
+        })
+      : (params = {
+          limit: 99,
+          offset: 0
+        });
     const resp = await this.props.loadData(
-      organization.get(
-        params,
-        '/GetJoinRequests',
-        false,
-        par => qs.stringify(par, { indices: false })
+      organization.get(params, '/GetJoinRequests', false, par =>
+        qs.stringify(par, { indices: false })
       ),
       {
         saveTo: 'joinRequests'
@@ -188,33 +185,38 @@ export class AdminPanel extends Component {
 
   handleNumSelected = (selectInfo, selected) => {
     console.log('selectInfo', selectInfo);
-    this.setState({selectInfo, selected})
+    this.setState({ selectInfo, selected });
   };
 
   render() {
-    //console.log('this.props', this.props);
-    //console.log('this.state', this.state);
+    // console.log('this.props', this.props);
+    // console.log('this.state', this.state);
     const { joinRequests } = this.props;
-    const { query, selected } = this.state;
+    const { query, selected, selectInfo } = this.state;
     const countSelectedItem = _get(selected, 'length');
-    return(
+    const countSelectedInfo = _get(selectInfo, 'length');
+    return (
       <Fragment>
         <Layout>
           <div className="admin-panel-wrapper">
             <Grid container spacing={0} justify="center">
               <Grid item xs={12} sm={12}>
-                <Grid container spacing={0} justify="space-between" className='container'>
-                  <Grid item xs={1} sm={1} className='container-grid'>
+                <Grid
+                  container
+                  spacing={0}
+                  justify="space-between"
+                  className="container">
+                  <Grid item xs={1} sm={1} className="container-grid">
                     <div className="vertical-block">
                       <ButtonWithIconVB />
                     </div>
                   </Grid>
-                  <Grid item xs={11} sm={11} className='container-grid'>
+                  <Grid item xs={11} sm={11} className="container-grid">
                     <div className="horizontal-block">
                       <p className="text-title">MetKnow Admin Dashboard</p>
                       <TextField
                         InputProps={{
-                          className: "field-search-input",
+                          className: 'field-search-input',
                           onBlur: this.handleBlur,
                           onFocus: this.handleFocus,
                           startAdornment: (
@@ -229,17 +231,18 @@ export class AdminPanel extends Component {
                             <InputAdornment variant="filled" position="end">
                               <Clear
                                 className="endAdornment-search-clear"
-                                onClick={this.handleClear}/>
+                                onClick={this.handleClear}
+                              />
                             </InputAdornment>
                           )
                         }}
                         id="outlined-search"
-                        className='field-search'
-                        placeholder='Quick Search'
+                        className="field-search"
+                        placeholder="Quick Search"
                         value={this.state.query}
                         type="text"
                         onChange={this.handleCustomChange}
-                        //onChange={this.handleChange('query')}
+                        // onChange={this.handleChange('query')}
                         margin="normal"
                         variant="filled"
                       />
@@ -247,9 +250,11 @@ export class AdminPanel extends Component {
                     <div className="horizontal-block-info">
                       <p className="text-title-info">New Users</p>
                       <div className="horizontal-block-info-button">
-                        {!!countSelectedItem && (
+                        {!!countSelectedItem && !!countSelectedInfo && (
                           <>
-                            <p className="text-title-info-count">{countSelectedItem} items Selected</p>
+                            <p className="text-title-info-count">
+                              {countSelectedInfo} items Selected
+                            </p>
                             <ButtonWithIconHB />
                           </>
                         )}
@@ -268,7 +273,7 @@ export class AdminPanel extends Component {
           </div>
         </Layout>
       </Fragment>
-    )
+    );
   }
 }
 

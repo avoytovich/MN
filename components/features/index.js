@@ -1,14 +1,21 @@
 import { Component, Fragment } from 'react';
-import { Grid, IconButton, TextField, FormControl, MenuItem, Collapse  } from '@material-ui/core';
+import {
+  Grid,
+  IconButton,
+  TextField,
+  FormControl,
+  MenuItem,
+  Collapse
+} from '@material-ui/core';
 import CreateIcon from '@material-ui/icons/Create';
 import ArrowIcon from '@material-ui/icons/KeyboardArrowUp'
 import Router, { withRouter } from 'next/router';
-import { Link } from '../../routes';
 import InfiniteScroll from 'react-infinite-scroll-component';
 import qs from "qs";
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { get as _get } from 'lodash';
+import { Link } from '../../routes';
 
 import { setData } from '../../actions/updateData';
 import { getMember } from '../../actions/members';
@@ -17,18 +24,18 @@ import { myRoleIs } from '../../services/accountService';
 import withModal from '../../services/decorators/withModal';
 import loading from '../../services/decorators/loading';
 import ClassesNesting from './withClassesNesting';
-import MemberModal from "../groups/gallery/memberModal";
-import "./features.sass";
+import MemberModal from '../groups/gallery/memberModal';
+import './features.sass';
 
 const orderBy = [
   {
     value: 'firstname',
-    label: 'First Name',
+    label: 'First Name'
   },
   {
     value: 'lastname',
-    label: 'Last Name',
-  },
+    label: 'Last Name'
+  }
 ];
 
 const mapDispatchToProps = dispatch =>
@@ -40,11 +47,11 @@ const mapStateToProps = ({ runtime }) => ({
 
 @connect(
   mapStateToProps,
-  mapDispatchToProps,
+  mapDispatchToProps
 )
 @withRouter
 @loading()
-@withModal(MemberModal, {disableStyles: true, withCloseOutside: true})
+@withModal(MemberModal, { disableStyles: true, withCloseOutside: true })
 export class Features extends Component {
   constructor(props) {
     super(props);
@@ -61,30 +68,30 @@ export class Features extends Component {
       isAdmin: false,
       orderBy: 'firstname',
       group: 'ROOT'
-    }
-    //this.loadAndSaveMembersList();
+    };
+    // this.loadAndSaveMembersList();
   }
-  
+
   componentDidUpdate = (prevProps, prevState) => {
-    if(this.props.groupDetails.id !== prevProps.groupDetails.id)
+    if (this.props.groupDetails.id !== prevProps.groupDetails.id)
       this.loadAndSaveMembersList();
     const { groupDetails, router, handleGroup } = this.props;
     const { group } = this.state;
     if (prevState.group != this.state.group) {
       handleGroup(group);
     }
-    /*if (group == 'ROOT' && router.query.sub) {
+    /* if (group == 'ROOT' && router.query.sub) {
       Router.push({
         pathname: `/manage-groups/group/${groupDetails.id}`
       });
-    }*/
-  }
+    } */
+  };
 
   componentDidMount() {
     const { groupDetails, router } = this.props;
     const { group } = this.state;
     if (router.query.sub) {
-      groupDetails.subgroups.forEach( async(item, id) => {
+      groupDetails.subgroups.forEach(async (item, id) => {
         if (item.id == router.query.sub) {
           await this.loadAndSaveMembersList(item.name);
         }
@@ -93,30 +100,33 @@ export class Features extends Component {
       this.loadAndSaveMembersList();
     }
     this.setState({
-      isAdmin: myRoleIs(),
+      isAdmin: myRoleIs()
     });
   }
 
-  loadAndSaveMembersList = async (condition) => {
-    if (this.props.groupDetails.subgroups.some(item => {
-      return item.name == condition;
-    }) ) {
+  loadAndSaveMembersList = async condition => {
+    if (
+      this.props.groupDetails.subgroups.some(item => item.name == condition) ) {
       await this.setState({
         offset: 0,
         elements: [],
-        group: condition,
+        group: condition
       });
     }
-    
-    if (condition == 'firstname' || condition ==  'lastname') {
+
+    if (condition == 'firstname' || condition == 'lastname') {
       await this.setState({
         offset: 0,
         elements: [],
-        orderBy: condition,
+        orderBy: condition
       });
     }
-    if (condition &&
-          ['', 'firstname', 'lastname', this.state.group].every(item => (condition != item))) {
+    if (
+      condition &&
+      ['', 'firstname', 'lastname', this.state.group].every(
+        item => condition != item
+      )
+    ) {
       this.setState({
         offset: 0,
         elements: [],
@@ -132,42 +142,41 @@ export class Features extends Component {
     }
     const { groupDetails, groupMembers } = this.props;
     const { offset, search, orderBy, group } = this.state;
-    const currentSubGroup = groupDetails.subgroups.filter(item => {
-      return item.name == group;
-    });
+    const currentSubGroup = groupDetails.subgroups.filter(item => item.name == group);
     const resp = await this.props.loadData(
       members.get(
         {
-          groupId: currentSubGroup[0] && currentSubGroup[0]['id'] || groupDetails.id,
+          groupId:
+            (currentSubGroup[0] && currentSubGroup[0]['id']) || groupDetails.id,
           limit: 12,
           offset: offset,
           search: search,
-          orderBy: orderBy,
+          orderBy: orderBy
         },
         '/GetGroupMembers',
         false,
-        par => qs.stringify(par, { indices: false }),
+        par => qs.stringify(par, { indices: false })
       ),
       {
-        saveTo: 'groupMembers',
-      },
+        saveTo: 'groupMembers'
+      }
     );
     this.setState({
       offset: this.state.offset + 12,
       elements: this.state.elements.concat(resp.data.data),
-      membersInfo: {...resp.data},
+      membersInfo: { ...resp.data }
     });
     this.props.setData(resp.data, 'groupMembers');
   };
 
   handleChange = name => event => {
     this.setState({
-      [name]: event.target.value,
+      [name]: event.target.value
     });
   };
 
-  handleSubmit = (e) => {
-    if(e.charCode === 13) {
+  handleSubmit = e => {
+    if (e.charCode === 13) {
       const condition = e.target.value;
       this.loadAndSaveMembersList(condition);
     }
@@ -181,7 +190,7 @@ export class Features extends Component {
     document.addEventListener('keypress', this.handleSubmit);
   };
 
-  /*handleIdCreateMember = () => {
+  /* handleIdCreateMember = () => {
     const { groupDetails, router } = this.props;
     const { group } = this.state;
     return groupDetails.id;
@@ -192,18 +201,21 @@ export class Features extends Component {
     //   return currentSubGroup[0] && currentSubGroup[0]['id'];
     // } else
     //   return groupDetails.id;
-  };*/
+  }; */
 
-  handleClick = id => async() => {
+  handleClick = id => async () => {
     const member = await getMember(id);
     this.props.open(member);
-  }
+  };
 
   render() {
-    //console.log('this.props', this.props);
-    //console.log('this.state', this.state);
+    // console.log('this.props', this.props);
+    // console.log('this.state', this.state);
     const { groupDetails, groupMembers } = this.props;
-    const { elements, membersInfo, isAdmin, open } = this.state;
+    const { elements, membersInfo, isAdmin, group, open } = this.state;
+    const currentGroup = groupDetails.subgroups.filter(
+      item => item.name === group
+    );
     if (!groupMembers) return null;
     return (
       <Fragment>
@@ -221,7 +233,7 @@ export class Features extends Component {
                 <Grid item xs={false} sm={3} md={2}>
                   <div
                     style={{
-                      backgroundImage: `url('/static/svg/group-features.svg')`,
+                      backgroundImage: `url('/static/svg/group-features.svg')`
                     }}
                     className="icon"
                   />
@@ -231,15 +243,17 @@ export class Features extends Component {
                     <p className='name'>{groupDetails.name}</p>
                       { isAdmin &&
                         <IconButton
-                          /*onClick={this.handleClick}*/
-                        >
-                          <Link route="editgroup" params={{id: groupDetails.id}}>
-                            <CreateIcon />
-                          </Link>
-                        </IconButton>
-                      }
-                      <br/>
-                    <p className='description'>{groupDetails.description}</p>
+                      /* onClick={this.handleClick} */
+                      >
+                        <Link
+                          route="editgroup"
+                          params={{ id: groupDetails.id }}>
+                          <CreateIcon />
+                        </Link>
+                      </IconButton>
+                    )}
+                    <br/>
+                    <p className="description">{groupDetails.description}</p>
                   </div>
                 </Grid>
                 <Collapse in={open}>
@@ -295,26 +309,25 @@ export class Features extends Component {
                     label="Choose View"
                     id="outlined-select"
                     InputProps={{
-                      className: "field-search-input",
-                      onChange: (e) => this.loadAndSaveMembersList(e.target.value),
+                      className: 'field-search-input',
+                      onChange: e => this.loadAndSaveMembersList(e.target.value)
                     }}
                     select
-                    className='field-select'
+                    className="field-select"
                     value={this.state.group}
                     onChange={this.handleChange('group')}
                     margin="normal"
-                    variant="outlined"
-                  >
+                    variant="outlined">
                     {groupDetails.subgroups.map((item, id) => (
                       <ClassesNesting key={id} value={item.name}>
-                        {item.name == 'ROOT' ? `Group: ${item.name}` : `SubGroup: ${item.name}`}
+                        {item.name == 'ROOT'
+                          ? `Group: ${item.name}`
+                          : `SubGroup: ${item.name}`}
                       </ClassesNesting>
                     ))}
                   </TextField>
                 </Grid>
-                <Grid item xs={6} sm={6} className="user-activity-right">
-                  
-                </Grid>
+                <Grid item xs={6} sm={6} className="user-activity-right" />
               </Grid>
             </Grid>
           </Grid>
@@ -325,10 +338,7 @@ export class Features extends Component {
               <InfiniteScroll
                 next={() => this.loadAndSaveMembersList()}
                 dataLength={this.state.elements.length}
-                hasMore={
-                  elements.length <
-                  membersInfo.pagination.total_count
-                }
+                hasMore={elements.length < membersInfo.pagination.total_count}
                 className="infinite-scroll-component">
                 <Grid
                   container
@@ -336,24 +346,30 @@ export class Features extends Component {
                   direction="row"
                   justify="flex-start"
                   className="infinite-scroll-component-list">
-                  { isAdmin && <Grid item xs={12} sm={6} md={3}>
-                    <div className="grid-info">
-                      <Link route='create-member' params={{ groupId: groupDetails.id }}>
-                        <div
-                          style={{
-                            backgroundImage: `url(${'/static/svg/placeholder_add.svg'})`,
-                          }}
-                          className="grid-info-list"
-                        >
-                          <div className="grid-info-list-info">
-                            <p className="info-member-name">+ Add Profile</p>
-                            <p className="info-member-title">Press here</p>
+                  {isAdmin && (
+                    <Grid item xs={12} sm={6} md={3}>
+                      <div className="grid-info">
+                        <Link
+                          route="create-member"
+                          params={{
+                            groupId:
+                              (currentGroup[0] && currentGroup[0].id) ||
+                              groupDetails.id
+                          }}>
+                          <div
+                            style={{
+                              backgroundImage: `url(${'/static/svg/placeholder_add.svg'})`
+                            }}
+                            className="grid-info-list">
+                            <div className="grid-info-list-info">
+                              <p className="info-member-name">+ Add Profile</p>
+                              <p className="info-member-title">Press here</p>
+                            </div>
                           </div>
-                        </div>
-                      </Link>
-                    </div>
-                  </Grid>
-                  }
+                        </Link>
+                      </div>
+                    </Grid>
+                  )}
                   {elements.map((item, index) => {
                     const {
                       firstName,
@@ -365,20 +381,21 @@ export class Features extends Component {
                     return (
                       <Grid key={index} item xs={12} sm={6} md={3}>
                         <div
-                          onClick={ this.handleClick(id) }
-                          className="grid-info" >
-                            <div
-                              style={{
-                                backgroundImage: `url(${_get(imageContent, 'mediumImage') ||
-                                '/static/svg/placeholder.svg'})`,
-                              }}
-                              className="grid-info-list"
-                            >
-                              <div className="grid-info-list-info">
-                                <p className="info-member-name">{`${firstName} ${lastName}`}</p>
-                                <p className="info-member-title">{title}</p>
-                              </div>
+                          onClick={this.handleClick(id)}
+                          className="grid-info">
+                          <div
+                            style={{
+                              backgroundImage: `url(${_get(
+                                imageContent,
+                                'mediumImage'
+                              ) || '/static/svg/placeholder.svg'})`
+                            }}
+                            className="grid-info-list">
+                            <div className="grid-info-list-info">
+                              <p className="info-member-name">{`${firstName} ${lastName}`}</p>
+                              <p className="info-member-title">{title}</p>
                             </div>
+                          </div>
                         </div>
                       </Grid>
                     );
