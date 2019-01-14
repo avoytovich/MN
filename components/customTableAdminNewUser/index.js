@@ -511,8 +511,8 @@ class EnhancedTable extends React.Component {
   };
 
   render() {
-    console.log('this.props', this.props);
-    console.log('this.state', this.state);
+    //console.log('this.props', this.props);
+    //console.log('this.state', this.state);
     const { classes, groups } = this.props;
     const {
       data,

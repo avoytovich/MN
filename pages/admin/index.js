@@ -9,6 +9,7 @@ import Router from 'next/router';
 
 import loading from '../../services/decorators/loading';
 import { organization } from '../../services/cruds';
+import withIcon from '../../services/setButtons';
 import { setData } from '../../actions/updateData';
 import Table from '../../components/customTableAdminNewUser';
 import Layout from '../../components/MyLayout';
@@ -16,62 +17,6 @@ import SecondPanel from '../../components/secondpanel';
 import ClassesNesting from '../../components/features/withClassesNesting';
 
 import './admin.sass';
-
-const ButtonInfo = {
-  Approve: {
-    name: 'Approve',
-    className: 'approve-button',
-    onClick: () => {
-      console.log('Approve');
-    }
-  },
-  Reject: {
-    name: 'Reject',
-    className: 'reject-button',
-    onClick: () => {
-      console.log('Reject');
-    }
-  },
-  Verticals: {
-    name: '',
-    className: 'vertical-button',
-    onClick: () => {
-      console.log('VerticalButtons');
-    }
-  }
-};
-
-const CustomButton = ({ IconComponent }) => {
-  let data;
-  IconComponent === DoneAll
-    ? (data = ButtonInfo.Approve)
-    : IconComponent === Clear
-    ? (data = ButtonInfo.Reject)
-    : (data = ButtonInfo.Verticals);
-  const { name, className, onClick } = data;
-  return (
-    <Button className={className} onClick={onClick}>
-      {name}
-      <IconComponent />
-    </Button>
-  );
-};
-
-const withIcon = IconComponents =>
-  class Icon extends Component {
-    render() {
-      return (
-        <>
-          {IconComponents.map((IconComponent, id) => (
-            <CustomButton key={id} IconComponent={IconComponent} />
-          ))}
-        </>
-      );
-    }
-  };
-
-const ButtonWithIconVB = withIcon([Dehaze, Settings]);
-const ButtonWithIconHB = withIcon([DoneAll, Clear]);
 
 const mapDispatchToProps = dispatch =>
   bindActionCreators({ setData }, dispatch);
@@ -89,9 +34,16 @@ const mapStateToProps = ({ runtime }) => ({
 export class AdminPanel extends Component {
   state = {
     query: '',
-    selected: 0
+    selected: 0,
+    acceptJoin: ''
     // isAdmin: false,
   };
+
+  componentDidUpdate(prevProps, prevState) {
+    if (prevState.acceptJoin !== this.state.acceptJoin) {
+      this.GetJoinRequests_loadAndSaveToProps();
+    }
+  }
 
   componentDidMount() {
     this.GetJoinRequests_loadAndSaveToProps();
@@ -188,13 +140,20 @@ export class AdminPanel extends Component {
     this.setState({ selectInfo, selected });
   };
 
+  handleAcceptSet = acceptJoin => {
+    console.log('acceptJoin', acceptJoin);
+    this.setState({ acceptJoin });
+  };
+
   render() {
-    // console.log('this.props', this.props);
-    // console.log('this.state', this.state);
+    //console.log('this.props', this.props);
+    //console.log('this.state', this.state);
     const { joinRequests } = this.props;
     const { query, selected, selectInfo } = this.state;
     const countSelectedItem = _get(selected, 'length');
     const countSelectedInfo = _get(selectInfo, 'length');
+    const ButtonWithIconVB = withIcon([Dehaze, Settings], selectInfo);
+    const ButtonWithIconHB = withIcon([DoneAll, Clear], selectInfo, this.handleAcceptSet);
     return (
       <Fragment>
         <Layout>
